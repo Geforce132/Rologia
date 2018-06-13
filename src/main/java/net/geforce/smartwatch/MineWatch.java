@@ -19,8 +19,8 @@ import net.minecraftforge.common.MinecraftForge;
 @Mod(modid=MineWatch.MOD_ID, name=MineWatch.MOD_NAME,version=MineWatch.VERSION)
 public class MineWatch {
 	
-	public static final String MOD_ID = "minewatch";
-	public static final String MOD_NAME = "MineWatch";
+	public static final String MOD_ID = "rologia";
+	public static final String MOD_NAME = "Rologia";
 	public static final String VERSION = "0.0.1";
 	
 	@Instance(MOD_ID)

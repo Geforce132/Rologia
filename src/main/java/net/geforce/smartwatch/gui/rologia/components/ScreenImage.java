@@ -8,8 +8,6 @@ import net.minecraft.util.ResourceLocation;
 
 public class ScreenImage extends ScreenComponent {
 	
-	public static ScreenImage DEFAULT = new ScreenImage("minewatch:textures/gui/watch/default.png", 0, 0, 64, 64);
-	
 	private ResourceLocation location;
 	private int imageWidth;
 	private int imageHeight;

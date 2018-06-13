@@ -1,4 +1,4 @@
-package net.geforce.smartwatch.gui.rologia.framework;
+package net.geforce.smartwatch.gui.rologia;
 
 import net.geforce.smartwatch.gui.rologia.screens.BootScreen;
 import net.geforce.smartwatch.gui.rologia.screens.Screen;
@@ -13,8 +13,9 @@ public class Rologia {
 
 	private EntityPlayer user;
 	
-	public void openSmartwatchGUI(EntityPlayer player) {
+	public void openSmartwatchGUI(EntityPlayer player, int screenXPos, int screenYPos) {
 		user = player;
+		getCurrentScreen().setScreenPosition(screenXPos, screenYPos);
 		getCurrentScreen().initializeScreen();
 	}
 
