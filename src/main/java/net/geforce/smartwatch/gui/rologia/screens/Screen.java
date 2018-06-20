@@ -19,52 +19,53 @@ public abstract class Screen extends Gui {
 	public static final int WATCH_SCREEN_X_SIZE = WATCH_BACKGROUND_X_SIZE - 8;
 	public static final int WATCH_SCREEN_Y_SIZE = WATCH_BACKGROUND_Y_SIZE - 7;
 
-	private int screenXPos = 0;
-	private int screenYPos = 0;
+	private int screenXPos;
+	private int screenYPos;
 	
 	private int mousePosX = 0;
 	private int mousePosY = 0;
 	
 	protected ArrayList<ScreenImage> images = new ArrayList<ScreenImage>();
 	protected ArrayList<ScreenComponent> components = new ArrayList<ScreenComponent>();
+	
+	private ScreenImage backgroundImage;
+	
+	public Screen(int x, int y) {
+		screenXPos = x;
+		screenYPos = y;
+		backgroundImage = getBackgroundImage();
+		backgroundImage.setPosition(x, y);
+	}
 
 	public abstract void initializeScreen();
 	
 	public abstract void onComponentClicked(ScreenComponent component, int mouseX, int mouseY);
 	
-	public void drawImages() {		
-		drawComponentWithGLFixes(getBackgroundImage());
+	public void drawImages() {
+		GL11.glPushMatrix();
+		
+		backgroundImage.performPrerenderGLFixes();
+		backgroundImage.drawComponent();
+		
+		GL11.glPopMatrix();
 		
 		for(ScreenImage image : images)
 		{
-			drawComponentWithGLFixes(image);
+			GL11.glPushMatrix();
+			image.performPrerenderGLFixes();
+			image.drawComponent();
+			GL11.glPopMatrix();
 		}
 	}
 	
 	public void drawComponents() {
 		for(ScreenComponent component : components)
 		{
-			drawComponentWithGLFixes(component);
+			GL11.glPushMatrix();
+			component.performPrerenderGLFixes();
+			component.drawComponent();
+			GL11.glPopMatrix();
 		}
-	}
-	
-	private void drawComponentWithGLFixes(ScreenComponent component) {
-		GL11.glPushMatrix();
-		
-		GL11.glTranslatef(component.getXPos(), component.getYPos(), 0);
-		GL11.glRotatef(component.getRotation(), 0, 0, 1);
-		GL11.glTranslatef(-component.getXPos(), -component.getYPos(), 0);
-		
-		GL11.glScalef(component.getScale(), component.getScale(), 1F);
-		
-		if(component.getScale() != 1.0F)
-			component.setPosition((int) (component.getXPos() / component.getScale()), (int) (component.getYPos() / component.getScale()));
-		else if(component.getScale() == 1F)
-			component.resetPosition();
-		
-		component.drawComponent();
-		
-		GL11.glPopMatrix();
 	}
 	
 	public void editImages() {}
@@ -111,9 +112,13 @@ public abstract class Screen extends Gui {
 		mousePosY = y;
 	}
 	
-	public void setScreenPosition(int x, int y) {
+	public Screen setScreenPosition(int x, int y) {
 		screenXPos = x;
 		screenYPos = y;
+
+		backgroundImage.setPosition(x + 3, y + 3);
+		backgroundImage.setDefaultPosition(x + 3, y + 3);
+		return this;
 	}
 	
 	public int getMouseX() {
@@ -132,10 +137,22 @@ public abstract class Screen extends Gui {
 		return screenYPos;
 	}
 	
-	public ScreenImage getBackgroundImage() {
-		return new ScreenImage("minewatch:textures/gui/watch/default.png", getXPos() + 3, getYPos() + 3, WATCH_SCREEN_X_SIZE, WATCH_SCREEN_Y_SIZE);
+	public int getCenteredXForComponent(ScreenComponent comp) {
+		return (screenXPos + (WATCH_SCREEN_X_SIZE / 2) - (comp.getWidth() / 2));
 	}
 	
+	public int getCenteredYForComponent(ScreenComponent comp) {
+		return (screenYPos + (WATCH_SCREEN_Y_SIZE / 2) - (comp.getHeight() / 2));
+	}
+	
+	public Screen setBackgroundImage(ScreenImage newImage) {
+		newImage.setPosition(getXPos(), getYPos());
+		backgroundImage = newImage;
+		return this;
+	}
+	
+	public abstract ScreenImage getBackgroundImage();
+
 	public TextureManager getTextureManager() {
 		return Minecraft.getMinecraft().getTextureManager();
 	}

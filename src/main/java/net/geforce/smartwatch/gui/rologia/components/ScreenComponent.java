@@ -1,5 +1,7 @@
 package net.geforce.smartwatch.gui.rologia.components;
 
+import org.lwjgl.opengl.GL11;
+
 import net.geforce.smartwatch.gui.rologia.screens.Screen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -8,8 +10,8 @@ import net.minecraft.client.renderer.texture.TextureManager;
 
 public abstract class ScreenComponent extends Gui {
 	
-	protected int xPos;
-	protected int yPos;
+	protected int xPos = Screen.WATCH_BACKGROUND_X_SIZE;
+	protected int yPos = Screen.WATCH_BACKGROUND_Y_SIZE;
 	protected int defaultXPos;
 	protected int defaultYPos;
 	
@@ -22,7 +24,7 @@ public abstract class ScreenComponent extends Gui {
 		setPosition(x, y);
 		defaultXPos = x;
 		defaultYPos = y;
-		
+
 		rotation = 0F;
 		scale = 1F;
 	}
@@ -31,6 +33,23 @@ public abstract class ScreenComponent extends Gui {
 	
 	public abstract void mouseClick(int mouseX, int mouseY, int mouseButtonClicked);
 	
+	public void performPrerenderGLFixes() {		
+		GL11.glTranslatef(getXPos(), getYPos(), 0);
+		GL11.glRotatef(getRotation(), 0, 0, 1);
+		GL11.glTranslatef(-getXPos(), -getYPos(), 0);
+
+		GL11.glScalef(getScale(), getScale(), 1F);
+
+		if(getScale() != 1.0F)
+		{
+			int translatedX, translatedY;
+			translatedX = (int) (getDefaultXPos() / getScale());
+			translatedY = (int) (getDefaultYPos() / getScale());
+			if(getXPos() != translatedX && getYPos() != translatedY)
+				setPosition(translatedX, translatedY);
+		}
+	}
+
 	public void setPosition(int x, int y) {
 		xPos = x;
 		yPos = y;
@@ -41,6 +60,18 @@ public abstract class ScreenComponent extends Gui {
 		yPos = defaultYPos;
 	}
 	
+	public void setDefaultPosition(int x, int y) {
+		defaultXPos = x;
+		defaultYPos = y;
+	}
+
+	public void setPositionAndOrigin(int x, int y) {
+		xPos = x;
+		yPos = y;
+		defaultXPos = x;
+		defaultYPos = y;
+	}
+
 	public void setRotation(float newRotation) {
 		rotation = newRotation;
 	}

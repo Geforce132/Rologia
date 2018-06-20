@@ -13,6 +13,28 @@ public class ScreenImage extends ScreenComponent {
 	private int imageHeight;
 	private boolean isDynamicImage;
 	
+	public ScreenImage(String imagePath, int width, int height) {
+		super(-1, -1);
+		location = new ResourceLocation(imagePath);
+		imageWidth = width;
+		imageHeight = height;
+		isDynamicImage = false;
+	}
+
+	public ScreenImage(ResourceLocation imageLocation, int width, int height) {
+		super(-1, -1);
+		location = imageLocation;
+		imageWidth = width;
+		imageHeight = height;
+	}
+
+	public ScreenImage(BufferedImage image) {
+		super(-1, -1);
+		location = Minecraft.getMinecraft().getTextureManager().getDynamicTextureLocation(image.toString(), new DynamicTexture(image));
+		imageWidth = image.getWidth();
+		imageHeight = image.getHeight();
+	}
+
 	public ScreenImage(BufferedImage image, int x, int y) {
 		super(x, y);
 		location = Minecraft.getMinecraft().getTextureManager().getDynamicTextureLocation(image.toString(), new DynamicTexture(image));
@@ -52,12 +74,12 @@ public class ScreenImage extends ScreenComponent {
 	
 	@Override
 	public int getWidth() {
-		return imageWidth;
+		return (int) (imageWidth * scale);
 	}
 	
 	@Override
 	public int getHeight() {
-		return imageHeight;
+		return (int) (imageHeight * scale);
 	}
 
 	public ResourceLocation getResourceLocation() {

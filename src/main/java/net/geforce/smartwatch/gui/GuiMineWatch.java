@@ -37,8 +37,8 @@ public class GuiMineWatch extends GuiScreen {
 		super.drawScreen(mouseX, mouseY, partialTicks);
 		
 		mc.getTextureManager().bindTexture(SCREEN_EDGE_TEXTURE);
-		int startX = (width - Screen.WATCH_SCREEN_X_SIZE) / 2;
-		int startY = (height - Screen.WATCH_SCREEN_Y_SIZE) / 2;
+		int startX = (width / 2) - (Screen.WATCH_BACKGROUND_X_SIZE / 2);
+		int startY = (height / 2) - (Screen.WATCH_BACKGROUND_Y_SIZE / 2);
 		drawTexturedModalRect(startX, startY, 0, 0, Screen.WATCH_BACKGROUND_X_SIZE, Screen.WATCH_BACKGROUND_Y_SIZE);
 		
 		rologia.renderScreen(mouseX, mouseY);
@@ -47,7 +47,6 @@ public class GuiMineWatch extends GuiScreen {
 	@Override
 	public void mouseClicked(int mouseX, int mouseY, int buttonClicked) {
 		Screen screen = rologia.getCurrentScreen();
-		//screen.handleMouseClick((mouseX - screen.getXPos()) - 3, (mouseY - screen.getYPos()) - 3, buttonClicked);
 		screen.handleMouseClick(mouseX, mouseY, buttonClicked);
 	}
 

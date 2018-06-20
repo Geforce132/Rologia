@@ -9,14 +9,14 @@ public class Rologia {
 	
 	public static final String VERSION = "0.0.1";
 	
-	private Screen currentScreen = new BootScreen();
+	private Screen currentScreen;
 
 	private EntityPlayer user;
 	
 	public void openSmartwatchGUI(EntityPlayer player, int screenXPos, int screenYPos) {
 		user = player;
-		getCurrentScreen().setScreenPosition(screenXPos, screenYPos);
-		getCurrentScreen().initializeScreen();
+		setScreen(new BootScreen(screenXPos, screenYPos));
+		currentScreen.initializeScreen();
 	}
 
 	public void renderScreen(int mouseX, int mouseY) {
@@ -36,6 +36,10 @@ public class Rologia {
 	
 	public EntityPlayer getUser() {
 		return user;
+	}
+	
+	public void setScreen(Screen newScreen) {
+		currentScreen = newScreen;
 	}
 	
 	public Screen getCurrentScreen() {
