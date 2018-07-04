@@ -1,5 +1,7 @@
 package net.geforce.smartwatch.gui.rologia.components;
 
+import java.util.ArrayList;
+
 import org.lwjgl.opengl.GL11;
 
 import net.geforce.smartwatch.gui.rologia.screens.Screen;
@@ -18,8 +20,12 @@ public abstract class ScreenComponent extends Gui {
 	protected float rotation;
 	protected float scale;
 	
+	protected int colorValue;
+	
 	private Screen screen;
 	
+	private ArrayList<ScreenComponent> subComponents = new ArrayList<ScreenComponent>();
+
 	protected ScreenComponent(int x, int y) {
 		setPosition(x, y);
 		defaultXPos = x;
@@ -31,6 +37,13 @@ public abstract class ScreenComponent extends Gui {
 	
 	public abstract void drawComponent();
 	
+	public void drawSubComponents() {
+		for(ScreenComponent comp : subComponents) {
+			comp.performPrerenderGLFixes();
+			comp.drawComponent();
+		}
+	}
+
 	public abstract void mouseClick(int mouseX, int mouseY, int mouseButtonClicked);
 	
 	public void performPrerenderGLFixes() {		
@@ -50,6 +63,14 @@ public abstract class ScreenComponent extends Gui {
 		}
 	}
 
+	public void addSubComponent(ScreenComponent comp) {
+		if(!subComponents.contains(comp))
+		{
+			comp.setScreen(getScreen());
+			subComponents.add(comp);
+		}
+	}
+
 	public void setPosition(int x, int y) {
 		xPos = x;
 		yPos = y;
@@ -64,12 +85,23 @@ public abstract class ScreenComponent extends Gui {
 		defaultXPos = x;
 		defaultYPos = y;
 	}
-
+	
 	public void setPositionAndOrigin(int x, int y) {
 		xPos = x;
 		yPos = y;
 		defaultXPos = x;
 		defaultYPos = y;
+	}
+
+	public void centerPosition() {
+		centerPosition(0, 0);
+	}
+
+	public void centerPosition(int xOffset, int yOffset) {
+		int centeredX = screen.getCenteredXForComponent(this) + xOffset;
+		int centeredY = screen.getCenteredYForComponent(this) + yOffset;
+
+		setPositionAndOrigin(centeredX, centeredY);
 	}
 
 	public void setRotation(float newRotation) {
@@ -80,6 +112,10 @@ public abstract class ScreenComponent extends Gui {
 		scale = newScale;
 	}
 	
+	public void setColor(int color) {
+		colorValue = color;
+	}
+
 	public void setScreen(Screen newScreen) {
 		screen = newScreen;
 	}
@@ -112,10 +148,18 @@ public abstract class ScreenComponent extends Gui {
 		return scale;
 	}
 	
+	public int getColor() {
+		return colorValue;
+	}
+
 	public Screen getScreen() {
 		return screen;
 	}
 	
+	public ArrayList<ScreenComponent> getSubComponents() {
+		return subComponents;
+	}
+
 	public TextureManager getTextureManager() {
 		return Minecraft.getMinecraft().getTextureManager();
 	}

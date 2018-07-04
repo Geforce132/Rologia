@@ -1,7 +1,7 @@
 package net.geforce.smartwatch.gui.rologia.screens;
 
 import net.geforce.smartwatch.gui.rologia.components.ScreenComponent;
-import net.geforce.smartwatch.gui.rologia.components.ScreenImage;
+import net.geforce.smartwatch.gui.rologia.components.images.ScreenImage;
 
 public class HomeScreen extends Screen {
 

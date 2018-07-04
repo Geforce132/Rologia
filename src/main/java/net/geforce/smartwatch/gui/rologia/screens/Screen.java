@@ -5,8 +5,11 @@ import java.util.ArrayList;
 import org.lwjgl.opengl.GL11;
 
 import net.geforce.smartwatch.gui.rologia.components.ScreenComponent;
-import net.geforce.smartwatch.gui.rologia.components.ScreenImage;
-import net.geforce.smartwatch.gui.rologia.components.ScreenText;
+import net.geforce.smartwatch.gui.rologia.components.ScreenStatusBar;
+import net.geforce.smartwatch.gui.rologia.components.images.ScreenImage;
+import net.geforce.smartwatch.gui.rologia.components.text.ScreenText;
+import net.geforce.smartwatch.gui.rologia.components.text.ScreenTimeText;
+import net.geforce.smartwatch.gui.rologia.rendering.Colors;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
@@ -28,13 +31,20 @@ public abstract class Screen extends Gui {
 	protected ArrayList<ScreenImage> images = new ArrayList<ScreenImage>();
 	protected ArrayList<ScreenComponent> components = new ArrayList<ScreenComponent>();
 	
+	private ScreenStatusBar statusBar;
 	private ScreenImage backgroundImage;
 	
 	public Screen(int x, int y) {
 		screenXPos = x;
 		screenYPos = y;
 		backgroundImage = getBackgroundImage();
+		backgroundImage.setScreen(this);
 		backgroundImage.setPosition(x, y);
+		statusBar = new ScreenStatusBar(x, y, Colors.RED);
+		statusBar.setScreen(this);
+		ScreenTimeText timeText = new ScreenTimeText(x + 55, y + 1, 9999999);
+		timeText.setScale(0.75F);
+		statusBar.addSubComponent(timeText);
 	}
 
 	public abstract void initializeScreen();
@@ -58,6 +68,13 @@ public abstract class Screen extends Gui {
 		}
 	}
 	
+	public void editComponents() {
+		for(ScreenComponent component : components)
+		{
+			editComponent(component);
+		}
+	}
+
 	public void drawComponents() {
 		for(ScreenComponent component : components)
 		{
@@ -65,12 +82,24 @@ public abstract class Screen extends Gui {
 			component.performPrerenderGLFixes();
 			component.drawComponent();
 			GL11.glPopMatrix();
+
+			component.drawSubComponents();
 		}
+	}
+
+	public void drawStatusBar() {
+		GL11.glPushMatrix();
+		statusBar.drawComponent();
+		GL11.glPopMatrix();
+
+		statusBar.drawSubComponents();
 	}
 	
 	public void editImages() {}
 	
-	public void editComponents() {}
+	public void editComponent(ScreenComponent comp) {}
+	
+	public void editStatusBar() {}
 	
 	public void onScreenOpened() {}
 	
@@ -118,6 +147,7 @@ public abstract class Screen extends Gui {
 
 		backgroundImage.setPosition(x + 3, y + 3);
 		backgroundImage.setDefaultPosition(x + 3, y + 3);
+
 		return this;
 	}
 	
@@ -144,7 +174,7 @@ public abstract class Screen extends Gui {
 	public int getCenteredYForComponent(ScreenComponent comp) {
 		return (screenYPos + (WATCH_SCREEN_Y_SIZE / 2) - (comp.getHeight() / 2));
 	}
-	
+
 	public Screen setBackgroundImage(ScreenImage newImage) {
 		newImage.setPosition(getXPos(), getYPos());
 		backgroundImage = newImage;
@@ -152,6 +182,10 @@ public abstract class Screen extends Gui {
 	}
 	
 	public abstract ScreenImage getBackgroundImage();
+
+	public ScreenStatusBar getStatusBar() {
+		return statusBar;
+	}
 
 	public TextureManager getTextureManager() {
 		return Minecraft.getMinecraft().getTextureManager();

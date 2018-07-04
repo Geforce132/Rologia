@@ -22,12 +22,17 @@ public class Rologia {
 	public void renderScreen(int mouseX, int mouseY) {
 		if(currentScreen.getMouseX() != mouseX || currentScreen.getMouseY() != mouseY)
 			currentScreen.setMousePos(mouseX, mouseY);
-			
+		
 		currentScreen.editImages();
 		currentScreen.drawImages();
 		
 		currentScreen.editComponents();
 		currentScreen.drawComponents();
+
+		// Drawn last because this should always be drawn over everything
+		// else on the screen.
+		currentScreen.editStatusBar();
+		currentScreen.drawStatusBar();
 	}
 	
 	public static Rologia getInstanceFromWatch(ItemMineWatch watch) {

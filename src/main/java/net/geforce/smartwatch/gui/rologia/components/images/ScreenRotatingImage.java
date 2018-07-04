@@ -1,4 +1,4 @@
-package net.geforce.smartwatch.gui.rologia.components;
+package net.geforce.smartwatch.gui.rologia.components.images;
 
 import java.awt.image.BufferedImage;
 

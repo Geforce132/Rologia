@@ -1,7 +1,8 @@
-package net.geforce.smartwatch.gui.rologia.components;
+package net.geforce.smartwatch.gui.rologia.components.images;
 
 import java.awt.image.BufferedImage;
 
+import net.geforce.smartwatch.gui.rologia.components.ScreenComponent;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.util.ResourceLocation;
@@ -20,21 +21,21 @@ public class ScreenImage extends ScreenComponent {
 		imageHeight = height;
 		isDynamicImage = false;
 	}
-
+	
 	public ScreenImage(ResourceLocation imageLocation, int width, int height) {
 		super(-1, -1);
 		location = imageLocation;
 		imageWidth = width;
 		imageHeight = height;
 	}
-
+	
 	public ScreenImage(BufferedImage image) {
 		super(-1, -1);
 		location = Minecraft.getMinecraft().getTextureManager().getDynamicTextureLocation(image.toString(), new DynamicTexture(image));
 		imageWidth = image.getWidth();
 		imageHeight = image.getHeight();
 	}
-
+	
 	public ScreenImage(BufferedImage image, int x, int y) {
 		super(x, y);
 		location = Minecraft.getMinecraft().getTextureManager().getDynamicTextureLocation(image.toString(), new DynamicTexture(image));
