@@ -3,16 +3,15 @@ package net.geforce.smartwatch.utils;
 import java.util.Iterator;
 import java.util.List;
 
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.relauncher.Side;
 import net.minecraft.client.Minecraft;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.util.ChatComponentText;
-import net.minecraft.util.EnumChatFormatting;
+import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.relauncher.Side;
 
 public class PlayerUtils{
 
@@ -21,7 +20,7 @@ public class PlayerUtils{
 	 *
 	 * Args: player, x, y, z, yaw, pitch.
 	 */
-	public static void setPlayerPosition(EntityPlayer player, double x, double y, double z, float yaw, float pitch){
+	public static void setPlayerPosition(EntityPlayer player, double x, double y, double z, float yaw, float pitch) {
 		player.setPositionAndRotation(x, y, z, yaw, pitch);
 		player.setPositionAndUpdate(x, y, z);
 	}
@@ -34,14 +33,14 @@ public class PlayerUtils{
 	public static EntityPlayer getPlayerFromName(String par1) {
 		if(FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT)
 		{
-			List<?> players = Minecraft.getMinecraft().theWorld.playerEntities;
+			List<?> players = Minecraft.getMinecraft().world.playerEntities;
 			Iterator<?> iterator = players.iterator();
 
 			while(iterator.hasNext())
 			{
 				EntityPlayer tempPlayer = (EntityPlayer) iterator.next();
 				
-				if(tempPlayer.getCommandSenderName().matches(par1))
+				if(tempPlayer.getName().matches(par1))
 					return tempPlayer;
 			}
 
@@ -49,14 +48,14 @@ public class PlayerUtils{
 		}
 		else
 		{
-			List<?> players = MinecraftServer.getServer().getConfigurationManager().playerEntityList;
+			List<?> players = FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().getPlayers();
 			Iterator<?> iterator = players.iterator();
 
 			while(iterator.hasNext())
 			{
 				EntityPlayer tempPlayer = (EntityPlayer) iterator.next();
-				
-				if(tempPlayer.getCommandSenderName().matches(par1))
+
+				if(tempPlayer.getName().matches(par1))
 					return tempPlayer;
 			}
 
@@ -69,40 +68,30 @@ public class PlayerUtils{
 	 *
 	 * Args: playerName.
 	 */
-	public static boolean isPlayerOnline(String name) {
-		if(FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT) 
-		{
-			for(int i = 0; i < Minecraft.getMinecraft().theWorld.playerEntities.size(); i++) 
-			{
-				EntityPlayer player = (EntityPlayer) Minecraft.getMinecraft().theWorld.playerEntities.get(i);
+	public static boolean isPlayerOnline(String par1) {
 
-				if(player != null && player.getCommandSenderName().matches(name))
+		if(FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT)
+		{
+			for(int i = 0; i < Minecraft.getMinecraft().world.playerEntities.size(); i++)
+			{
+				EntityPlayer player = Minecraft.getMinecraft().world.playerEntities.get(i);
+
+				if(player != null && player.getName().matches(par1))
 					return true;
 			}
 
 			return false;
 		}
-		
 		else
-			return (MinecraftServer.getServer().getConfigurationManager().getPlayerByUsername(name) != null);
+			return (FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().getPlayerByUsername(par1) != null);
 	}
 
-	/**
-	 * Sends the given player a chat message. <p>
-	 *
-	 * Args: player, prefix, text, color.
-	 */
-	public static void sendMessageToPlayer(EntityPlayer player, String prefix, String text, EnumChatFormatting color){
-		player.addChatComponentMessage(new ChatComponentText("[" + color + prefix + EnumChatFormatting.WHITE + "] " + text));
+	public static void sendMessageToPlayer(EntityPlayer player, String prefix, String text, TextFormatting color) {
+		player.sendMessage(new TextComponentString("[" + color + prefix + TextFormatting.WHITE + "] " + text));
 	}
 
-	/**
-	 * Sends the given {@link ICommandSender} a chat message. <p>
-	 *
-	 * Args: sender, prefix, text, color.
-	 */
-	public static void sendMessageToPlayer(ICommandSender sender, String prefix, String text, EnumChatFormatting color){
-		sender.addChatMessage(new ChatComponentText("[" + color + prefix + EnumChatFormatting.WHITE + "] " + text));
+	public static void sendMessageToPlayer(ICommandSender sender, String prefix, String text, TextFormatting color) {
+		sender.sendMessage(new TextComponentString("[" + color + prefix + TextFormatting.WHITE + "] " + text));
 	}
 
 	/**
@@ -110,8 +99,8 @@ public class PlayerUtils{
 	 *
 	 * Args: sender, prefix, text, link, color.
 	 */
-	public static void sendMessageEndingWithLink(ICommandSender sender, String prefix, String text, String link, EnumChatFormatting color){
-		sender.addChatMessage(new ChatComponentText("[" + color + prefix + EnumChatFormatting.WHITE + "] " + text + ": ").appendSibling(ForgeHooks.newChatWithLinks(link)));
+	public static void sendMessageEndingWithLink(ICommandSender sender, String prefix, String text, String link, TextFormatting color) {
+		sender.sendMessage(new TextComponentString("[" + color + prefix + TextFormatting.WHITE + "] " + text + ": ").appendSibling(ForgeHooks.newChatWithLinks(link)));
 	}
 
 	/**
@@ -119,11 +108,11 @@ public class PlayerUtils{
 	 *
 	 * Args: player, item.
 	 */
-	public static boolean isHoldingItem(EntityPlayer player, Item item){
-		if(item == null && player.getCurrentEquippedItem() == null)
+	public static boolean isHoldingItem(EntityPlayer player, Item item) {
+		if(item == null && player.inventory.getCurrentItem().isEmpty())
 			return true;
 
-		return (player.getCurrentEquippedItem() != null && player.getCurrentEquippedItem().getItem() == item);
+		return (!player.inventory.getCurrentItem().isEmpty() && player.inventory.getCurrentItem().getItem() == item);
 	}
 	
 }

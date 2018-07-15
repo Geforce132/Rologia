@@ -1,12 +1,12 @@
 package net.geforce.smartwatch.gui;
 
-import cpw.mods.fml.common.network.IGuiHandler;
 import net.geforce.smartwatch.MineWatch;
 import net.geforce.smartwatch.containers.ContainerEmpty;
 import net.geforce.smartwatch.item.ItemMineWatch;
 import net.geforce.smartwatch.utils.PlayerUtils;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.network.IGuiHandler;
 
 public class GuiHandler implements IGuiHandler {
 	
@@ -30,7 +30,7 @@ public class GuiHandler implements IGuiHandler {
 		case BOOT_SCREEN_ID:
 			if(!PlayerUtils.isHoldingItem(player, MineWatch.mineWatch)) return null;
 			
-			return new GuiMineWatch(player, (ItemMineWatch) player.getCurrentEquippedItem().getItem());
+			return new GuiMineWatch(player, (ItemMineWatch) player.inventory.getCurrentItem().getItem());
 		}
 		
 		return null;

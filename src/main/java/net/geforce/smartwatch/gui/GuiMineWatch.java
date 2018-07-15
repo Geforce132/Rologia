@@ -1,13 +1,13 @@
 package net.geforce.smartwatch.gui;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import net.geforce.smartwatch.gui.rologia.Rologia;
-import net.geforce.smartwatch.gui.rologia.screens.Screen;
 import net.geforce.smartwatch.item.ItemMineWatch;
+import net.geforce.smartwatch.rologia.gui.screens.Screen;
+import net.geforce.smartwatch.rologia.os.Rologia;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class GuiMineWatch extends GuiScreen {
@@ -22,25 +22,28 @@ public class GuiMineWatch extends GuiScreen {
 	public GuiMineWatch(EntityPlayer playerWhoOpenedGUI, ItemMineWatch watch) {
 		player = playerWhoOpenedGUI;
 		mineWatch = watch;
-		rologia = Rologia.getInstanceFromWatch(mineWatch);
+		rologia = Rologia.getInstanceForPlayer(playerWhoOpenedGUI);
 	}
 	
 	@Override
 	public void initGui() {
 		super.initGui();
-		
+		System.out.println("initing");
 		rologia.openSmartwatchGUI(player, (width - Screen.WATCH_SCREEN_X_SIZE) / 2, (height - Screen.WATCH_SCREEN_Y_SIZE) / 2);
+	}
+	
+	@Override
+	public void updateScreen() {
+		rologia.update();
 	}
 	
 	@Override
 	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
 		super.drawScreen(mouseX, mouseY, partialTicks);
-		
 		mc.getTextureManager().bindTexture(SCREEN_EDGE_TEXTURE);
 		int startX = (width / 2) - (Screen.WATCH_BACKGROUND_X_SIZE / 2);
 		int startY = (height / 2) - (Screen.WATCH_BACKGROUND_Y_SIZE / 2);
 		drawTexturedModalRect(startX, startY, 0, 0, Screen.WATCH_BACKGROUND_X_SIZE, Screen.WATCH_BACKGROUND_Y_SIZE);
-		
 		rologia.renderScreen(mouseX, mouseY);
 	}
 	
