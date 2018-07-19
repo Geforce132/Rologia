@@ -1,5 +1,7 @@
 package net.geforce.smartwatch.rologia.gui.screens;
 
+import com.sun.javafx.scene.traversal.Direction;
+
 import net.geforce.smartwatch.rologia.gui.components.ScreenComponent;
 import net.geforce.smartwatch.rologia.gui.components.images.ScreenImage;
 import net.geforce.smartwatch.rologia.gui.components.images.ScreenRotatingImage;
@@ -13,8 +15,8 @@ public class BootScreen extends Screen {
 
 	private ScreenShapeRectangle rectangle = new ScreenShapeRectangle(this, 100, 100, Colors.BLUE);
 	private ScreenRotatingImage loadingCircle = new ScreenRotatingImage(this, Images.LOADING_CIRCLE, 256, 256, 0.5F);
-	private ScreenShapeArrowSimple arrow = new ScreenShapeArrowSimple(this, 14, 8, 3);
-	private ScreenShapeArrowSimple arrow2 = new ScreenShapeArrowSimple(this, -14, -8, -3);
+	private ScreenShapeArrowSimple arrow = new ScreenShapeArrowSimple(this, 14, 8, 3, Direction.RIGHT);
+	private ScreenShapeArrowSimple arrow2 = new ScreenShapeArrowSimple(this, 12, 8, 3, Direction.LEFT);
 
 	public BootScreen(Rologia OS, int screenX, int screenY) {
 		super(OS, screenX, screenY);

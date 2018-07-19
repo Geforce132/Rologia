@@ -1,0 +1,12 @@
+*.class
+*.iml
+*.ipr
+*.iws
+*.classpath
+*.project
+*.prefs
+*.launch
+/output
+
+#ForgeGradle
+gradle.properties

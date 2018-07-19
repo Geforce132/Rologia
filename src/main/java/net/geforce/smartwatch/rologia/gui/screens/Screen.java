@@ -117,6 +117,28 @@ public abstract class Screen extends Gui {
 		this.drawString(getFontRenderer(), "Mouse pos: (" + mouseX + ", " + mouseY + ")", mouseX + 10, mouseY + 5, 555555);
 		
 		for(ScreenComponent comp : components) {
+			GL11.glEnable(GL11.GL_BLEND);
+	        GL11.glDisable(GL11.GL_TEXTURE_2D);
+
+			GL11.glBegin(GL11.GL_LINES);
+			GL11.glColor3f(0, 0, 255);
+			GL11.glVertex2f(comp.getXPos(), comp.getYPos());
+			GL11.glVertex2f(comp.getXPos() + comp.getWidth(), comp.getYPos());
+
+			GL11.glVertex2f(comp.getXPos() + comp.getWidth(), comp.getYPos());
+			GL11.glVertex2f(comp.getXPos() + comp.getWidth(), comp.getYPos() + comp.getHeight());
+
+			GL11.glVertex2f(comp.getXPos() + comp.getWidth(), comp.getYPos() + comp.getHeight());
+			GL11.glVertex2f(comp.getXPos(), comp.getYPos() + comp.getHeight());
+
+			GL11.glVertex2f(comp.getXPos(), comp.getYPos());
+			GL11.glVertex2f(comp.getXPos(), comp.getYPos() + comp.getHeight());
+
+			GL11.glEnd();
+
+	        GL11.glEnable(GL11.GL_TEXTURE_2D);
+	        GL11.glDisable(GL11.GL_BLEND);
+
 			if(comp.isMouseHoveringOver(mouseX, mouseY)) {
 				this.drawString(getFontRenderer(), comp == statusBar ? ("--- Status bar: ---") : ("--- Component: ---"), mouseX + 10, mouseY + 25, 555555);
 				this.drawString(getFontRenderer(), "X, Y pos: (" + comp.getXPos() + ", " + comp.getYPos() + ")" + " -> " + " w, h: (" + (comp.getXPos() + comp.getWidth()) + ", " + (comp.getYPos() + comp.getHeight()) + ")", mouseX + 10, mouseY + 35, 555555);
