@@ -36,17 +36,14 @@ public class BootScreen extends Screen {
 	
 	@Override
 	public void updateScreen() {
-		
+
 	}
 
 	@Override
 	public void editComponent(ScreenComponent comp) {}
 
 	@Override
-	public void onComponentClicked(ScreenComponent component, int mouseX, int mouseY) {
-		if(component == rectangle)
-			getOS().setScreen(new HomeScreen(getOS(), getXPos(), getYPos()));
-	}
+	public void onComponentClicked(ScreenComponent component, int mouseX, int mouseY) {}
 
 	@Override
 	public ScreenImage getBackgroundImage() {

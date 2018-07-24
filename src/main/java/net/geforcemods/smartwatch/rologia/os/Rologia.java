@@ -22,6 +22,7 @@ public class Rologia {
 	private boolean hasInitialized = false;
 	
 	private Screen currentScreen;
+	private App currentApp;
 	private LocalDateTime time = LocalDateTime.now();
 	private ArrayList<Task> tasks = new ArrayList<Task>();
 	private ArrayList<App> apps = new ArrayList<App>();
@@ -47,6 +48,7 @@ public class Rologia {
 	
 	public void update() {
 		currentScreen.updateScreen();
+		currentApp.updateApp();
 
 		for(Task task : tasks) {
 			task.decreaseSleepCounter();
@@ -63,6 +65,8 @@ public class Rologia {
 		currentScreen.editComponents();
 		currentScreen.drawComponents();
 
+		currentApp.drawApp(currentScreen);
+
 		// Edited last because this should always be drawn over everything
 		// else on the screen.
 		currentScreen.editStatusBar();
@@ -72,18 +76,25 @@ public class Rologia {
 	}
 	
 	private void loadApps() {
-		AppStepCounter app = new AppStepCounter();
+		AppStepCounter app = new AppStepCounter(this);
 		
 		if(!apps.contains(app)) {
-			apps.add(new AppStepCounter());
-			ResourceLoader.loadAppJson(this, app);
+			apps.add(app);
+			ResourceLoader.loadApps(this);
 		}
+
+		//TODO Remove later on!
+		setApp("step_counter");
 	}
 	
 	public void setScreen(Screen newScreen) {
 		currentScreen = newScreen;
 	}
 	
+	public void setApp(String appID) {
+		currentApp = getApp(appID);
+	}
+
 	public void setTime(LocalDateTime newTime) {
 		time = newTime;
 	}
@@ -122,6 +133,20 @@ public class Rologia {
 		return apps;
 	}
 	
+	public App getApp(String appID) {
+		for(App app : apps)
+		{
+			if(app.getAppID().matches(appID))
+				return app;
+		}
+
+		return null;
+	}
+
+	public App getCurrentApp() {
+		return currentApp;
+	}
+
 	public EntityPlayer getUser() {
 		return user;
 	}

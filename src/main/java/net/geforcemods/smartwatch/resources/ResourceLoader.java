@@ -12,25 +12,37 @@ import net.geforcemods.smartwatch.MineWatch;
 import net.geforcemods.smartwatch.rologia.os.Rologia;
 import net.geforcemods.smartwatch.rologia.os.apps.App;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.IResource;
 import net.minecraft.util.ResourceLocation;
 
 public class ResourceLoader {
 	
-	public static void loadAppJson(Rologia os, App app) {
+	public static void loadApps(Rologia os) {
 		Gson gson = new Gson();
-		ResourceLocation loc = new ResourceLocation(MineWatch.MOD_ID + ":apps/" + app.getAppID() + "/info.json");
-		
+
 		try {
-			InputStream in = Minecraft.getMinecraft().getResourceManager().getResource(loc).getInputStream();
-			BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-			JsonElement je = gson.fromJson(reader, JsonElement.class);
-			JsonObject json = je.getAsJsonObject();
-			
-			app.loadInfoFromJson(json);
+			for(App app : os.getApps()) {
+				IResource appJson = Minecraft.getMinecraft().getResourceManager().getResource(new ResourceLocation(MineWatch.MOD_ID + ":apps/" + app.getAppID() + ".json"));
+				InputStream in = appJson.getInputStream();
+				BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+				JsonElement je = gson.fromJson(reader, JsonElement.class);
+				JsonObject json = je.getAsJsonObject();
+
+				String appName = getAppNameFromJson(appJson);
+				System.out.println(appName);
+				os.getApp(appName).setBaseAppInformation(json);
+				os.getApp(appName).loadInfoFromJson(json);
+			}
 		}
 		catch(Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	private static String getAppNameFromJson(IResource rl) {
+		String location = rl.getResourceLocation().toString();
+
+		return location.replace(MineWatch.MOD_ID + ":apps/", "").replace(".json", "");
 	}
 
 }

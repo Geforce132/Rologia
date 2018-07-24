@@ -10,24 +10,25 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
 
 public class AppStepCounter extends App {
 	
-	public void drawApp(Rologia os, Screen currentScreen) {
-		currentScreen.getFontRenderer().drawString(os.getUserStats().getStepCount() + "", 10, 10, 55555);
+	public AppStepCounter(Rologia rologia) {
+		super(rologia);
 	}
-	
-	@Override
-	public void updateApp(Rologia os) {
 
+	public void drawApp(Screen currentScreen) {
+		currentScreen.getFontRenderer().drawString("Step count: " + os.getUserStats().getStepCount(), 180, 80, 55555);
 	}
 	
 	@Override
-	public void onEventPosted(Rologia os, AppEvent event) {
+	public void updateApp() {
+	}
+	
+	@Override
+	public void onEventPosted(AppEvent event) {
 		System.out.println(os.getUserStats().getStepCount() + " | " + FMLCommonHandler.instance().getSide());
 	}
 	
 	@Override
-	public void loadInfoFromJson(JsonObject json) {
-		System.out.println(json.get("app_name").getAsString());
-	}
+	public void loadInfoFromJson(JsonObject json) {}
 	
 	@Override
 	public AppEventType[] subscribeToEvents() {
@@ -37,11 +38,6 @@ public class AppStepCounter extends App {
 	@Override
 	public AppType getAppType() {
 		return AppType.PREINSTALLED;
-	}
-
-	@Override
-	public AppImage getAppImage() {
-		return null;
 	}
 
 	@Override

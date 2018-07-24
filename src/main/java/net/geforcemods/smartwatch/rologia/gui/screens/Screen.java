@@ -58,10 +58,20 @@ public abstract class Screen extends Gui {
 	public void editImages() {}
 
 	public void drawImages() {
+
 		GL11.glPushMatrix();
 		
-		backgroundImage.performPrerenderGLFixes();
-		backgroundImage.drawComponent();
+		//TODO Uncomment two lines below if the screen needs to be drawn in the future.
+		if(OS.getCurrentApp().getAppBackgroundImage() == null)
+		{
+			//backgroundImage.performPrerenderGLFixes();
+			//backgroundImage.drawComponent();
+		}
+		else
+		{
+			OS.getCurrentApp().getAppBackgroundImage().performPrerenderGLFixes();
+			OS.getCurrentApp().getAppBackgroundImage().drawComponent();
+		}
 		
 		GL11.glPopMatrix();
 		

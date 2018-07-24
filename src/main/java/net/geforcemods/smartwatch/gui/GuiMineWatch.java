@@ -29,7 +29,6 @@ public class GuiMineWatch extends GuiScreen {
 	@Override
 	public void initGui() {
 		super.initGui();
-		System.out.println("initing");
 		rologia.openSmartwatchGUI(player, (width - Screen.WATCH_SCREEN_X_SIZE) / 2, (height - Screen.WATCH_SCREEN_Y_SIZE) / 2);
 	}
 	

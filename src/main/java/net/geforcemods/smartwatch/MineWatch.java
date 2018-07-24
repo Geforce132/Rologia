@@ -69,9 +69,7 @@ public class MineWatch {
 		for(Rologia os : rologiaInstances.values()) {
 			for(App app : os.getApps())
 			{
-				System.out.println(os.getApps().size());
-				System.out.println("posting " + os);
-				app.onEventPosted(event.getOS(), event);
+				app.onEventPosted(event);
 			}
 		}
 	}

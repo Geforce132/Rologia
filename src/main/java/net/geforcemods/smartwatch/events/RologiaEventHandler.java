@@ -16,12 +16,10 @@ public class RologiaEventHandler {
 		if(event.getEntity() == null) return;
 
 		EntityPlayer player = Minecraft.getMinecraft().player;
-		System.out.println(event.getSound().getSoundName());
 		if(event.getEntity() == player && event.getSound().getSoundName().getResourcePath().endsWith(".step")) {
 			Rologia os = Rologia.getInstanceForPlayer(player);
 			UserStats stats = os.getUserStats();
 			
-			System.out.println("running");
 			MineWatch.instance.postRologiaEvent(new AppEventPlayerStep(Minecraft.getMinecraft().player, stats.getStepCount(), stats.increaseStepCount(1)));
 		}
 	}
