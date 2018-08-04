@@ -4,40 +4,40 @@ import java.awt.image.BufferedImage;
 
 import org.lwjgl.opengl.GL11;
 
-import net.geforcemods.smartwatch.rologia.gui.screens.Screen;
+import net.geforcemods.smartwatch.rologia.os.Rologia;
 import net.minecraft.util.ResourceLocation;
 
 public class ScreenRotatingImage extends ScreenImage {
 	
 	private float rotation = 0F;
 
-	public ScreenRotatingImage(Screen screen, BufferedImage image, float rotationValue) {
-		super(screen, image);
+	public ScreenRotatingImage(Rologia os, BufferedImage image, float rotationValue) {
+		super(os, image);
 		setRotation(rotationValue);
 	}
 	
-	public ScreenRotatingImage(Screen screen, ResourceLocation imageLocation, int width, int height, float rotationValue) {
-		super(screen, imageLocation, width, height);
+	public ScreenRotatingImage(Rologia os, ResourceLocation imageLocation, int width, int height, float rotationValue) {
+		super(os, imageLocation, width, height);
 		setRotation(rotationValue);
 	}
 	
-	public ScreenRotatingImage(Screen screen, String imagePath, int width, int height, float rotationValue) {
-		super(screen, imagePath, width, height);
+	public ScreenRotatingImage(Rologia os, String imagePath, int width, int height, float rotationValue) {
+		super(os, imagePath, width, height);
 		setRotation(rotationValue);
 	}
 
-	public ScreenRotatingImage(Screen screen, BufferedImage image, int x, int y, float rotationValue) {
-		super(screen, image, x, y);
+	public ScreenRotatingImage(Rologia os, BufferedImage image, int x, int y, float rotationValue) {
+		super(os, image, x, y);
 		setRotation(rotationValue);
 	}
 	
-	public ScreenRotatingImage(Screen screen, ResourceLocation imageLocation, int x, int y, int width, int height, float rotationValue) {
-		super(screen, imageLocation, x, y, width, height);
+	public ScreenRotatingImage(Rologia os, ResourceLocation imageLocation, int x, int y, int width, int height, float rotationValue) {
+		super(os, imageLocation, x, y, width, height);
 		setRotation(rotationValue);
 	}
 	
-	public ScreenRotatingImage(Screen screen, String imagePath, int x, int y, int width, int height, float rotationValue) {
-		super(screen, imagePath, x, y, width, height);
+	public ScreenRotatingImage(Rologia os, String imagePath, int x, int y, int width, int height, float rotationValue) {
+		super(os, imagePath, x, y, width, height);
 		setRotation(rotationValue);
 	}
 	

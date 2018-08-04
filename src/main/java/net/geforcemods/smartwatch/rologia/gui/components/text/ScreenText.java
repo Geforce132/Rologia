@@ -1,20 +1,20 @@
 package net.geforcemods.smartwatch.rologia.gui.components.text;
 
 import net.geforcemods.smartwatch.rologia.gui.components.ScreenComponent;
-import net.geforcemods.smartwatch.rologia.gui.screens.Screen;
+import net.geforcemods.smartwatch.rologia.os.Rologia;
 
 public class ScreenText extends ScreenComponent {
 	
 	private String text;
 	
-	public ScreenText(Screen screen, String string, int color) {
-		super(screen);
+	public ScreenText(Rologia os, String string, int color) {
+		super(os);
 		text = string;
 		setColor(color);
 	}
 
-	public ScreenText(Screen screen, String string, int x, int y, int color) {
-		super(screen, x, y);
+	public ScreenText(Rologia os, String string, int x, int y, int color) {
+		super(os, x, y);
 		text = string;
 		setColor(color);
 	}

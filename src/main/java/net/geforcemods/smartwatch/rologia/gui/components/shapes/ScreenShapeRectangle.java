@@ -4,7 +4,7 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.Color;
 
 import net.geforcemods.smartwatch.rologia.gui.components.ScreenComponent;
-import net.geforcemods.smartwatch.rologia.gui.screens.Screen;
+import net.geforcemods.smartwatch.rologia.os.Rologia;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
@@ -16,15 +16,15 @@ public class ScreenShapeRectangle extends ScreenComponent {
 	private int   height;
 	private Color color;
 	
-	public ScreenShapeRectangle(Screen screen, int w, int h, Color rgbColor) {
-		super(screen);
+	public ScreenShapeRectangle(Rologia os, int w, int h, Color rgbColor) {
+		super(os);
 		width = w;
 		height = h;
 		color = rgbColor;
 	}
 
-	public ScreenShapeRectangle(Screen screen, int x, int y, int w, int h, Color rgbColor) {
-		super(screen, x, y);
+	public ScreenShapeRectangle(Rologia os, int x, int y, int w, int h, Color rgbColor) {
+		super(os, x, y);
 		width = w;
 		height = h;
 		color = rgbColor;

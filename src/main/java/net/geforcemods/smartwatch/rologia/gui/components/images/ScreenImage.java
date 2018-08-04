@@ -2,8 +2,10 @@ package net.geforcemods.smartwatch.rologia.gui.components.images;
 
 import java.awt.image.BufferedImage;
 
+import org.lwjgl.opengl.GL11;
+
 import net.geforcemods.smartwatch.rologia.gui.components.ScreenComponent;
-import net.geforcemods.smartwatch.rologia.gui.screens.Screen;
+import net.geforcemods.smartwatch.rologia.os.Rologia;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.util.ResourceLocation;
@@ -15,46 +17,46 @@ public class ScreenImage extends ScreenComponent {
 	private int imageHeight;
 	private boolean isDynamicImage;
 	
-	public ScreenImage(Screen screen, String imagePath, int width, int height) {
-		super(screen);
+	public ScreenImage(Rologia os, String imagePath, int width, int height) {
+		super(os);
 		location = new ResourceLocation(imagePath);
 		imageWidth = width;
 		imageHeight = height;
 		isDynamicImage = false;
 	}
 	
-	public ScreenImage(Screen screen, ResourceLocation imageLocation, int width, int height) {
-		super(screen);
+	public ScreenImage(Rologia os, ResourceLocation imageLocation, int width, int height) {
+		super(os);
 		location = imageLocation;
 		imageWidth = width;
 		imageHeight = height;
 	}
-	
-	public ScreenImage(Screen screen, BufferedImage image) {
-		super(screen);
+
+	public ScreenImage(Rologia os, BufferedImage image) {
+		super(os);
 		location = Minecraft.getMinecraft().getTextureManager().getDynamicTextureLocation(image.toString(), new DynamicTexture(image));
 		imageWidth = image.getWidth();
 		imageHeight = image.getHeight();
 	}
 	
-	public ScreenImage(Screen screen, BufferedImage image, int x, int y) {
-		super(screen, x, y);
+	public ScreenImage(Rologia os, BufferedImage image, int x, int y) {
+		super(os, x, y);
 		location = Minecraft.getMinecraft().getTextureManager().getDynamicTextureLocation(image.toString(), new DynamicTexture(image));
 		imageWidth = image.getWidth();
 		imageHeight = image.getHeight();
 		isDynamicImage = true;
 	}
 	
-	public ScreenImage(Screen screen, ResourceLocation imageLocation, int x, int y, int width, int height) {
-		super(screen, x, y);
+	public ScreenImage(Rologia os, ResourceLocation imageLocation, int x, int y, int width, int height) {
+		super(os, x, y);
 		location = imageLocation;
 		imageWidth = width;
 		imageHeight = height;
 		isDynamicImage = false;
 	}
 	
-	public ScreenImage(Screen screen, String imagePath, int x, int y, int width, int height) {
-		super(screen, x, y);
+	public ScreenImage(Rologia os, String imagePath, int x, int y, int width, int height) {
+		super(os, x, y);
 		location = new ResourceLocation(imagePath);
 		imageWidth = width;
 		imageHeight = height;
@@ -70,7 +72,7 @@ public class ScreenImage extends ScreenComponent {
 		else
 		{
 			getTextureManager().bindTexture(location);
-			drawTexturedModalRect(xPos, yPos, 0, 0, imageWidth, imageHeight);
+			drawModalRectWithCustomSizedTexture(xPos, yPos, 0, 0, imageWidth, imageHeight, imageWidth, imageHeight);
 		}
 	}
 	

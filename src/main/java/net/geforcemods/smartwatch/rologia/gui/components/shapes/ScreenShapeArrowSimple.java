@@ -6,7 +6,7 @@ import org.lwjgl.util.Color;
 import com.sun.javafx.scene.traversal.Direction;
 
 import net.geforcemods.smartwatch.rologia.gui.components.ScreenComponent;
-import net.geforcemods.smartwatch.rologia.gui.screens.Screen;
+import net.geforcemods.smartwatch.rologia.os.Rologia;
 
 public class ScreenShapeArrowSimple extends ScreenComponent {
 
@@ -17,8 +17,8 @@ public class ScreenShapeArrowSimple extends ScreenComponent {
 	
 	private Color color;
 	
-	public ScreenShapeArrowSimple(Screen screen, int height, int depth, int thickness, Direction direction) {
-		super(screen);
+	public ScreenShapeArrowSimple(Rologia os, int height, int depth, int thickness, Direction direction) {
+		super(os);
 		arrowHeight = height;
 		arrowPointDepth = depth;
 		arrowThickness = thickness;

@@ -3,6 +3,7 @@ package net.geforcemods.smartwatch.rologia.gui.components;
 import org.lwjgl.opengl.GL11;
 
 import net.geforcemods.smartwatch.rologia.gui.screens.Screen;
+import net.geforcemods.smartwatch.rologia.os.Rologia;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
@@ -20,23 +21,24 @@ public abstract class ScreenComponent extends Gui {
 	
 	protected int colorValue;
 	
-	private Screen screen;
+	private Rologia os;
 
-	protected ScreenComponent(Screen screenToInsertIn) {
-		screen = screenToInsertIn;
-
+	protected ScreenComponent(Rologia OS) {
 		rotation = 0F;
 		scale = 1F;
-	}
 	
-	protected ScreenComponent(Screen screenToInsertIn, int x, int y) {
-		screen = screenToInsertIn;
+		os = OS;
+	}
+
+	protected ScreenComponent(Rologia OS, int x, int y) {
 		setPosition(x, y);
 		defaultXPos = x;
 		defaultYPos = y;
 
 		rotation = 0F;
 		scale = 1F;
+
+		os = OS;
 	}
 	
 	public abstract void drawComponent();
@@ -75,9 +77,10 @@ public abstract class ScreenComponent extends Gui {
 		}
 	}
 
-	public void setPosition(int x, int y) {
+	public ScreenComponent setPosition(int x, int y) {
 		xPos = x;
 		yPos = y;
+		return this;
 	}
 	
 	public void resetPosition() {
@@ -85,27 +88,35 @@ public abstract class ScreenComponent extends Gui {
 		yPos = defaultYPos;
 	}
 	
-	public void setDefaultPosition(int x, int y) {
+	public ScreenComponent setDefaultPosition(int x, int y) {
 		defaultXPos = x;
 		defaultYPos = y;
+		return this;
 	}
 	
-	public void setPositionAndOrigin(int x, int y) {
+	public ScreenComponent setPositionAndOrigin(int x, int y) {
 		xPos = x;
 		yPos = y;
 		defaultXPos = x;
 		defaultYPos = y;
+		return this;
 	}
 
-	public void centerPosition() {
+	public ScreenComponent centerPosition() {
 		centerPosition(0, 0);
+		return this;
 	}
 
-	public void centerPosition(int xOffset, int yOffset) {
-		int centeredX = screen.getCenteredXForComponent(this) + xOffset;
-		int centeredY = screen.getCenteredYForComponent(this) + yOffset - screen.getStatusBar().getHeight();
+	public ScreenComponent centerPosition(int xOffset, int yOffset) {
+		int centeredX = getScreen().getCenteredXForComponent(this) + xOffset;
+		int centeredY = getScreen().getCenteredYForComponent(this) + yOffset - getScreen().getStatusBar().getHeight();
 
 		setPositionAndOrigin(centeredX, centeredY);
+		return this;
+	}
+
+	public void setOS(Rologia OS) {
+		os = OS;
 	}
 
 	public void setRotation(float newRotation) {
@@ -120,10 +131,6 @@ public abstract class ScreenComponent extends Gui {
 		colorValue = color;
 	}
 
-	public void setScreen(Screen newScreen) {
-		screen = newScreen;
-	}
-	
 	public int getXPos() {
 		return xPos;
 	}
@@ -156,8 +163,12 @@ public abstract class ScreenComponent extends Gui {
 		return colorValue;
 	}
 
+	public Rologia getOS() {
+		return os;
+	}
+
 	public Screen getScreen() {
-		return screen;
+		return os.getCurrentScreen();
 	}
 
 	public TextureManager getTextureManager() {

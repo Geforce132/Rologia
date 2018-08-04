@@ -1,0 +1,40 @@
+{
+    "components": [
+    	{
+    		"name": "loading_circle",
+    		"type": "rotating_image",
+    		"texture_path": "rologia:textures/gui/watch/loading.png",
+    		"width": 256,
+    		"height": 256,
+    		"rotation_speed": 0.5
+    	},
+    	{
+    		"name": "arrow_left_light",
+    		"type": "image",
+    		"texture_path": "rologia:textures/gui/watch/arrow_left_light.png",
+    		"width": 13,
+    		"height": 24
+    	},
+    	{
+    		"name": "arrow_left_right",
+    		"type": "image",
+    		"texture_path": "rologia:textures/gui/watch/arrow_left_right.png",
+    		"width": 13,
+    		"height": 24
+    	},
+    	{
+    		"name": "arrow_right_light",
+    		"type": "image",
+    		"texture_path": "rologia:textures/gui/watch/arrow_right_light.png",
+    		"width": 13,
+    		"height": 24
+    	},
+    	{
+    		"name": "arrow_right_dark",
+    		"type": "image",
+    		"texture_path": "rologia:textures/gui/watch/arrow_right_dark.png",
+    		"width": 13,
+    		"height": 24
+    	}
+    ]
+}

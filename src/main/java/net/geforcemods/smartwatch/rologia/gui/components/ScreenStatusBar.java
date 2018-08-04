@@ -4,19 +4,20 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.Color;
 
 import net.geforcemods.smartwatch.rologia.gui.screens.Screen;
+import net.geforcemods.smartwatch.rologia.os.Rologia;
 import net.geforcemods.smartwatch.rologia.os.misc.Constants;
 
 public class ScreenStatusBar extends ScreenComponent {
 
 	private Color color;
 
-	public ScreenStatusBar(Screen screen, Color rgbColor) {
-		super(screen);
+	public ScreenStatusBar(Rologia os, Color rgbColor) {
+		super(os);
 		color = rgbColor;
 	}
 	
-	public ScreenStatusBar(Screen screen, int x, int y, Color rgbColor) {
-		super(screen, x, y);
+	public ScreenStatusBar(Rologia os, int x, int y, Color rgbColor) {
+		super(os, x, y);
 		color = rgbColor;
 	}
 
@@ -39,7 +40,6 @@ public class ScreenStatusBar extends ScreenComponent {
         float scaleOfText = 0.85F;
 		GL11.glScalef(scaleOfText, scaleOfText, 1F);
         this.drawString(getFontRenderer(), getScreen().getOS().getTime(Constants.HM), (int) ((xPos + 50) / scaleOfText), (int) ((yPos + 1) / scaleOfText), 44444);
-
 	}
 	
 	@Override

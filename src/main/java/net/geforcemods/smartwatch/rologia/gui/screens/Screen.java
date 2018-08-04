@@ -36,6 +36,9 @@ public abstract class Screen extends Gui {
 	private ScreenStatusBar statusBar;
 	private ScreenImage backgroundImage;
 	
+	private ScreenComponent leftArrow;
+	private ScreenComponent rightArrow;
+
 	public Screen(Rologia os, int x, int y) {
 		OS = os;
 		
@@ -43,15 +46,23 @@ public abstract class Screen extends Gui {
 		screenYPos = y;
 		backgroundImage = getBackgroundImage();
 		backgroundImage.setPosition(x, y);
-
-		statusBar = new ScreenStatusBar(this, getXPos(), getYPos(), Colors.RED);
-		
-		addComponent(statusBar);
 	}
 
 	public abstract void initializeScreen();
 	
 	public abstract void onComponentClicked(ScreenComponent component, int mouseX, int mouseY);
+	
+	public void addStartupComponents() {
+		statusBar = new ScreenStatusBar(OS, getXPos(), getYPos(), Colors.RED);
+		
+		ScreenComponent leftArrow = getComponentAsImage("arrow_left_light");
+		leftArrow.centerPosition(-54, 0);
+		ScreenComponent rightArrow = getComponentAsImage("arrow_right_light");
+		rightArrow.centerPosition(54, 0);
+
+		addComponent(leftArrow);
+		addComponent(rightArrow);
+	}
 	
 	public void updateScreen() {}
 
@@ -103,6 +114,13 @@ public abstract class Screen extends Gui {
 		}
 	}
 
+	public void drawStatusBar() {
+		GL11.glPushMatrix();
+		statusBar.performPrerenderGLFixes();
+		statusBar.drawComponent();
+		GL11.glPopMatrix();
+	}
+
 	public void editStatusBar() {}
 	
 	public void drawDebuggingTools(int mouseX, int mouseY) {
@@ -149,8 +167,13 @@ public abstract class Screen extends Gui {
 	        GL11.glEnable(GL11.GL_TEXTURE_2D);
 	        GL11.glDisable(GL11.GL_BLEND);
 			
+	        if(statusBar.isMouseHoveringOver(mouseX, mouseY)) {
+	        	this.drawString(getFontRenderer(), "--- Status bar: ---", mouseX + 10, mouseY + 25, 555555);
+				this.drawString(getFontRenderer(), "X, Y pos: (" + comp.getXPos() + ", " + comp.getYPos() + ")" + " -> " + " w, h: (" + (comp.getXPos() + comp.getWidth()) + ", " + (comp.getYPos() + comp.getHeight()) + ")", mouseX + 10, mouseY + 35, 555555);
+				this.drawString(getFontRenderer(), "Default pos: (" + comp.getDefaultXPos() + ", " + comp.getDefaultYPos() + ")", mouseX + 10, mouseY + 45, 555555);	        }
+
 			if(comp.isMouseHoveringOver(mouseX, mouseY)) {
-				this.drawString(getFontRenderer(), comp == statusBar ? ("--- Status bar: ---") : ("--- Component: ---"), mouseX + 10, mouseY + 25, 555555);
+				this.drawString(getFontRenderer(), "--- Component: ---", mouseX + 10, mouseY + 25, 555555);
 				this.drawString(getFontRenderer(), "X, Y pos: (" + comp.getXPos() + ", " + comp.getYPos() + ")" + " -> " + " w, h: (" + (comp.getXPos() + comp.getWidth()) + ", " + (comp.getYPos() + comp.getHeight()) + ")", mouseX + 10, mouseY + 35, 555555);
 				this.drawString(getFontRenderer(), "Default pos: (" + comp.getDefaultXPos() + ", " + comp.getDefaultYPos() + ")", mouseX + 10, mouseY + 45, 555555);
 			}
@@ -171,7 +194,19 @@ public abstract class Screen extends Gui {
 	}
 	
 	public void addTextComponent(String text, int xPos, int yPos, int color) {
-		addComponent(new ScreenText(this, text, xPos, yPos, color));
+		addComponent(new ScreenText(getOS(), text, xPos, yPos, color));
+	}
+
+	public ScreenComponent getComponent(String compName) {
+		ScreenComponent component = getOS().components.get(compName);
+		component.setOS(getOS());
+		return component;
+	}
+
+	public ScreenImage getComponentAsImage(String compName) {
+		ScreenImage image = (ScreenImage) getOS().components.get(compName);
+		image.setOS(getOS());
+		return image;
 	}
 	
 	public void handleMouseClick(int mouseX, int mouseY, int mouseButtonClicked) {

@@ -64,7 +64,7 @@ public abstract class App {
 		{
 			if(appBackgroundImage == null)
 			{
-				appBackgroundImage = new ScreenImage(os.getCurrentScreen(), new ResourceLocation(appBackgroundImagePath), Screen.WATCH_SCREEN_X_SIZE, Screen.WATCH_SCREEN_Y_SIZE);
+				appBackgroundImage = new ScreenImage(os, new ResourceLocation(appBackgroundImagePath), Screen.WATCH_SCREEN_X_SIZE, Screen.WATCH_SCREEN_Y_SIZE);
 				return appBackgroundImage;
 			}
 		}
@@ -77,7 +77,7 @@ public abstract class App {
 		{
 			if(appIcon == null)
 			{
-				appIcon = new ScreenImage(os.getCurrentScreen(), new ResourceLocation(appIconPath), 64, 64);
+				appIcon = new ScreenImage(os, new ResourceLocation(appIconPath), 64, 64);
 				return appIcon;
 			}
 		}

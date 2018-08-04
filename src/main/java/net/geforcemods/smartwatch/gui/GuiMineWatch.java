@@ -1,7 +1,7 @@
 package net.geforcemods.smartwatch.gui;
 
-import net.geforcemods.smartwatch.MineWatch;
 import net.geforcemods.smartwatch.item.ItemMineWatch;
+import net.geforcemods.smartwatch.resources.ResourceLoader;
 import net.geforcemods.smartwatch.rologia.gui.screens.Screen;
 import net.geforcemods.smartwatch.rologia.os.Rologia;
 import net.minecraft.client.gui.GuiScreen;
@@ -13,7 +13,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class GuiMineWatch extends GuiScreen {
 	
-	private static final ResourceLocation SCREEN_EDGE_TEXTURE = new ResourceLocation(MineWatch.MOD_ID + ":textures/gui/watch/watch_screen_background_2.png");
+	private static final ResourceLocation SCREEN_EDGE_TEXTURE = new ResourceLocation(ResourceLoader.TEXTURE_FOLDER_PATH + "watch_screen_background_2.png");
 
 	private EntityPlayer player;
 	

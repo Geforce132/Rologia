@@ -4,7 +4,7 @@ import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.Color;
 
 import net.geforcemods.smartwatch.rologia.gui.components.ScreenComponent;
-import net.geforcemods.smartwatch.rologia.gui.screens.Screen;
+import net.geforcemods.smartwatch.rologia.os.Rologia;
 
 public class ScreenShapeTriangle extends ScreenComponent {
 
@@ -21,13 +21,13 @@ public class ScreenShapeTriangle extends ScreenComponent {
 	
 	private boolean hasMultipleColors = false;
 	
-	public ScreenShapeTriangle(Screen screen, Color c1) {
-		super(screen); // X-Y coordinates are for the centroid of the triangle.
+	public ScreenShapeTriangle(Rologia os, Color c1) {
+		super(os);
 		color1 = c1;
 	}
 	
-	public ScreenShapeTriangle(Screen screen, Color c1, Color c2, Color c3) {
-		super(screen);
+	public ScreenShapeTriangle(Rologia os, Color c1, Color c2, Color c3) {
+		super(os);
 		color1 = c1;
 		color2 = c2;
 		color3 = c3;
@@ -35,8 +35,8 @@ public class ScreenShapeTriangle extends ScreenComponent {
 		hasMultipleColors = true;
 	}
 
-	public ScreenShapeTriangle(Screen screen, int v1x, int v1y, int v2x, int v2y, int v3x, int v3y, Color c1) {
-		super(screen, (v1x + v2x + v3x) / 3, (v1y + v2y + v3y) / 3); // X-Y coordinates are for the centroid of the triangle.
+	public ScreenShapeTriangle(Rologia os, int v1x, int v1y, int v2x, int v2y, int v3x, int v3y, Color c1) {
+		super(os, (v1x + v2x + v3x) / 3, (v1y + v2y + v3y) / 3); // X-Y coordinates are for the centroid of the triangle.
 		vertex1_x = v1x;
 		vertex1_y = v1y;
 		vertex2_x = v2x;
@@ -46,8 +46,8 @@ public class ScreenShapeTriangle extends ScreenComponent {
 		color1 = c1;
 	}
 	
-	public ScreenShapeTriangle(Screen screen, int v1x, int v1y, int v2x, int v2y, int v3x, int v3y, Color c1, Color c2, Color c3) {
-		super(screen, (v1x + v2x + v3x) / 3, (v1y + v2y + v3y) / 3); // X-Y coordinates are for the centroid of the triangle.
+	public ScreenShapeTriangle(Rologia os, int v1x, int v1y, int v2x, int v2y, int v3x, int v3y, Color c1, Color c2, Color c3) {
+		super(os, (v1x + v2x + v3x) / 3, (v1y + v2y + v3y) / 3); // X-Y coordinates are for the centroid of the triangle.
 		vertex1_x = v1x;
 		vertex1_y = v1y;
 		vertex2_x = v2x;

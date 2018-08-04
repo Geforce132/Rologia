@@ -3,9 +3,11 @@ package net.geforcemods.smartwatch.rologia.os;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import net.geforcemods.smartwatch.MineWatch;
 import net.geforcemods.smartwatch.resources.ResourceLoader;
+import net.geforcemods.smartwatch.rologia.gui.components.ScreenComponent;
 import net.geforcemods.smartwatch.rologia.gui.screens.BootScreen;
 import net.geforcemods.smartwatch.rologia.gui.screens.Screen;
 import net.geforcemods.smartwatch.rologia.os.apps.App;
@@ -27,31 +29,37 @@ public class Rologia {
 	private ArrayList<Task> tasks = new ArrayList<Task>();
 	private ArrayList<App> apps = new ArrayList<App>();
 
+	public HashMap<String, ScreenComponent> components = new HashMap<String, ScreenComponent>();
+
 	private EntityPlayer user;
 	private UserStats userStats = new UserStats();
 	
 	public void initOS() {
 		if(hasInitialized) return;
 
+		loadComponents();
 		loadApps();
 		hasInitialized = true;
 	}
 	
 	public void openSmartwatchGUI(EntityPlayer player, int screenXPos, int screenYPos) {
 		user = player;
-
 		setScreen(new BootScreen(this, screenXPos, screenYPos));
+		currentScreen.addStartupComponents();
 		currentScreen.initializeScreen();
 		
 		tasks.add(new TaskUpdateTime(this));
 	}
 	
 	public void update() {
-		currentScreen.updateScreen();
-		currentApp.updateApp();
+		if(currentScreen != null)
+		{
+			currentScreen.updateScreen();
+			currentApp.updateApp();
 
-		for(Task task : tasks) {
-			task.decreaseSleepCounter();
+			for(Task task : tasks) {
+				task.decreaseSleepCounter();
+			}
 		}
 	}
 
@@ -70,9 +78,15 @@ public class Rologia {
 		// Edited last because this should always be drawn over everything
 		// else on the screen.
 		currentScreen.editStatusBar();
+		currentScreen.drawStatusBar();
 		
-		if(debugMode)
+		if(debugMode) {
 			currentScreen.drawDebuggingTools(mouseX, mouseY);
+		}
+	}
+
+	private void loadComponents() {
+		ResourceLoader.loadComponents(this);
 	}
 	
 	private void loadApps() {
