@@ -1,24 +1,40 @@
 package net.geforcemods.smartwatch.resources;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.lang.reflect.Type;
 
+import org.apache.commons.io.FilenameUtils;
+
+import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import net.geforcemods.smartwatch.MineWatch;
+import net.geforcemods.smartwatch.rologia.gui.components.ComponentDeserializer;
+import net.geforcemods.smartwatch.rologia.gui.components.ScreenComponent;
 import net.geforcemods.smartwatch.rologia.gui.components.images.ScreenImage;
 import net.geforcemods.smartwatch.rologia.gui.components.images.ScreenRotatingImage;
 import net.geforcemods.smartwatch.rologia.os.Rologia;
 import net.geforcemods.smartwatch.rologia.os.apps.App;
+import net.geforcemods.smartwatch.rologia.os.apps.AppDeserializer;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.IResource;
 import net.minecraft.util.ResourceLocation;
 
 public class ResourceLoader {
+	
+	/**
+	 * Minecraft's root folder. MC_DIR gets set during {@link MineWatch}.preInit()
+	 */
+	public static File MC_DIR;
 	
 	public static final String TEXTURE_FOLDER_PATH = MineWatch.MOD_ID + ":textures/gui/watch/";
 	public static final String APPS_FOLDER_PATH = MineWatch.MOD_ID + ":os/apps/";
@@ -66,23 +82,41 @@ public class ResourceLoader {
 		}
 	}
 
+	public static File getRologiaFolder() {
+		File folder = new File(MC_DIR, "rologia/");
+
+		if(!folder.exists())
+			folder.mkdir();
+
+		return folder;
+	}
+
 	public static void loadApps(Rologia os) {
-		Gson gson = new Gson();
+		File appsFolder = new File(getRologiaFolder(), "apps/");
+
+		if(!appsFolder.exists())
+			appsFolder.mkdir();
 
 		try {
-			for(App app : os.getApps()) {
-				IResource appJson = Minecraft.getMinecraft().getResourceManager().getResource(new ResourceLocation(APPS_FOLDER_PATH + app.getAppID() + ".json"));
-				InputStream in = appJson.getInputStream();
-				BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-				JsonElement je = gson.fromJson(reader, JsonElement.class);
-				JsonObject json = je.getAsJsonObject();
+			for(File appJson : appsFolder.listFiles()) {
+				if(!FilenameUtils.getExtension(appJson.getName()).matches("json")) return;
 
-				String appName = getAppNameFromJson(appJson);
-				os.getApp(appName).setBaseAppInformation(json);
-				os.getApp(appName).loadInfoFromJson(json);
+		        Gson gson = new GsonBuilder().setPrettyPrinting().registerTypeAdapter(App.class, new AppDeserializer()).registerTypeAdapter(ScreenComponent.class, new ComponentDeserializer()).create();
+
+		        Type type = new TypeToken<App>(){}.getType();
+
+		        // Create a base App instance to work with
+	        	BufferedReader reader = new BufferedReader(new FileReader(appJson));
+	        	App app = gson.fromJson(reader, type);
+
+				app.setOS(os);
+
+				//System.out.printf("\n%s %s %s", app.getAppName(), app.getAppID(), app.getAppVersion());
+
+				os.addApp(app);
 			}
 		}
-		catch(Exception e) {
+		catch(FileNotFoundException e) {
 			e.printStackTrace();
 		}
 	}

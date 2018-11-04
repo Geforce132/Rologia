@@ -3,6 +3,8 @@ package net.geforcemods.smartwatch.rologia.os.apps;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 
+import org.lwjgl.opengl.GL11;
+
 import com.google.gson.JsonObject;
 
 import net.geforcemods.smartwatch.rologia.gui.screens.Screen;
@@ -19,8 +21,8 @@ public class AppStepCounter extends App {
 	}
 
 	public void drawApp(Screen currentScreen) {
-		currentScreen.getFontRenderer().drawString("Step count: " + os.getUserStats().getStepCount(), 180, 80, 55555);
-		currentScreen.getFontRenderer().drawString("Distance walked: " + getDistanceInMiles(os.getUser()), 180, 100, 55555);
+		currentScreen.drawString("Step count: " + os.getUserStats().getStepCount(), currentScreen.getXPos(), currentScreen.getYPos() + 10, 55555);
+		currentScreen.drawString("Distance walked: " + getDistanceInMiles(os.getUser()), currentScreen.getXPos(), currentScreen.getYPos() + 30, 55555);
 	}
 	
 	@Override
@@ -35,6 +37,16 @@ public class AppStepCounter extends App {
 	@Override
 	public void loadInfoFromJson(JsonObject json) {}
 	
+	public Object replaceKeywords(String keyword) {
+		if(keyword.matches("step_count"))
+			return os.getUserStats().getStepCount();
+
+		if(keyword.matches("distance_walked"))
+				return getDistanceInMiles(os.getUser());
+
+		return "unknown";
+	}
+
 	private float getDistanceInMiles(EntityPlayer player) {
 		float feet = (player.distanceWalkedModified * 3);
 
@@ -47,11 +59,6 @@ public class AppStepCounter extends App {
 	@Override
 	public AppEventType[] subscribeToEvents() {
 		return new AppEventType[] {AppEventType.PLAYER_STEP};
-	}
-
-	@Override
-	public AppType getAppType() {
-		return AppType.PREINSTALLED;
 	}
 
 	@Override

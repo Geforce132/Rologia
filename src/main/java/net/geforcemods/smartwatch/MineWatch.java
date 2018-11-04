@@ -6,6 +6,7 @@ import net.geforcemods.smartwatch.events.RologiaEventHandler;
 import net.geforcemods.smartwatch.gui.GuiHandler;
 import net.geforcemods.smartwatch.item.ItemMineWatch;
 import net.geforcemods.smartwatch.network.ServerProxy;
+import net.geforcemods.smartwatch.resources.ResourceLoader;
 import net.geforcemods.smartwatch.rologia.os.Rologia;
 import net.geforcemods.smartwatch.rologia.os.apps.App;
 import net.geforcemods.smartwatch.rologia.os.apps.events.AppEvent;
@@ -49,6 +50,7 @@ public class MineWatch {
 	
 	@EventHandler
 	public void preInit(FMLPreInitializationEvent event) {
+		ResourceLoader.MC_DIR = event.getModConfigurationDirectory().getParentFile();
 		network = NetworkRegistry.INSTANCE.newSimpleChannel(MOD_ID);
 		
 		mineWatch = new ItemMineWatch().setCreativeTab(CreativeTabs.REDSTONE).setMaxStackSize(1).setRegistryName("mine_watch").setUnlocalizedName("mineWatch");

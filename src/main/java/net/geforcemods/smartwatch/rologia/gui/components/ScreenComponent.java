@@ -21,7 +21,9 @@ public abstract class ScreenComponent extends Gui {
 	
 	protected int colorValue;
 	
-	private Rologia os;
+	private String type;
+
+	private transient Rologia os;
 
 	protected ScreenComponent(Rologia OS) {
 		rotation = 0F;

@@ -1,5 +1,6 @@
 package net.geforcemods.smartwatch.rologia.os;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -11,7 +12,6 @@ import net.geforcemods.smartwatch.rologia.gui.components.ScreenComponent;
 import net.geforcemods.smartwatch.rologia.gui.screens.BootScreen;
 import net.geforcemods.smartwatch.rologia.gui.screens.Screen;
 import net.geforcemods.smartwatch.rologia.os.apps.App;
-import net.geforcemods.smartwatch.rologia.os.apps.AppStepCounter;
 import net.geforcemods.smartwatch.rologia.os.stats.UserStats;
 import net.geforcemods.smartwatch.rologia.os.tasks.TaskUpdateTime;
 import net.geforcemods.smartwatch.rologia.os.time.Task;
@@ -27,7 +27,8 @@ public class Rologia {
 	private App currentApp;
 	private LocalDateTime time = LocalDateTime.now();
 	private ArrayList<Task> tasks = new ArrayList<Task>();
-	private ArrayList<App> apps = new ArrayList<App>();
+	public static ArrayList<App> apps = new ArrayList<App>();
+	public static HashMap<String, App> appTypes = new HashMap<String, App>();
 
 	public HashMap<String, ScreenComponent> components = new HashMap<String, ScreenComponent>();
 
@@ -38,7 +39,14 @@ public class Rologia {
 		if(hasInitialized) return;
 
 		loadComponents();
-		loadApps();
+
+		try {
+			loadApps();
+		}
+		catch(IOException e) {
+			e.printStackTrace();
+		}
+
 		hasInitialized = true;
 	}
 	
@@ -89,15 +97,8 @@ public class Rologia {
 		ResourceLoader.loadComponents(this);
 	}
 	
-	private void loadApps() {
-		AppStepCounter app = new AppStepCounter(this);
-		
-		if(!apps.contains(app)) {
-			apps.add(app);
-			ResourceLoader.loadApps(this);
-		}
-
-		//TODO Remove later on!
+	private void loadApps() throws IOException {
+		ResourceLoader.loadApps(this);
 		setApp("step_counter");
 	}
 	
@@ -141,6 +142,10 @@ public class Rologia {
 	
 	public ArrayList<Task> getScheduledTasks() {
 		return tasks;
+	}
+	
+	public void addApp(App app) {
+		apps.add(app);
 	}
 	
 	public ArrayList<App> getApps() {

@@ -2,6 +2,7 @@ package net.geforcemods.smartwatch.rologia.gui.screens;
 
 import java.util.ArrayList;
 
+import org.apache.commons.lang3.StringUtils;
 import org.lwjgl.opengl.GL11;
 
 import net.geforcemods.smartwatch.rologia.gui.components.ScreenComponent;
@@ -197,6 +198,16 @@ public abstract class Screen extends Gui {
 		addComponent(new ScreenText(getOS(), text, xPos, yPos, color));
 	}
 
+	public void drawString(String text, int x, int y, int color) {
+		String[] keywords = StringUtils.substringsBetween(text, "$$", "$$");
+
+		if(keywords == null) return;
+
+		for(int i = 0; i < keywords.length; i++) {						
+			text = text.replace("$$" + keywords[i] + "$$", OS.getCurrentApp().replaceKeywords(keywords[i]).toString());
+		}
+	}
+
 	public ScreenComponent getComponent(String compName) {
 		ScreenComponent component = getOS().components.get(compName);
 		component.setOS(getOS());
@@ -275,7 +286,7 @@ public abstract class Screen extends Gui {
 		return Minecraft.getMinecraft().getTextureManager();
 	}
 	
-	public FontRenderer getFontRenderer() {
+	protected FontRenderer getFontRenderer() {
 		return Minecraft.getMinecraft().fontRenderer;
 	}
 	
