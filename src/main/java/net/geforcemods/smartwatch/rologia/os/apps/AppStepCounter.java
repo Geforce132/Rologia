@@ -21,8 +21,10 @@ public class AppStepCounter extends App {
 	}
 
 	public void drawApp(Screen currentScreen) {
+		GL11.glPushMatrix();
 		currentScreen.drawString("Step count: " + os.getUserStats().getStepCount(), currentScreen.getXPos(), currentScreen.getYPos() + 10, 55555);
 		currentScreen.drawString("Distance walked: " + getDistanceInMiles(os.getUser()), currentScreen.getXPos(), currentScreen.getYPos() + 30, 55555);
+		GL11.glPopMatrix();
 	}
 	
 	@Override
@@ -42,7 +44,7 @@ public class AppStepCounter extends App {
 			return os.getUserStats().getStepCount();
 
 		if(keyword.matches("distance_walked"))
-				return getDistanceInMiles(os.getUser());
+			return getDistanceInMiles(os.getUser());
 
 		return "unknown";
 	}

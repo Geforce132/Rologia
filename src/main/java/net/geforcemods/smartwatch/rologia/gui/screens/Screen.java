@@ -201,11 +201,13 @@ public abstract class Screen extends Gui {
 	public void drawString(String text, int x, int y, int color) {
 		String[] keywords = StringUtils.substringsBetween(text, "$$", "$$");
 
-		if(keywords == null) return;
-
-		for(int i = 0; i < keywords.length; i++) {						
-			text = text.replace("$$" + keywords[i] + "$$", OS.getCurrentApp().replaceKeywords(keywords[i]).toString());
+		if(keywords != null) {
+			for(int i = 0; i < keywords.length; i++) {						
+				text = text.replace("$$" + keywords[i] + "$$", OS.getCurrentApp().replaceKeywords(keywords[i]).toString());
+			}
 		}
+
+		this.drawString(getFontRenderer(), text, x, y, color);	
 	}
 
 	public ScreenComponent getComponent(String compName) {
