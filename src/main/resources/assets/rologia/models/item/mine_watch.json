@@ -1,0 +1,119 @@
+{
+    "__comment": "Model generated using MrCrayfish's Model Creator (http://mrcrayfish.com/modelcreator/)",
+    "ambientocclusion": false,
+    "display": {
+    	"gui": {
+            "rotation": [ 30, 45, 0 ],
+            "translation": [ 0, 0, 0],
+            "scale":[ 0.625, 0.625, 0.625 ]
+        },
+        "ground": {
+            "rotation": [ 0, 0, 0 ],
+            "translation": [ 0, 3, 0],
+            "scale":[ 0.5, 0.5, 0.5 ]
+        },
+        "thirdperson_righthand": {
+            "rotation": [ 70, 180, 0 ],
+            "translation": [ 0, 2.25, 3 ],
+            "scale": [ 0.55, 0.55, 0.55 ]
+        },
+        "thirdperson_lefthand": {
+            "rotation": [ 70, 180, 0 ],
+            "translation": [ 0, 2.25, 3 ],
+            "scale": [ 0.55, 0.55, 0.55 ]
+        },
+        "firstperson_righthand": {
+            "rotation": [ 0, 180, 0 ],
+            "translation": [ 0, 2, 0],
+            "scale": [ 0.68, 0.68, 0.68 ]
+        },
+        "firstperson_lefthand": {
+            "rotation": [ 0, 180, 0 ],
+            "translation": [ 0, 2, 0],
+            "scale": [ 0.68, 0.68, 0.68 ]
+        }
+    },
+    "textures": {
+            "mine_watch": "rologia:items/mine_watch"
+    },
+    "elements": [
+        {
+            "name": "Screen",
+            "from": [ 7.4, 6.0, 7.0 ], 
+            "to": [ 8.9, 6.2, 9.0 ], 
+            "faces": {
+                "north": { "texture": "#-1", "uv": [ 0.0, 0.0, 1.5, 0.2 ] },
+                "east": { "texture": "#-1", "uv": [ 0.0, 0.0, 2.0, 0.2 ] },
+                "south": { "texture": "#-1", "uv": [ 0.0, 0.0, 1.5, 0.2 ] },
+                "west": { "texture": "#-1", "uv": [ 0.0, 0.0, 2.0, 0.2 ] },
+                "up": { "texture": "#-1", "uv": [ 0.0, 0.0, 1.5, 2.0 ] },
+                "down": { "texture": "#-1", "uv": [ 0.0, 0.0, 1.5, 2.0 ] }
+            }
+        },
+        {
+            "name": "Band_top",
+            "from": [ 7.6, 5.8, 6.0 ], 
+            "to": [ 8.7, 6.0, 7.5 ], 
+            "faces": {
+                "north": { "texture": "#-1", "uv": [ 0.0, 0.0, 1.1, 0.2 ] },
+                "east": { "texture": "#-1", "uv": [ 0.0, 0.0, 1.5, 0.2 ] },
+                "south": { "texture": "#-1", "uv": [ 0.0, 0.0, 1.1, 0.2 ] },
+                "west": { "texture": "#-1", "uv": [ 0.0, 0.0, 1.5, 0.2 ] },
+                "up": { "texture": "#-1", "uv": [ 0.0, 0.0, 1.1, 1.5 ] },
+                "down": { "texture": "#-1", "uv": [ 0.0, 0.0, 1.1, 1.5 ] }
+            }
+        },
+        {
+            "name": "Band_bottom",
+            "from": [ 7.6, 5.8, 8.5 ], 
+            "to": [ 8.7, 6.0, 10.0 ], 
+            "faces": {
+                "north": { "texture": "#-1", "uv": [ 0.0, 0.0, 1.1, 0.2 ] },
+                "east": { "texture": "#-1", "uv": [ 0.0, 0.0, 1.5, 0.2 ] },
+                "south": { "texture": "#-1", "uv": [ 0.0, 0.0, 1.1, 0.2 ] },
+                "west": { "texture": "#-1", "uv": [ 0.0, 0.0, 1.5, 0.2 ] },
+                "up": { "texture": "#-1", "uv": [ 0.0, 0.0, 1.1, 1.5 ] },
+                "down": { "texture": "#-1", "uv": [ 0.0, 0.0, 1.1, 1.5 ] }
+            }
+        },
+        {
+            "name": "Arm_bottom",
+            "from": [ 7.6, 3.8, 9.7 ], 
+            "to": [ 8.7, 6.0, 10.0 ], 
+            "faces": {
+                "north": { "texture": "#-1", "uv": [ 0.0, 0.0, 1.1, 2.2 ] },
+                "east": { "texture": "#-1", "uv": [ 0.0, 0.0, 0.3, 2.2 ] },
+                "south": { "texture": "#-1", "uv": [ 0.0, 0.0, 1.1, 2.2 ] },
+                "west": { "texture": "#-1", "uv": [ 0.0, 0.0, 0.3, 2.2 ] },
+                "up": { "texture": "#-1", "uv": [ 0.0, 0.0, 1.1, 0.3 ] },
+                "down": { "texture": "#-1", "uv": [ 0.0, 0.0, 1.1, 0.3 ] }
+            }
+        },
+        {
+            "name": "Arm_top",
+            "from": [ 7.6, 3.8, 5.699999999999999 ], 
+            "to": [ 8.7, 6.0, 5.999999999999999 ], 
+            "faces": {
+                "north": { "texture": "#-1", "uv": [ 0.0, 0.0, 1.1, 2.2 ] },
+                "east": { "texture": "#-1", "uv": [ 0.0, 0.0, 0.3, 2.2 ] },
+                "south": { "texture": "#-1", "uv": [ 0.0, 0.0, 1.1, 2.2 ] },
+                "west": { "texture": "#-1", "uv": [ 0.0, 0.0, 0.3, 2.2 ] },
+                "up": { "texture": "#-1", "uv": [ 0.0, 0.0, 1.1, 0.3 ] },
+                "down": { "texture": "#-1", "uv": [ 0.0, 0.0, 1.1, 0.3 ] }
+            }
+        },
+        {
+            "name": "Band",
+            "from": [ 7.6, 3.8, 6.0 ], 
+            "to": [ 8.7, 4.0, 10.0 ], 
+            "faces": {
+                "north": { "texture": "#-1", "uv": [ 0.0, 0.0, 1.1, 0.2 ] },
+                "east": { "texture": "#-1", "uv": [ 0.0, 0.0, 4.0, 0.2 ] },
+                "south": { "texture": "#-1", "uv": [ 0.0, 0.0, 1.1, 0.2 ] },
+                "west": { "texture": "#-1", "uv": [ 0.0, 0.0, 4.0, 0.2 ] },
+                "up": { "texture": "#-1", "uv": [ 0.0, 0.0, 1.1, 4.0 ] },
+                "down": { "texture": "#-1", "uv": [ 0.0, 0.0, 1.1, 4.0 ] }
+            }
+        }
+    ]
+}

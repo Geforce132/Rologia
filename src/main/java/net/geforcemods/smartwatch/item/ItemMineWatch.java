@@ -13,6 +13,11 @@ import net.minecraft.world.World;
 public class ItemMineWatch extends Item {
 	
 	@Override
+	public boolean isFull3D(){
+		return true;
+	}
+
+	@Override
 	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
 		ItemStack itemStackIn = player.getHeldItem(hand);
 

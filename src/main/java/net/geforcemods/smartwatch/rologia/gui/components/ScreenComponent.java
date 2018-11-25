@@ -26,21 +26,21 @@ public abstract class ScreenComponent extends Gui {
 	private transient Rologia os;
 
 	protected ScreenComponent(Rologia OS) {
+		os = OS;
+
 		rotation = 0F;
 		scale = 1F;
-	
-		os = OS;
 	}
 
 	protected ScreenComponent(Rologia OS, int x, int y) {
+		os = OS;
+
 		setPosition(x, y);
 		defaultXPos = x;
 		defaultYPos = y;
 
 		rotation = 0F;
 		scale = 1F;
-
-		os = OS;
 	}
 	
 	public abstract void drawComponent();
