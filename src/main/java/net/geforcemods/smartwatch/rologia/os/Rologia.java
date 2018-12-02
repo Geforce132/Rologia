@@ -16,6 +16,7 @@ import net.geforcemods.smartwatch.rologia.os.stats.UserStats;
 import net.geforcemods.smartwatch.rologia.os.tasks.TaskUpdateTime;
 import net.geforcemods.smartwatch.rologia.os.time.Task;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 
 public class Rologia {
 	
@@ -101,16 +102,6 @@ public class Rologia {
 	private void loadApps() throws IOException {		
 		ResourceLoader.loadApps(this);
 		setApp("step_counter");
-		
-		//		AppStepCounter app = new AppStepCounter(this);
-//		
-//		if(!apps.contains(app)) {
-//			apps.add(app);
-//			ResourceLoader.loadApps(this);
-//		}
-//
-//		//TODO Remove later on!
-//		setApp("step_counter");
 	}
 	
 	public void setScreen(Screen newScreen) {
@@ -143,12 +134,21 @@ public class Rologia {
 
 		if(!MineWatch.instance.rologiaInstances.containsKey(uuid))
 		{
+			System.out.println("loading new");
 			Rologia newOS = new Rologia();
 			newOS.initOS();
 			MineWatch.instance.rologiaInstances.put(uuid, newOS);
 		}
 
 		return MineWatch.instance.rologiaInstances.get(uuid);
+	}
+	
+	public static void removeInstanceForPlayer(EntityPlayer player) {
+		if(MineWatch.instance.rologiaInstances.containsKey(player.getGameProfile().getId().toString())) {
+			MineWatch.instance.rologiaInstances.remove(player.getGameProfile().getId().toString());
+			Rologia.apps.clear();
+			System.out.println("removing " + FMLCommonHandler.instance().getSide());
+		}
 	}
 	
 	public ArrayList<Task> getScheduledTasks() {
@@ -170,7 +170,6 @@ public class Rologia {
 				return app;
 		}
 
-		System.out.println("returning null");
 		return null;
 	}
 

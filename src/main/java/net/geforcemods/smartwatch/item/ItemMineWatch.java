@@ -2,6 +2,7 @@ package net.geforcemods.smartwatch.item;
 
 import net.geforcemods.smartwatch.MineWatch;
 import net.geforcemods.smartwatch.gui.GuiHandler;
+import net.geforcemods.smartwatch.rologia.os.Rologia;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -20,6 +21,11 @@ public class ItemMineWatch extends Item {
 	@Override
 	public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
 		ItemStack itemStackIn = player.getHeldItem(hand);
+
+		if(player.isSneaking()) {
+			Rologia.removeInstanceForPlayer(player);
+			return ActionResult.newResult(EnumActionResult.PASS, itemStackIn);
+		}
 
 		if(world.isRemote)
 			return ActionResult.newResult(EnumActionResult.PASS, itemStackIn);

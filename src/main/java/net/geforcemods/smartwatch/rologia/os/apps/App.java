@@ -101,7 +101,7 @@ public abstract class App {
 		{
 			if(appBackgroundImage == null)
 			{
-				appBackgroundImage = new ScreenImage(os, new ResourceLocation(app_background_image), Screen.WATCH_BACKGROUND_X_SIZE, Screen.WATCH_BACKGROUND_Y_SIZE);
+				appBackgroundImage = new ScreenImage(os, new ResourceLocation(app_background_image), os.getCurrentScreen().getXPos(), os.getCurrentScreen().getYPos(), Screen.WATCH_SCREEN_X_SIZE, Screen.WATCH_SCREEN_Y_SIZE);
 				return appBackgroundImage;
 			}
 		}

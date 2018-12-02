@@ -11,8 +11,8 @@ import net.minecraft.client.renderer.texture.TextureManager;
 
 public abstract class ScreenComponent extends Gui {
 	
-	protected int xPos = Screen.WATCH_BACKGROUND_X_SIZE;
-	protected int yPos = Screen.WATCH_BACKGROUND_Y_SIZE;
+	protected int xPos = Screen.WATCH_SCREEN_X_SIZE;
+	protected int yPos = Screen.WATCH_SCREEN_Y_SIZE;
 	protected int defaultXPos;
 	protected int defaultYPos;
 	
@@ -54,7 +54,6 @@ public abstract class ScreenComponent extends Gui {
 		compY = getYPos();
 		compWidth = getWidth();
 		compHeight = getHeight();
-		//System.out.println(getXPos() + " | " + getYPos() + " | " + Math.abs(getWidth()) + " | " + Math.abs(getHeight()) + " | " + ((mouseX >= compX && mouseX <= (compX + compWidth) && mouseY >= compY && mouseY <= (compY + compHeight))));
 
 		if(mouseX >= compX && mouseX <= (compX + compWidth) && mouseY >= compY && mouseY <= (compY + compHeight))
 			return true;

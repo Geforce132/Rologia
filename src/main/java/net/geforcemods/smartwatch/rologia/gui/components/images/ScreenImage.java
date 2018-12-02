@@ -2,8 +2,6 @@ package net.geforcemods.smartwatch.rologia.gui.components.images;
 
 import java.awt.image.BufferedImage;
 
-import org.lwjgl.opengl.GL11;
-
 import net.geforcemods.smartwatch.rologia.gui.components.ScreenComponent;
 import net.geforcemods.smartwatch.rologia.os.Rologia;
 import net.minecraft.client.Minecraft;
