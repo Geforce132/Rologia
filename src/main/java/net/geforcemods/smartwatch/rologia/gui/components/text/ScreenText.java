@@ -2,6 +2,7 @@ package net.geforcemods.smartwatch.rologia.gui.components.text;
 
 import net.geforcemods.smartwatch.rologia.gui.components.ScreenComponent;
 import net.geforcemods.smartwatch.rologia.os.Rologia;
+import net.geforcemods.smartwatch.rologia.os.misc.Position;
 
 public class ScreenText extends ScreenComponent {
 	
@@ -13,15 +14,15 @@ public class ScreenText extends ScreenComponent {
 		setColor(color);
 	}
 
-	public ScreenText(Rologia os, String string, int x, int y, int color) {
-		super(os, x, y);
+	public ScreenText(Rologia os, String string, Position pos, int color) {
+		super(os, pos);
 		text = string;
 		setColor(color);
 	}
 	
 	@Override
 	public void drawComponent() {
-		drawString(getFontRenderer(), text, xPos, yPos, colorValue);
+		drawString(getFontRenderer(), text, getPosition().getX(), getPosition().getY(), colorValue);
 	}
 
 	@Override

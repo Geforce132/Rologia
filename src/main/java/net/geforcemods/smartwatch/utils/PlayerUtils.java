@@ -63,6 +63,10 @@ public class PlayerUtils{
 		}
 	}
 
+	public static String getPlayerUUID(EntityPlayer player) {
+		return player.getGameProfile().getId().toString();
+	}
+
 	/**
 	 * Returns true if a player with the given name is in the world.
 	 *

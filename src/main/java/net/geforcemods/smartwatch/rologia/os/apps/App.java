@@ -49,7 +49,7 @@ public abstract class App {
 				ScreenText text = (ScreenText) comp;
 				
 				GL11.glPushMatrix();
-				currentScreen.drawString(text.getText(), currentScreen.getXPos() + text.getXPos(), currentScreen.getYPos() + text.getYPos(), text.getColor());
+				currentScreen.drawString(text.getText(), currentScreen.getPosition().getX() + text.getPosition().getX(), currentScreen.getPosition().getY() + text.getPosition().getY(), text.getColor());
 				GL11.glPopMatrix();
 			}
 		}
@@ -101,7 +101,7 @@ public abstract class App {
 		{
 			if(appBackgroundImage == null)
 			{
-				appBackgroundImage = new ScreenImage(os, new ResourceLocation(app_background_image), os.getCurrentScreen().getXPos(), os.getCurrentScreen().getYPos(), Screen.WATCH_SCREEN_X_SIZE, Screen.WATCH_SCREEN_Y_SIZE);
+				appBackgroundImage = new ScreenImage(os, new ResourceLocation(app_background_image), os.getCurrentScreen().getPosition(), Screen.WATCH_SCREEN_X_SIZE, Screen.WATCH_SCREEN_Y_SIZE);
 				return appBackgroundImage;
 			}
 		}

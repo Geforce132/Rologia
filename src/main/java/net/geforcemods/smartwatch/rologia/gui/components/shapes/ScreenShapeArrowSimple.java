@@ -35,48 +35,48 @@ public class ScreenShapeArrowSimple extends ScreenComponent {
         GL11.glColor4f(255F, 0F, 0F, 1F);
 
         if(arrowDirection == Direction.RIGHT) {
-	        GL11.glVertex2i(getXPos(), getYPos());
-	        GL11.glVertex2i(getXPos() + arrowPointDepth, getYPos() + arrowHeight);
-	        GL11.glVertex2i(getXPos() + arrowThickness + arrowPointDepth, getYPos() + arrowHeight);
-	        GL11.glVertex2i(getXPos() + arrowThickness, getYPos());
+	        GL11.glVertex2i(getPosition().getX(), getPosition().getY());
+	        GL11.glVertex2i(getPosition().getX() + arrowPointDepth, getPosition().getY() + arrowHeight);
+	        GL11.glVertex2i(getPosition().getX() + arrowThickness + arrowPointDepth, getPosition().getY() + arrowHeight);
+	        GL11.glVertex2i(getPosition().getX() + arrowThickness, getPosition().getY());
 	
-	        GL11.glVertex2i(getXPos() + arrowPointDepth, getYPos() + arrowHeight);
-	        GL11.glVertex2i(getXPos(), getYPos() + (arrowHeight * 2));
-	        GL11.glVertex2i(getXPos() + arrowThickness, getYPos() + (arrowHeight * 2));
-	        GL11.glVertex2i(getXPos() + arrowThickness + arrowPointDepth, getYPos() + arrowHeight);
+	        GL11.glVertex2i(getPosition().getX() + arrowPointDepth, getPosition().getY() + arrowHeight);
+	        GL11.glVertex2i(getPosition().getX(), getPosition().getY() + (arrowHeight * 2));
+	        GL11.glVertex2i(getPosition().getX() + arrowThickness, getPosition().getY() + (arrowHeight * 2));
+	        GL11.glVertex2i(getPosition().getX() + arrowThickness + arrowPointDepth, getPosition().getY() + arrowHeight);
         }
         else if(arrowDirection == Direction.LEFT) {
-	        GL11.glVertex2i(getXPos() + arrowPointDepth, getYPos());
-	        GL11.glVertex2i(getXPos(), getYPos() + arrowHeight);
-	        GL11.glVertex2i(getXPos() + arrowThickness, getYPos() + arrowHeight);
-	        GL11.glVertex2i(getXPos() + arrowPointDepth + arrowThickness, getYPos());
+	        GL11.glVertex2i(getPosition().getX() + arrowPointDepth, getPosition().getY());
+	        GL11.glVertex2i(getPosition().getX(), getPosition().getY() + arrowHeight);
+	        GL11.glVertex2i(getPosition().getX() + arrowThickness, getPosition().getY() + arrowHeight);
+	        GL11.glVertex2i(getPosition().getX() + arrowPointDepth + arrowThickness, getPosition().getY());
 	
-	        GL11.glVertex2i(getXPos(), getYPos() + arrowHeight);
-	        GL11.glVertex2i(getXPos() + arrowPointDepth, getYPos() + (arrowHeight * 2));
-	        GL11.glVertex2i(getXPos() + arrowPointDepth + arrowThickness, getYPos() + (arrowHeight * 2));
-	        GL11.glVertex2i(getXPos() + arrowThickness, getYPos() + arrowHeight);
+	        GL11.glVertex2i(getPosition().getX(), getPosition().getY() + arrowHeight);
+	        GL11.glVertex2i(getPosition().getX() + arrowPointDepth, getPosition().getY() + (arrowHeight * 2));
+	        GL11.glVertex2i(getPosition().getX() + arrowPointDepth + arrowThickness, getPosition().getY() + (arrowHeight * 2));
+	        GL11.glVertex2i(getPosition().getX() + arrowThickness, getPosition().getY() + arrowHeight);
         }
         else if(arrowDirection == Direction.UP) {
-	        GL11.glVertex2i(getXPos() + arrowPointDepth + (arrowThickness * 2), getYPos());
-	        GL11.glVertex2i(getXPos(), getYPos() + arrowHeight);
-	        GL11.glVertex2i(getXPos() + arrowThickness, getYPos() + arrowHeight);
-	        GL11.glVertex2i(getXPos() + arrowPointDepth + (arrowThickness * 2), getYPos() + arrowThickness);
+	        GL11.glVertex2i(getPosition().getX() + arrowPointDepth + (arrowThickness * 2), getPosition().getY());
+	        GL11.glVertex2i(getPosition().getX(), getPosition().getY() + arrowHeight);
+	        GL11.glVertex2i(getPosition().getX() + arrowThickness, getPosition().getY() + arrowHeight);
+	        GL11.glVertex2i(getPosition().getX() + arrowPointDepth + (arrowThickness * 2), getPosition().getY() + arrowThickness);
 	
-	        GL11.glVertex2i(getXPos() + arrowPointDepth + (arrowThickness * 2), getYPos());
-	        GL11.glVertex2i(getXPos() + arrowPointDepth + (arrowThickness * 2), getYPos() + arrowThickness);
-	        GL11.glVertex2i(getXPos() + (arrowHeight * 2) - arrowThickness, getYPos() + arrowHeight);
-	        GL11.glVertex2i(getXPos() + (arrowHeight * 2), getYPos() + arrowHeight);
+	        GL11.glVertex2i(getPosition().getX() + arrowPointDepth + (arrowThickness * 2), getPosition().getY());
+	        GL11.glVertex2i(getPosition().getX() + arrowPointDepth + (arrowThickness * 2), getPosition().getY() + arrowThickness);
+	        GL11.glVertex2i(getPosition().getX() + (arrowHeight * 2) - arrowThickness, getPosition().getY() + arrowHeight);
+	        GL11.glVertex2i(getPosition().getX() + (arrowHeight * 2), getPosition().getY() + arrowHeight);
         }
         else if(arrowDirection == Direction.DOWN) {
-	        GL11.glVertex2i(getXPos() + arrowThickness, getYPos());
-	        GL11.glVertex2i(getXPos(), getYPos());
-	        GL11.glVertex2i(getXPos() + arrowPointDepth + (arrowThickness * 2), getYPos() + arrowHeight + arrowThickness);
-	        GL11.glVertex2i(getXPos() + arrowPointDepth + (arrowThickness * 2), getYPos() + arrowHeight - arrowThickness);
+	        GL11.glVertex2i(getPosition().getX() + arrowThickness, getPosition().getY());
+	        GL11.glVertex2i(getPosition().getX(), getPosition().getY());
+	        GL11.glVertex2i(getPosition().getX() + arrowPointDepth + (arrowThickness * 2), getPosition().getY() + arrowHeight + arrowThickness);
+	        GL11.glVertex2i(getPosition().getX() + arrowPointDepth + (arrowThickness * 2), getPosition().getY() + arrowHeight - arrowThickness);
 	
-	        GL11.glVertex2i(getXPos() + arrowPointDepth + (arrowThickness * 2), getYPos() + arrowHeight - arrowThickness);
-	        GL11.glVertex2i(getXPos() + arrowPointDepth + (arrowThickness * 2), getYPos() + arrowHeight);
-	        GL11.glVertex2i(getXPos() + (arrowHeight * 2), getYPos());
-	        GL11.glVertex2i(getXPos() + (arrowHeight * 2) - arrowThickness, getYPos());
+	        GL11.glVertex2i(getPosition().getX() + arrowPointDepth + (arrowThickness * 2), getPosition().getY() + arrowHeight - arrowThickness);
+	        GL11.glVertex2i(getPosition().getX() + arrowPointDepth + (arrowThickness * 2), getPosition().getY() + arrowHeight);
+	        GL11.glVertex2i(getPosition().getX() + (arrowHeight * 2), getPosition().getY());
+	        GL11.glVertex2i(getPosition().getX() + (arrowHeight * 2) - arrowThickness, getPosition().getY());
         }
 
         GL11.glEnd();

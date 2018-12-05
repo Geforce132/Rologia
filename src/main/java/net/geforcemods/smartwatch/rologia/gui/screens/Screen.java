@@ -11,6 +11,7 @@ import net.geforcemods.smartwatch.rologia.gui.components.images.ScreenImage;
 import net.geforcemods.smartwatch.rologia.gui.components.text.ScreenText;
 import net.geforcemods.smartwatch.rologia.gui.rendering.Colors;
 import net.geforcemods.smartwatch.rologia.os.Rologia;
+import net.geforcemods.smartwatch.rologia.os.misc.Position;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
@@ -25,8 +26,7 @@ public abstract class Screen extends Gui {
 	
 	private Rologia OS;
 	
-	private int screenXPos;
-	private int screenYPos;
+	private Position screenPos;
 	
 	private int mousePosX = 0;
 	private int mousePosY = 0;
@@ -40,13 +40,12 @@ public abstract class Screen extends Gui {
 	private ScreenComponent leftArrow;
 	private ScreenComponent rightArrow;
 
-	public Screen(Rologia os, int x, int y) {
+	public Screen(Rologia os, Position pos) {
 		OS = os;
 		
-		screenXPos = x;
-		screenYPos = y;
+		screenPos = pos;
 		backgroundImage = getBackgroundImage();
-		backgroundImage.setPosition(x, y);
+		backgroundImage.setPosition(pos);
 	}
 
 	public abstract void initializeScreen();
@@ -54,7 +53,7 @@ public abstract class Screen extends Gui {
 	public abstract void onComponentClicked(ScreenComponent component, int mouseX, int mouseY);
 	
 	public void addStartupComponents() {
-		statusBar = new ScreenStatusBar(OS, getXPos(), getYPos(), Colors.RED);
+		statusBar = new ScreenStatusBar(OS, getPosition(), Colors.RED);
 		
 		ScreenComponent leftArrow = getComponentAsImage("arrow_left_light");
 		leftArrow.centerPosition(-54, 0);
@@ -151,17 +150,17 @@ public abstract class Screen extends Gui {
 	        
 			GL11.glBegin(GL11.GL_LINES);
 			GL11.glColor3f(0, 0, 255);
-			GL11.glVertex2f(comp.getXPos(), comp.getYPos());
-			GL11.glVertex2f(comp.getXPos() + comp.getWidth(), comp.getYPos());
+			GL11.glVertex2f(comp.getPosition().getX(), comp.getPosition().getY());
+			GL11.glVertex2f(comp.getPosition().getX() + comp.getWidth(), comp.getPosition().getY());
 			
-			GL11.glVertex2f(comp.getXPos() + comp.getWidth(), comp.getYPos());
-			GL11.glVertex2f(comp.getXPos() + comp.getWidth(), comp.getYPos() + comp.getHeight());
+			GL11.glVertex2f(comp.getPosition().getX() + comp.getWidth(), comp.getPosition().getY());
+			GL11.glVertex2f(comp.getPosition().getX() + comp.getWidth(), comp.getPosition().getY() + comp.getHeight());
 			
-			GL11.glVertex2f(comp.getXPos() + comp.getWidth(), comp.getYPos() + comp.getHeight());
-			GL11.glVertex2f(comp.getXPos(), comp.getYPos() + comp.getHeight());
+			GL11.glVertex2f(comp.getPosition().getX() + comp.getWidth(), comp.getPosition().getY() + comp.getHeight());
+			GL11.glVertex2f(comp.getPosition().getX(), comp.getPosition().getY() + comp.getHeight());
 			
-			GL11.glVertex2f(comp.getXPos(), comp.getYPos());
-			GL11.glVertex2f(comp.getXPos(), comp.getYPos() + comp.getHeight());
+			GL11.glVertex2f(comp.getPosition().getX(), comp.getPosition().getY());
+			GL11.glVertex2f(comp.getPosition().getX(), comp.getPosition().getY() + comp.getHeight());
 
 			GL11.glEnd();
 
@@ -170,13 +169,14 @@ public abstract class Screen extends Gui {
 			
 	        if(statusBar.isMouseHoveringOver(mouseX, mouseY)) {
 	        	this.drawString(getFontRenderer(), "--- Status bar: ---", mouseX + 10, mouseY + 25, 555555);
-				this.drawString(getFontRenderer(), "X, Y pos: (" + comp.getXPos() + ", " + comp.getYPos() + ")" + " -> " + " w, h: (" + (comp.getXPos() + comp.getWidth()) + ", " + (comp.getYPos() + comp.getHeight()) + ")", mouseX + 10, mouseY + 35, 555555);
-				this.drawString(getFontRenderer(), "Default pos: (" + comp.getDefaultXPos() + ", " + comp.getDefaultYPos() + ")", mouseX + 10, mouseY + 45, 555555);	        }
+				this.drawString(getFontRenderer(), "X, Y pos: (" + comp.getPosition().getX() + ", " + comp.getPosition().getY() + ")" + " -> " + " w, h: (" + (comp.getPosition().getX() + comp.getWidth()) + ", " + (comp.getPosition().getY() + comp.getHeight()) + ")", mouseX + 10, mouseY + 35, 555555);
+				this.drawString(getFontRenderer(), "Default pos: (" + comp.getDefaultPosition().getX() + ", " + comp.getDefaultPosition().getY() + ")", mouseX + 10, mouseY + 45, 555555);	
+			}
 
 			if(comp.isMouseHoveringOver(mouseX, mouseY)) {
 				this.drawString(getFontRenderer(), "--- Component: ---", mouseX + 10, mouseY + 25, 555555);
-				this.drawString(getFontRenderer(), "X, Y pos: (" + comp.getXPos() + ", " + comp.getYPos() + ")" + " -> " + " w, h: (" + (comp.getXPos() + comp.getWidth()) + ", " + (comp.getYPos() + comp.getHeight()) + ")", mouseX + 10, mouseY + 35, 555555);
-				this.drawString(getFontRenderer(), "Default pos: (" + comp.getDefaultXPos() + ", " + comp.getDefaultYPos() + ")", mouseX + 10, mouseY + 45, 555555);
+				this.drawString(getFontRenderer(), "X, Y pos: (" + comp.getPosition().getX() + ", " + comp.getPosition().getY() + ")" + " -> " + " w, h: (" + (comp.getPosition().getX() + comp.getWidth()) + ", " + (comp.getPosition().getY() + comp.getHeight()) + ")", mouseX + 10, mouseY + 35, 555555);
+				this.drawString(getFontRenderer(), "Default pos: (" + comp.getDefaultPosition().getX() + ", " + comp.getDefaultPosition().getY() + ")", mouseX + 10, mouseY + 45, 555555);
 			}
 		}
 	}
@@ -194,8 +194,8 @@ public abstract class Screen extends Gui {
 		}		
 	}
 	
-	public void addTextComponent(String text, int xPos, int yPos, int color) {
-		addComponent(new ScreenText(getOS(), text, xPos, yPos, color));
+	public void addTextComponent(String text, Position pos, int color) {
+		addComponent(new ScreenText(getOS(), text, pos, color));
 	}
 	
 	public void drawString(String text, int x, int y, int color) {
@@ -235,11 +235,10 @@ public abstract class Screen extends Gui {
 		mousePosY = y;
 	}
 	
-	public Screen setScreenPosition(int x, int y) {
-		screenXPos = x;
-		screenYPos = y;
+	public Screen setScreenPosition(Position pos) {
+		screenPos = pos;
 
-		backgroundImage.setPositionAndOrigin(x + 3, y + 3);
+		backgroundImage.setPositionAndOrigin(pos.shiftX(3).shiftY(3));
 
 		return this;
 	}
@@ -252,24 +251,18 @@ public abstract class Screen extends Gui {
 		return mousePosY;
 	}
 	
-	public int getXPos() {
-		return screenXPos;
+	public Position getPosition() {
+		return screenPos;
 	}
 	
-	public int getYPos() {
-		return screenYPos;
-	}
-	
-	public int getCenteredXForComponent(ScreenComponent comp) {
-		return (screenXPos + (WATCH_SCREEN_X_SIZE / 2) - (comp.getWidth() / 2));
-	}
-	
-	public int getCenteredYForComponent(ScreenComponent comp) {
-		return (screenYPos + (WATCH_SCREEN_Y_SIZE / 2) - (comp.getHeight() / 2));
+	public Position getCenteredPositionForComponent(ScreenComponent comp) {
+		int centeredX = (getPosition().getX() + (WATCH_SCREEN_X_SIZE / 2) - (comp.getWidth() / 2));
+		int centeredY = (getPosition().getY() + (WATCH_SCREEN_Y_SIZE / 2) - (comp.getHeight() / 2));
+		return new Position(centeredX, centeredY);
 	}
 
 	public Screen setBackgroundImage(ScreenImage newImage) {
-		newImage.setPosition(getXPos(), getYPos());
+		newImage.setPosition(screenPos);
 		backgroundImage = newImage;
 		return this;
 	}

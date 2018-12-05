@@ -5,6 +5,7 @@ import org.lwjgl.util.Color;
 
 import net.geforcemods.smartwatch.rologia.gui.components.ScreenComponent;
 import net.geforcemods.smartwatch.rologia.os.Rologia;
+import net.geforcemods.smartwatch.rologia.os.misc.Position;
 import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
@@ -23,8 +24,8 @@ public class ScreenShapeRectangle extends ScreenComponent {
 		color = rgbColor;
 	}
 
-	public ScreenShapeRectangle(Rologia os, int x, int y, int w, int h, Color rgbColor) {
-		super(os, x, y);
+	public ScreenShapeRectangle(Rologia os, Position pos, int w, int h, Color rgbColor) {
+		super(os, pos);
 		width = w;
 		height = h;
 		color = rgbColor;
@@ -39,10 +40,10 @@ public class ScreenShapeRectangle extends ScreenComponent {
         OpenGlHelper.glBlendFunc(770, 771, 1, 0);
         GL11.glColor4f(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
         buffer.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_COLOR);
-        buffer.pos((double)xPos, (double)yPos + height, 0.0D);
-        buffer.pos((double)xPos + width, (double)yPos + height, 0.0D);
-        buffer.pos((double)xPos + width, (double)yPos, 0.0D);
-        buffer.pos((double)xPos, (double)yPos, 0.0D);
+        buffer.pos((double)getPosition().getX(), (double)getPosition().getY() + height, 0.0D);
+        buffer.pos((double)getPosition().getX() + width, (double)getPosition().getY() + height, 0.0D);
+        buffer.pos((double)getPosition().getX() + width, (double)getPosition().getY(), 0.0D);
+        buffer.pos((double)getPosition().getX(), (double)getPosition().getY(), 0.0D);
         tessellator.draw();
         GL11.glEnable(GL11.GL_TEXTURE_2D);
         GL11.glDisable(GL11.GL_BLEND);

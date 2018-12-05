@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 import org.lwjgl.opengl.GL11;
 
 import net.geforcemods.smartwatch.rologia.os.Rologia;
+import net.geforcemods.smartwatch.rologia.os.misc.Position;
 import net.minecraft.util.ResourceLocation;
 
 public class ScreenRotatingImage extends ScreenImage {
@@ -26,35 +27,34 @@ public class ScreenRotatingImage extends ScreenImage {
 		setRotation(rotationValue);
 	}
 
-	public ScreenRotatingImage(Rologia os, BufferedImage image, int x, int y, float rotationValue) {
-		super(os, image, x, y);
+	public ScreenRotatingImage(Rologia os, BufferedImage image, Position pos, float rotationValue) {
+		super(os, image, pos);
 		setRotation(rotationValue);
 	}
 	
-	public ScreenRotatingImage(Rologia os, ResourceLocation imageLocation, int x, int y, int width, int height, float rotationValue) {
-		super(os, imageLocation, x, y, width, height);
+	public ScreenRotatingImage(Rologia os, ResourceLocation imageLocation, Position pos, int width, int height, float rotationValue) {
+		super(os, imageLocation, pos, width, height);
 		setRotation(rotationValue);
 	}
 	
-	public ScreenRotatingImage(Rologia os, String imagePath, int x, int y, int width, int height, float rotationValue) {
-		super(os, imagePath, x, y, width, height);
+	public ScreenRotatingImage(Rologia os, String imagePath, Position pos, int width, int height, float rotationValue) {
+		super(os, imagePath, pos, width, height);
 		setRotation(rotationValue);
 	}
 	
 	@Override
 	public void performPrerenderGLFixes() {
-		GL11.glTranslatef(getWidth() / 2 + getScreen().getCenteredXForComponent(this), getHeight() / 2 + getScreen().getCenteredYForComponent(this), 0);
+		GL11.glTranslatef(getWidth() / 2 + getScreen().getCenteredPositionForComponent(this).getX(), getHeight() / 2 + getScreen().getCenteredPositionForComponent(this).getY(), 0);
 		GL11.glRotatef(rotation += getRotation(), 0, 0, 1);
-		GL11.glTranslatef(-getWidth() / 2 - getScreen().getCenteredXForComponent(this), -getHeight() / 2 - getScreen().getCenteredYForComponent(this), 0);
+		GL11.glTranslatef(-getWidth() / 2 - getScreen().getCenteredPositionForComponent(this).getX(), -getHeight() / 2 - getScreen().getCenteredPositionForComponent(this).getY(), 0);
 		
 		GL11.glScalef(getScale(), getScale(), 1F);
 		if(getScale() != 1.0F)
 		{
-			int translatedX, translatedY;
-			translatedX = (int) (getScreen().getCenteredXForComponent(this) / getScale());
-			translatedY = (int) (getScreen().getCenteredYForComponent(this) / getScale());
-			if(getXPos() != translatedX && getYPos() != translatedY)
-				setPosition(translatedX, translatedY);
+			Position pos = getScreen().getCenteredPositionForComponent(this).scalePos(getScale());
+
+			if(!getPosition().matches(pos))
+				setPosition(pos);
 		}
 	}
 

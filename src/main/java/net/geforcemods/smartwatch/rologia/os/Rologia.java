@@ -12,9 +12,11 @@ import net.geforcemods.smartwatch.rologia.gui.components.ScreenComponent;
 import net.geforcemods.smartwatch.rologia.gui.screens.BootScreen;
 import net.geforcemods.smartwatch.rologia.gui.screens.Screen;
 import net.geforcemods.smartwatch.rologia.os.apps.App;
+import net.geforcemods.smartwatch.rologia.os.misc.Position;
 import net.geforcemods.smartwatch.rologia.os.stats.UserStats;
 import net.geforcemods.smartwatch.rologia.os.tasks.TaskUpdateTime;
 import net.geforcemods.smartwatch.rologia.os.time.Task;
+import net.geforcemods.smartwatch.utils.PlayerUtils;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 
@@ -28,8 +30,7 @@ public class Rologia {
 	private App currentApp;
 	private LocalDateTime time = LocalDateTime.now();
 	private ArrayList<Task> tasks = new ArrayList<Task>();
-	public static ArrayList<App> apps = new ArrayList<App>();
-	public static HashMap<String, App> appTypes = new HashMap<String, App>();
+	public ArrayList<App> apps = new ArrayList<App>();
 
 	public HashMap<String, ScreenComponent> components = new HashMap<String, ScreenComponent>();
 
@@ -53,7 +54,7 @@ public class Rologia {
 	
 	public void openSmartwatchGUI(EntityPlayer player, int screenXPos, int screenYPos) {
 		user = player;
-		setScreen(new BootScreen(this, screenXPos, screenYPos));
+		setScreen(new BootScreen(this, new Position(screenXPos, screenYPos)));
 		currentScreen.addStartupComponents();
 		currentScreen.initializeScreen();
 		
@@ -144,9 +145,11 @@ public class Rologia {
 	}
 	
 	public static void removeInstanceForPlayer(EntityPlayer player) {
-		if(MineWatch.instance.rologiaInstances.containsKey(player.getGameProfile().getId().toString())) {
-			MineWatch.instance.rologiaInstances.remove(player.getGameProfile().getId().toString());
-			Rologia.apps.clear();
+		String uuid = PlayerUtils.getPlayerUUID(player);
+
+		if(MineWatch.instance.rologiaInstances.containsKey(uuid)) {
+			MineWatch.instance.rologiaInstances.get(uuid).apps.clear();
+			MineWatch.instance.rologiaInstances.remove(uuid);
 			System.out.println("removing " + FMLCommonHandler.instance().getSide());
 		}
 	}

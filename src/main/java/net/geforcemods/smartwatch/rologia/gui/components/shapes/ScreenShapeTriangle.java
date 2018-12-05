@@ -5,6 +5,7 @@ import org.lwjgl.util.Color;
 
 import net.geforcemods.smartwatch.rologia.gui.components.ScreenComponent;
 import net.geforcemods.smartwatch.rologia.os.Rologia;
+import net.geforcemods.smartwatch.rologia.os.misc.Position;
 
 public class ScreenShapeTriangle extends ScreenComponent {
 
@@ -36,7 +37,7 @@ public class ScreenShapeTriangle extends ScreenComponent {
 	}
 
 	public ScreenShapeTriangle(Rologia os, int v1x, int v1y, int v2x, int v2y, int v3x, int v3y, Color c1) {
-		super(os, (v1x + v2x + v3x) / 3, (v1y + v2y + v3y) / 3); // X-Y coordinates are for the centroid of the triangle.
+		super(os, new Position((v1x + v2x + v3x) / 3, (v1y + v2y + v3y) / 3)); // X-Y coordinates are for the centroid of the triangle.
 		vertex1_x = v1x;
 		vertex1_y = v1y;
 		vertex2_x = v2x;
@@ -47,7 +48,7 @@ public class ScreenShapeTriangle extends ScreenComponent {
 	}
 	
 	public ScreenShapeTriangle(Rologia os, int v1x, int v1y, int v2x, int v2y, int v3x, int v3y, Color c1, Color c2, Color c3) {
-		super(os, (v1x + v2x + v3x) / 3, (v1y + v2y + v3y) / 3); // X-Y coordinates are for the centroid of the triangle.
+		super(os, new Position((v1x + v2x + v3x) / 3, (v1y + v2y + v3y) / 3)); // X-Y coordinates are for the centroid of the triangle.
 		vertex1_x = v1x;
 		vertex1_y = v1y;
 		vertex2_x = v2x;

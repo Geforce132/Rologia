@@ -4,6 +4,7 @@ import org.lwjgl.opengl.GL11;
 
 import net.geforcemods.smartwatch.rologia.gui.screens.Screen;
 import net.geforcemods.smartwatch.rologia.os.Rologia;
+import net.geforcemods.smartwatch.rologia.os.misc.Position;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
@@ -11,10 +12,8 @@ import net.minecraft.client.renderer.texture.TextureManager;
 
 public abstract class ScreenComponent extends Gui {
 	
-	protected int xPos = Screen.WATCH_SCREEN_X_SIZE;
-	protected int yPos = Screen.WATCH_SCREEN_Y_SIZE;
-	protected int defaultXPos;
-	protected int defaultYPos;
+	protected Position position = new Position(Screen.WATCH_SCREEN_X_SIZE, Screen.WATCH_SCREEN_Y_SIZE);
+	protected Position defaultPos = new Position();
 	
 	protected float rotation;
 	protected float scale;
@@ -32,12 +31,11 @@ public abstract class ScreenComponent extends Gui {
 		scale = 1F;
 	}
 
-	protected ScreenComponent(Rologia OS, int x, int y) {
+	protected ScreenComponent(Rologia OS, Position pos) {
 		os = OS;
 
-		setPosition(x, y);
-		defaultXPos = x;
-		defaultYPos = y;
+		setPosition(pos);
+		defaultPos = pos;
 
 		rotation = 0F;
 		scale = 1F;
@@ -48,58 +46,50 @@ public abstract class ScreenComponent extends Gui {
 	public abstract void mouseClick(int mouseX, int mouseY, int mouseButtonClicked);
 	
 	public boolean isMouseHoveringOver(int mouseX, int mouseY) {
-		int compX, compY;
+		Position pos = getPosition();
 		int compWidth, compHeight;
-		compX = getXPos();
-		compY = getYPos();
 		compWidth = getWidth();
 		compHeight = getHeight();
 
-		if(mouseX >= compX && mouseX <= (compX + compWidth) && mouseY >= compY && mouseY <= (compY + compHeight))
+		if(mouseX >= pos.getX() && mouseX <= (pos.getX() + compWidth) && mouseY >= pos.getY() && mouseY <= (pos.getY() + compHeight))
 			return true;
 		
 		return false;
 	}
 
 	public void performPrerenderGLFixes() {		
-		GL11.glTranslatef(getXPos(), getYPos(), 0);
+		GL11.glTranslatef(position.getX(), position.getY(), 0);
 		GL11.glRotatef(getRotation(), 0, 0, 1);
-		GL11.glTranslatef(-getXPos(), -getYPos(), 0);
+		GL11.glTranslatef(-position.getX(), -position.getY(), 0);
 
 		GL11.glScalef(getScale(), getScale(), 1F);
 
 		if(getScale() != 1.0F)
 		{
-			int translatedX, translatedY;
-			translatedX = (int) (getDefaultXPos() / getScale());
-			translatedY = (int) (getDefaultYPos() / getScale());
-			if(getXPos() != translatedX && getYPos() != translatedY)
-				setPosition(translatedX, translatedY);
+			Position pos = new Position((int) (defaultPos.getX() / getScale()), (int) (defaultPos.getY() / getScale()));
+
+			if(!getPosition().matches(pos))
+				setPosition(pos);
 		}
 	}
 
-	public ScreenComponent setPosition(int x, int y) {
-		xPos = x;
-		yPos = y;
+	public ScreenComponent setPosition(Position pos) {
+		position = pos;
 		return this;
 	}
 	
 	public void resetPosition() {
-		xPos = defaultXPos;
-		yPos = defaultYPos;
+		position = defaultPos;
 	}
 	
-	public ScreenComponent setDefaultPosition(int x, int y) {
-		defaultXPos = x;
-		defaultYPos = y;
+	public ScreenComponent setDefaultPosition(Position pos) {
+		defaultPos = pos;
 		return this;
 	}
 	
-	public ScreenComponent setPositionAndOrigin(int x, int y) {
-		xPos = x;
-		yPos = y;
-		defaultXPos = x;
-		defaultYPos = y;
+	public ScreenComponent setPositionAndOrigin(Position pos) {
+		position = pos;
+		defaultPos = pos;
 		return this;
 	}
 
@@ -109,10 +99,9 @@ public abstract class ScreenComponent extends Gui {
 	}
 
 	public ScreenComponent centerPosition(int xOffset, int yOffset) {
-		int centeredX = getScreen().getCenteredXForComponent(this) + xOffset;
-		int centeredY = getScreen().getCenteredYForComponent(this) + yOffset - getScreen().getStatusBar().getHeight();
+		Position pos = getScreen().getCenteredPositionForComponent(this).shiftX(xOffset).shiftY(yOffset - getScreen().getStatusBar().getHeight());
 
-		setPositionAndOrigin(centeredX, centeredY);
+		setPositionAndOrigin(pos);
 		return this;
 	}
 
@@ -132,24 +121,16 @@ public abstract class ScreenComponent extends Gui {
 		colorValue = color;
 	}
 
-	public int getXPos() {
-		return xPos;
-	}
-	
-	public int getYPos() {
-		return yPos;
+	public Position getPosition() {
+		return position;
 	}
 	
 	public abstract int getWidth();
 	
 	public abstract int getHeight();
 	
-	public int getDefaultXPos() {
-		return defaultXPos;
-	}
-	
-	public int getDefaultYPos() {
-		return defaultYPos;
+	public Position getDefaultPosition() {
+		return defaultPos;
 	}
 	
 	public float getRotation() {

@@ -3,11 +3,12 @@ package net.geforcemods.smartwatch.rologia.gui.screens;
 import net.geforcemods.smartwatch.rologia.gui.components.ScreenComponent;
 import net.geforcemods.smartwatch.rologia.gui.components.images.ScreenImage;
 import net.geforcemods.smartwatch.rologia.os.Rologia;
+import net.geforcemods.smartwatch.rologia.os.misc.Position;
 
 public class BootScreen extends Screen {
 
-	public BootScreen(Rologia OS, int screenX, int screenY) {
-		super(OS, screenX, screenY);
+	public BootScreen(Rologia OS, Position pos) {
+		super(OS, pos);
 	}
 
 	@Override
