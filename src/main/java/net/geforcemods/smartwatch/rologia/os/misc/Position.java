@@ -32,13 +32,11 @@ public class Position {
 	}
 	
 	public Position shiftX(int x) {
-		xPos += x;
-		return this;
+		return new Position(xPos + x, yPos);
 	}
 	
 	public Position shiftY(int y) {
-		yPos += y;
-		return this;
+		return new Position(xPos, yPos + y);
 	}
 	
 	public Position scalePos(float scale) {

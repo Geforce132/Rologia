@@ -6,6 +6,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.lwjgl.opengl.GL11;
 
 import net.geforcemods.smartwatch.rologia.gui.components.ScreenComponent;
+import net.geforcemods.smartwatch.rologia.gui.components.ScreenScrollBar;
 import net.geforcemods.smartwatch.rologia.gui.components.ScreenStatusBar;
 import net.geforcemods.smartwatch.rologia.gui.components.images.ScreenImage;
 import net.geforcemods.smartwatch.rologia.gui.components.text.ScreenText;
@@ -35,6 +36,7 @@ public abstract class Screen extends Gui {
 	protected ArrayList<ScreenComponent> components = new ArrayList<ScreenComponent>();
 	
 	private ScreenStatusBar statusBar;
+	private ScreenScrollBar scrollBar;
 	private ScreenImage backgroundImage;
 	
 	private ScreenComponent leftArrow;
@@ -54,14 +56,16 @@ public abstract class Screen extends Gui {
 	
 	public void addStartupComponents() {
 		statusBar = new ScreenStatusBar(OS, getPosition(), Colors.RED);
+		scrollBar = new ScreenScrollBar(OS, getPosition().shiftX(90));
 		
 		ScreenComponent leftArrow = getComponentAsImage("arrow_left_light");
 		leftArrow.centerPosition(-54, 0);
 		ScreenComponent rightArrow = getComponentAsImage("arrow_right_light");
-		rightArrow.centerPosition(54, 0);
+		rightArrow.centerPosition(59, 0);
 
 		addComponent(leftArrow);
 		addComponent(rightArrow);
+		addComponent(scrollBar);
 	}
 	
 	public void updateScreen() {}
