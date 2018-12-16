@@ -36,7 +36,7 @@ public class MineWatch {
 	@Instance(MOD_ID)
 	public static MineWatch instance = new MineWatch();
 	
-	@SidedProxy(clientSide = "net.geforcemods.smartwatch.network.ClientProxy", serverSide = "net.geforcemods.smartwatch.network.ServerProxy")
+	@SidedProxy(clientSide = "net.geforcemods.rologia.network.ClientProxy", serverSide = "net.geforcemods.rologia.network.ServerProxy")
 	public static ServerProxy serverProxy;
 
 	public static SimpleNetworkWrapper network;

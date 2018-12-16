@@ -12,15 +12,17 @@ public class BootScreen extends Screen {
 	}
 
 	@Override
-	public void initializeScreen() {}
-
-	@Override
-	public void updateScreen() {
-
+	public void initializeScreen() {
 	}
 
 	@Override
-	public void editComponent(ScreenComponent comp) {}
+	public void updateScreen() {
+	}
+
+	@Override
+	public void editComponent(ScreenComponent comp) {
+		getOS().setApp("step_counter"); //TODO just for testing
+	}
 
 	@Override
 	public void onComponentClicked(ScreenComponent component, int mouseX, int mouseY) {

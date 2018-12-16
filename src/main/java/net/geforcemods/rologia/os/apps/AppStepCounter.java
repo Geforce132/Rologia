@@ -39,7 +39,7 @@ public class AppStepCounter extends App {
 			return os.getUserStats().getStepCount();
 		
 		if(keyword.matches("distance_walked"))
-				return getDistanceInMiles(os.getUser());
+			return getDistanceInMiles(os.getUser());
 
 		return "unknown";
 	}

@@ -65,7 +65,10 @@ public class Rologia {
 		if(currentScreen != null)
 		{
 			currentScreen.updateScreen();
-			currentApp.updateApp();
+
+			if(isAppOpen()) {
+				currentApp.updateApp();
+			}
 
 			for(Task task : tasks) {
 				task.decreaseSleepCounter();
@@ -83,8 +86,10 @@ public class Rologia {
 		currentScreen.editComponents();
 		currentScreen.drawComponents();
 
-		currentApp.drawComponents(currentScreen);
-		currentApp.drawApp(currentScreen);
+		if(isAppOpen()) {
+			currentApp.drawComponents(currentScreen);
+			currentApp.drawApp(currentScreen);
+		}
 
 		// Edited last because this should always be drawn over everything
 		// else on the screen.
@@ -102,7 +107,6 @@ public class Rologia {
 	
 	private void loadApps() throws IOException {		
 		ResourceLoader.loadApps(this);
-		setApp("step_counter");
 	}
 	
 	public void setScreen(Screen newScreen) {
@@ -110,7 +114,10 @@ public class Rologia {
 	}
 	
 	public void setApp(String appID) {
-		currentApp = getApp(appID);
+		if(currentApp != getApp(appID)) {
+			currentApp = getApp(appID);
+			currentScreen.addComponents(currentApp);
+		}
 	}
 
 	public void setTime(LocalDateTime newTime) {
@@ -178,6 +185,10 @@ public class Rologia {
 
 	public App getCurrentApp() {
 		return currentApp;
+	}
+
+	public boolean isAppOpen() {
+		return currentApp != null;
 	}
 
 	public EntityPlayer getUser() {

@@ -13,7 +13,7 @@ import net.minecraft.client.renderer.texture.TextureManager;
 public abstract class ScreenComponent extends Gui {
 	
 	protected Position position = new Position(Screen.WATCH_SCREEN_X_SIZE, Screen.WATCH_SCREEN_Y_SIZE);
-	protected Position defaultPos = new Position();
+	protected Position defaultPos = new Position(Screen.WATCH_SCREEN_X_SIZE, Screen.WATCH_SCREEN_Y_SIZE);
 	
 	protected float rotation;
 	protected float scale;
@@ -66,10 +66,11 @@ public abstract class ScreenComponent extends Gui {
 
 		if(getScale() != 1.0F)
 		{
-			Position pos = new Position((int) (defaultPos.getX() / getScale()), (int) (defaultPos.getY() / getScale()));
+            //TODO Fix scale crash
+			//Position pos = new Position((int) (defaultPos.getX() / getScale()), (int) (defaultPos.getY() / getScale()));
 
-			if(!getPosition().matches(pos))
-				setPosition(pos);
+			//if(!getPosition().matches(pos))
+			//	setPosition(pos);
 		}
 	}
 

@@ -16,6 +16,9 @@ public class ComponentDeserializer implements JsonDeserializer<ScreenComponent> 
         if(json.getAsJsonObject().get("type").getAsString().matches("ScreenText")) {
     		return context.deserialize(json, ScreenText.class);
         }
+        if(json.getAsJsonObject().get("type").getAsString().matches("ScreenButton")) {
+        	return context.deserialize(json, ScreenButton.class);
+        }
         
 		return context.deserialize(json, ScreenComponent.class);
     }

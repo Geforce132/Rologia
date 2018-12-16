@@ -9,7 +9,6 @@ import net.geforcemods.rologia.os.apps.events.AppEvent;
 import net.geforcemods.rologia.os.apps.events.AppEventType;
 import net.geforcemods.rologia.os.gui.components.ScreenComponent;
 import net.geforcemods.rologia.os.gui.components.images.ScreenImage;
-import net.geforcemods.rologia.os.gui.components.text.ScreenText;
 import net.geforcemods.rologia.os.gui.screens.Screen;
 import net.minecraft.util.ResourceLocation;
 
@@ -45,13 +44,9 @@ public abstract class App {
 	
 	public void drawComponents(Screen currentScreen) {
 		for(ScreenComponent comp : components) {
-			if(comp instanceof ScreenText) {
-				ScreenText text = (ScreenText) comp;
-				
-				GL11.glPushMatrix();
-				currentScreen.drawString(text.getText(), currentScreen.getPosition().getX() + text.getPosition().getX(), currentScreen.getPosition().getY() + text.getPosition().getY(), text.getColor());
-				GL11.glPopMatrix();
-			}
+			GL11.glPushMatrix();
+			comp.drawComponent();
+			GL11.glPopMatrix();
 		}
 	}
 	
@@ -123,6 +118,10 @@ public abstract class App {
 	
 	public void setOS(Rologia os) {
 		this.os = os;
+
+		for(int i = 0; i < components.length; i++) {
+			components[i].setOS(os);
+		}
 	}
 	
 }

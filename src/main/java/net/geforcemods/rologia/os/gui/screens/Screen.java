@@ -6,12 +6,13 @@ import org.apache.commons.lang3.StringUtils;
 import org.lwjgl.opengl.GL11;
 
 import net.geforcemods.rologia.os.Rologia;
+import net.geforcemods.rologia.os.apps.App;
 import net.geforcemods.rologia.os.gui.components.ScreenComponent;
 import net.geforcemods.rologia.os.gui.components.ScreenScrollBar;
 import net.geforcemods.rologia.os.gui.components.ScreenStatusBar;
 import net.geforcemods.rologia.os.gui.components.images.ScreenImage;
-import net.geforcemods.rologia.os.gui.components.text.ScreenText;
 import net.geforcemods.rologia.os.gui.rendering.Colors;
+import net.geforcemods.rologia.os.gui.rendering.GuiUtils;
 import net.geforcemods.rologia.os.misc.Position;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -73,19 +74,20 @@ public abstract class Screen extends Gui {
 	public void editImages() {}
 
 	public void drawImages() {
-
 		GL11.glPushMatrix();
 		
-		//TODO Uncomment two lines below if the screen needs to be drawn in the future.
-		if(OS.getCurrentApp().getAppBackgroundImage() == null)
-		{
-			//backgroundImage.performPrerenderGLFixes();
-			//backgroundImage.drawComponent();
-		}
-		else
-		{
-			OS.getCurrentApp().getAppBackgroundImage().performPrerenderGLFixes();
-			OS.getCurrentApp().getAppBackgroundImage().drawComponent();
+		if(OS.isAppOpen()) {
+			//TODO Uncomment two lines below if the screen needs to be drawn in the future.
+			if(OS.getCurrentApp().getAppBackgroundImage() == null)
+			{
+				//backgroundImage.performPrerenderGLFixes();
+				//backgroundImage.drawComponent();
+			}
+			else
+			{
+				OS.getCurrentApp().getAppBackgroundImage().performPrerenderGLFixes();
+				OS.getCurrentApp().getAppBackgroundImage().drawComponent();
+			}
 		}
 		
 		GL11.glPopMatrix();
@@ -100,9 +102,11 @@ public abstract class Screen extends Gui {
 	}
 	
 	public void editComponents() {
-		for(ScreenComponent component : components)
+		int l = components.size();
+		for(int i = 0; i < l; i++)
+		//for(ScreenComponent component : components) //TODO throws an CME
 		{
-			editComponent(component);
+			editComponent(components.get(i));
 		}
 	}
 	
@@ -149,27 +153,7 @@ public abstract class Screen extends Gui {
 		this.drawString(getFontRenderer(), "Mouse pos: (" + mouseX + ", " + mouseY + ")", mouseX + 10, mouseY + 5, 555555);
 		
 		for(ScreenComponent comp : components) {
-			GL11.glEnable(GL11.GL_BLEND);
-	        GL11.glDisable(GL11.GL_TEXTURE_2D);
-	        
-			GL11.glBegin(GL11.GL_LINES);
-			GL11.glColor3f(0, 0, 255);
-			GL11.glVertex2f(comp.getPosition().getX(), comp.getPosition().getY());
-			GL11.glVertex2f(comp.getPosition().getX() + comp.getWidth(), comp.getPosition().getY());
-			
-			GL11.glVertex2f(comp.getPosition().getX() + comp.getWidth(), comp.getPosition().getY());
-			GL11.glVertex2f(comp.getPosition().getX() + comp.getWidth(), comp.getPosition().getY() + comp.getHeight());
-			
-			GL11.glVertex2f(comp.getPosition().getX() + comp.getWidth(), comp.getPosition().getY() + comp.getHeight());
-			GL11.glVertex2f(comp.getPosition().getX(), comp.getPosition().getY() + comp.getHeight());
-			
-			GL11.glVertex2f(comp.getPosition().getX(), comp.getPosition().getY());
-			GL11.glVertex2f(comp.getPosition().getX(), comp.getPosition().getY() + comp.getHeight());
-
-			GL11.glEnd();
-
-	        GL11.glEnable(GL11.GL_TEXTURE_2D);
-	        GL11.glDisable(GL11.GL_BLEND);
+			GuiUtils.drawHollowRect(comp.getPosition(), comp.getWidth(), comp.getHeight());
 			
 	        if(statusBar.isMouseHoveringOver(mouseX, mouseY)) {
 	        	this.drawString(getFontRenderer(), "--- Status bar: ---", mouseX + 10, mouseY + 25, 555555);
@@ -182,6 +166,10 @@ public abstract class Screen extends Gui {
 				this.drawString(getFontRenderer(), "X, Y pos: (" + comp.getPosition().getX() + ", " + comp.getPosition().getY() + ")" + " -> " + " w, h: (" + (comp.getPosition().getX() + comp.getWidth()) + ", " + (comp.getPosition().getY() + comp.getHeight()) + ")", mouseX + 10, mouseY + 35, 555555);
 				this.drawString(getFontRenderer(), "Default pos: (" + comp.getDefaultPosition().getX() + ", " + comp.getDefaultPosition().getY() + ")", mouseX + 10, mouseY + 45, 555555);
 			}
+		}
+		
+		for(int i = 0; i < components.size(); i++) {
+			this.drawString(getFontRenderer(), components.get(i).toString().replace("net.geforcemods.rologia.os.gui.components.", ""), screenPos.getX() + 90, screenPos.getY() + (i * 20), 555555);
 		}
 	}
 	
@@ -198,20 +186,10 @@ public abstract class Screen extends Gui {
 		}		
 	}
 	
-	public void addTextComponent(String text, Position pos, int color) {
-		addComponent(new ScreenText(getOS(), text, pos, color));
-	}
-	
-	public void drawString(String text, int x, int y, int color) {
-		String[] keywords = StringUtils.substringsBetween(text, "$$", "$$");
-		
-		if(keywords != null) {
-			for(int i = 0; i < keywords.length; i++) {						
-				text = text.replace("$$" + keywords[i] + "$$", OS.getCurrentApp().replaceKeywords(keywords[i]).toString());
-			}
+	public void addComponents(App app) {
+		for(ScreenComponent comp : app.getComponents()) {
+			addComponent(comp);		
 		}
-		
-		this.drawString(getFontRenderer(), text, x, y, color);	
 	}
 
 	public ScreenComponent getComponent(String compName) {
