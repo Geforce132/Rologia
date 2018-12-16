@@ -1,4 +1,4 @@
-package net.geforcemods.smartwatch.rologia.os.apps.events;
+package net.geforcemods.rologia.os.apps.events;
 
 public enum AppEventType {
 	

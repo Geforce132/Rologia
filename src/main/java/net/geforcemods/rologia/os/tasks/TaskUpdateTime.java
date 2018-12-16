@@ -1,10 +1,10 @@
-package net.geforcemods.smartwatch.rologia.os.tasks;
+package net.geforcemods.rologia.os.tasks;
 
 import java.time.LocalDateTime;
 
-import net.geforcemods.smartwatch.rologia.gui.screens.Screen;
-import net.geforcemods.smartwatch.rologia.os.Rologia;
-import net.geforcemods.smartwatch.rologia.os.time.Task;
+import net.geforcemods.rologia.os.Rologia;
+import net.geforcemods.rologia.os.gui.screens.Screen;
+import net.geforcemods.rologia.os.time.Task;
 
 public class TaskUpdateTime extends Task {
 

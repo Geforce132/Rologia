@@ -1,18 +1,18 @@
-package net.geforcemods.smartwatch.rologia.gui.screens;
+package net.geforcemods.rologia.os.gui.screens;
 
 import java.util.ArrayList;
 
 import org.apache.commons.lang3.StringUtils;
 import org.lwjgl.opengl.GL11;
 
-import net.geforcemods.smartwatch.rologia.gui.components.ScreenComponent;
-import net.geforcemods.smartwatch.rologia.gui.components.ScreenScrollBar;
-import net.geforcemods.smartwatch.rologia.gui.components.ScreenStatusBar;
-import net.geforcemods.smartwatch.rologia.gui.components.images.ScreenImage;
-import net.geforcemods.smartwatch.rologia.gui.components.text.ScreenText;
-import net.geforcemods.smartwatch.rologia.gui.rendering.Colors;
-import net.geforcemods.smartwatch.rologia.os.Rologia;
-import net.geforcemods.smartwatch.rologia.os.misc.Position;
+import net.geforcemods.rologia.os.Rologia;
+import net.geforcemods.rologia.os.gui.components.ScreenComponent;
+import net.geforcemods.rologia.os.gui.components.ScreenScrollBar;
+import net.geforcemods.rologia.os.gui.components.ScreenStatusBar;
+import net.geforcemods.rologia.os.gui.components.images.ScreenImage;
+import net.geforcemods.rologia.os.gui.components.text.ScreenText;
+import net.geforcemods.rologia.os.gui.rendering.Colors;
+import net.geforcemods.rologia.os.misc.Position;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;

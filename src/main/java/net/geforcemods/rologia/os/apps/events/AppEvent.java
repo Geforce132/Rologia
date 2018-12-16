@@ -1,6 +1,6 @@
-package net.geforcemods.smartwatch.rologia.os.apps.events;
+package net.geforcemods.rologia.os.apps.events;
 
-import net.geforcemods.smartwatch.rologia.os.Rologia;
+import net.geforcemods.rologia.os.Rologia;
 import net.minecraft.entity.player.EntityPlayer;
 
 public abstract class AppEvent {

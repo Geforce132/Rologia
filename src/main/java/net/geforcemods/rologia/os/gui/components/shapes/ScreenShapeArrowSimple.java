@@ -1,12 +1,12 @@
-package net.geforcemods.smartwatch.rologia.gui.components.shapes;
+package net.geforcemods.rologia.os.gui.components.shapes;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.Color;
 
 import com.sun.javafx.scene.traversal.Direction;
 
-import net.geforcemods.smartwatch.rologia.gui.components.ScreenComponent;
-import net.geforcemods.smartwatch.rologia.os.Rologia;
+import net.geforcemods.rologia.os.Rologia;
+import net.geforcemods.rologia.os.gui.components.ScreenComponent;
 
 public class ScreenShapeArrowSimple extends ScreenComponent {
 

@@ -1,4 +1,4 @@
-package net.geforcemods.smartwatch.utils;
+package net.geforcemods.rologia.utils;
 
 import java.util.Iterator;
 import java.util.List;

@@ -1,9 +1,9 @@
-package net.geforcemods.smartwatch.gui;
+package net.geforcemods.rologia.gui;
 
-import net.geforcemods.smartwatch.MineWatch;
-import net.geforcemods.smartwatch.containers.ContainerEmpty;
-import net.geforcemods.smartwatch.item.ItemMineWatch;
-import net.geforcemods.smartwatch.utils.PlayerUtils;
+import net.geforcemods.rologia.MineWatch;
+import net.geforcemods.rologia.containers.ContainerEmpty;
+import net.geforcemods.rologia.item.ItemMineWatch;
+import net.geforcemods.rologia.utils.PlayerUtils;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.IGuiHandler;

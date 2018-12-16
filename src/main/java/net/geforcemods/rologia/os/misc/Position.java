@@ -1,4 +1,4 @@
-package net.geforcemods.smartwatch.rologia.os.misc;
+package net.geforcemods.rologia.os.misc;
 
 public class Position {
 	

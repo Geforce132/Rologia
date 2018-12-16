@@ -1,15 +1,15 @@
-package net.geforcemods.smartwatch;
+package net.geforcemods.rologia;
 
 import java.util.HashMap;
 
-import net.geforcemods.smartwatch.events.RologiaEventHandler;
-import net.geforcemods.smartwatch.gui.GuiHandler;
-import net.geforcemods.smartwatch.item.ItemMineWatch;
-import net.geforcemods.smartwatch.network.ServerProxy;
-import net.geforcemods.smartwatch.resources.ResourceLoader;
-import net.geforcemods.smartwatch.rologia.os.Rologia;
-import net.geforcemods.smartwatch.rologia.os.apps.App;
-import net.geforcemods.smartwatch.rologia.os.apps.events.AppEvent;
+import net.geforcemods.rologia.events.RologiaEventHandler;
+import net.geforcemods.rologia.gui.GuiHandler;
+import net.geforcemods.rologia.item.ItemMineWatch;
+import net.geforcemods.rologia.network.ServerProxy;
+import net.geforcemods.rologia.os.Rologia;
+import net.geforcemods.rologia.os.apps.App;
+import net.geforcemods.rologia.os.apps.events.AppEvent;
+import net.geforcemods.rologia.os.resources.ResourceLoader;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.MinecraftForge;

@@ -1,8 +1,8 @@
-package net.geforcemods.smartwatch.item;
+package net.geforcemods.rologia.item;
 
-import net.geforcemods.smartwatch.MineWatch;
-import net.geforcemods.smartwatch.gui.GuiHandler;
-import net.geforcemods.smartwatch.rologia.os.Rologia;
+import net.geforcemods.rologia.MineWatch;
+import net.geforcemods.rologia.gui.GuiHandler;
+import net.geforcemods.rologia.os.Rologia;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;

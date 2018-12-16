@@ -1,7 +1,7 @@
-package net.geforcemods.smartwatch.rologia.os.time;
+package net.geforcemods.rologia.os.time;
 
-import net.geforcemods.smartwatch.rologia.gui.screens.Screen;
-import net.geforcemods.smartwatch.rologia.os.Rologia;
+import net.geforcemods.rologia.os.Rologia;
+import net.geforcemods.rologia.os.gui.screens.Screen;
 
 public abstract class Task {
 	

@@ -1,11 +1,11 @@
-package net.geforcemods.smartwatch.rologia.gui.components.shapes;
+package net.geforcemods.rologia.os.gui.components.shapes;
 
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.Color;
 
-import net.geforcemods.smartwatch.rologia.gui.components.ScreenComponent;
-import net.geforcemods.smartwatch.rologia.os.Rologia;
-import net.geforcemods.smartwatch.rologia.os.misc.Position;
+import net.geforcemods.rologia.os.Rologia;
+import net.geforcemods.rologia.os.gui.components.ScreenComponent;
+import net.geforcemods.rologia.os.misc.Position;
 
 public class ScreenShapeTriangle extends ScreenComponent {
 

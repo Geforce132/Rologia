@@ -1,14 +1,14 @@
-package net.geforcemods.smartwatch.rologia.os.apps;
+package net.geforcemods.rologia.os.apps;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 
 import com.google.gson.JsonObject;
 
-import net.geforcemods.smartwatch.rologia.gui.screens.Screen;
-import net.geforcemods.smartwatch.rologia.os.Rologia;
-import net.geforcemods.smartwatch.rologia.os.apps.events.AppEvent;
-import net.geforcemods.smartwatch.rologia.os.apps.events.AppEventType;
+import net.geforcemods.rologia.os.Rologia;
+import net.geforcemods.rologia.os.apps.events.AppEvent;
+import net.geforcemods.rologia.os.apps.events.AppEventType;
+import net.geforcemods.rologia.os.gui.screens.Screen;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 

@@ -1,9 +1,9 @@
-package net.geforcemods.smartwatch.events;
+package net.geforcemods.rologia.events;
 
-import net.geforcemods.smartwatch.MineWatch;
-import net.geforcemods.smartwatch.rologia.os.Rologia;
-import net.geforcemods.smartwatch.rologia.os.apps.events.AppEventPlayerStep;
-import net.geforcemods.smartwatch.rologia.os.stats.UserStats;
+import net.geforcemods.rologia.MineWatch;
+import net.geforcemods.rologia.os.Rologia;
+import net.geforcemods.rologia.os.apps.events.AppEventPlayerStep;
+import net.geforcemods.rologia.os.stats.UserStats;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.event.entity.PlaySoundAtEntityEvent;

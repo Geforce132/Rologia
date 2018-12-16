@@ -1,4 +1,4 @@
-package net.geforcemods.smartwatch.rologia.os.speech;
+package net.geforcemods.rologia.os.speech;
 
 import java.io.File;
 import java.io.FileNotFoundException;

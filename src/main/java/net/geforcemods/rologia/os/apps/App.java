@@ -1,16 +1,16 @@
-package net.geforcemods.smartwatch.rologia.os.apps;
+package net.geforcemods.rologia.os.apps;
 
 import org.lwjgl.opengl.GL11;
 
 import com.google.gson.JsonObject;
 
-import net.geforcemods.smartwatch.rologia.gui.components.ScreenComponent;
-import net.geforcemods.smartwatch.rologia.gui.components.images.ScreenImage;
-import net.geforcemods.smartwatch.rologia.gui.components.text.ScreenText;
-import net.geforcemods.smartwatch.rologia.gui.screens.Screen;
-import net.geforcemods.smartwatch.rologia.os.Rologia;
-import net.geforcemods.smartwatch.rologia.os.apps.events.AppEvent;
-import net.geforcemods.smartwatch.rologia.os.apps.events.AppEventType;
+import net.geforcemods.rologia.os.Rologia;
+import net.geforcemods.rologia.os.apps.events.AppEvent;
+import net.geforcemods.rologia.os.apps.events.AppEventType;
+import net.geforcemods.rologia.os.gui.components.ScreenComponent;
+import net.geforcemods.rologia.os.gui.components.images.ScreenImage;
+import net.geforcemods.rologia.os.gui.components.text.ScreenText;
+import net.geforcemods.rologia.os.gui.screens.Screen;
 import net.minecraft.util.ResourceLocation;
 
 public abstract class App {

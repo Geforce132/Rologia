@@ -1,4 +1,4 @@
-package net.geforcemods.smartwatch.rologia.os.apps;
+package net.geforcemods.rologia.os.apps;
 
 import java.lang.reflect.Type;
 

@@ -1,6 +1,6 @@
-package net.geforcemods.smartwatch.rologia.os.fontrenderer;
+package net.geforcemods.rologia.os.fontrenderer;
 
-import net.geforcemods.smartwatch.rologia.gui.screens.Screen;
+import net.geforcemods.rologia.os.gui.screens.Screen;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.util.ResourceLocation;

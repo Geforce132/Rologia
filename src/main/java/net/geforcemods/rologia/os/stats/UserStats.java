@@ -1,4 +1,4 @@
-package net.geforcemods.smartwatch.rologia.os.stats;
+package net.geforcemods.rologia.os.stats;
 
 import java.sql.Time;
 

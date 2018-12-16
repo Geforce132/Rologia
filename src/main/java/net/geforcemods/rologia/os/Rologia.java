@@ -1,4 +1,4 @@
-package net.geforcemods.smartwatch.rologia.os;
+package net.geforcemods.rologia.os;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -6,17 +6,17 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import net.geforcemods.smartwatch.MineWatch;
-import net.geforcemods.smartwatch.resources.ResourceLoader;
-import net.geforcemods.smartwatch.rologia.gui.components.ScreenComponent;
-import net.geforcemods.smartwatch.rologia.gui.screens.BootScreen;
-import net.geforcemods.smartwatch.rologia.gui.screens.Screen;
-import net.geforcemods.smartwatch.rologia.os.apps.App;
-import net.geforcemods.smartwatch.rologia.os.misc.Position;
-import net.geforcemods.smartwatch.rologia.os.stats.UserStats;
-import net.geforcemods.smartwatch.rologia.os.tasks.TaskUpdateTime;
-import net.geforcemods.smartwatch.rologia.os.time.Task;
-import net.geforcemods.smartwatch.utils.PlayerUtils;
+import net.geforcemods.rologia.MineWatch;
+import net.geforcemods.rologia.os.apps.App;
+import net.geforcemods.rologia.os.gui.components.ScreenComponent;
+import net.geforcemods.rologia.os.gui.screens.BootScreen;
+import net.geforcemods.rologia.os.gui.screens.Screen;
+import net.geforcemods.rologia.os.misc.Position;
+import net.geforcemods.rologia.os.resources.ResourceLoader;
+import net.geforcemods.rologia.os.stats.UserStats;
+import net.geforcemods.rologia.os.tasks.TaskUpdateTime;
+import net.geforcemods.rologia.os.time.Task;
+import net.geforcemods.rologia.utils.PlayerUtils;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 

@@ -1,9 +1,9 @@
-package net.geforcemods.smartwatch.rologia.gui.screens;
+package net.geforcemods.rologia.os.gui.screens;
 
-import net.geforcemods.smartwatch.rologia.gui.components.ScreenComponent;
-import net.geforcemods.smartwatch.rologia.gui.components.images.ScreenImage;
-import net.geforcemods.smartwatch.rologia.os.Rologia;
-import net.geforcemods.smartwatch.rologia.os.misc.Position;
+import net.geforcemods.rologia.os.Rologia;
+import net.geforcemods.rologia.os.gui.components.ScreenComponent;
+import net.geforcemods.rologia.os.gui.components.images.ScreenImage;
+import net.geforcemods.rologia.os.misc.Position;
 
 public class BootScreen extends Screen {
 

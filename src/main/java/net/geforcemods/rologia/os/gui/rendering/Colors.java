@@ -1,4 +1,4 @@
-package net.geforcemods.smartwatch.rologia.gui.rendering;
+package net.geforcemods.rologia.os.gui.rendering;
 
 import org.lwjgl.util.Color;
 

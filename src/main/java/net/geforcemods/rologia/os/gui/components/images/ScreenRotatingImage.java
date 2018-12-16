@@ -1,11 +1,11 @@
-package net.geforcemods.smartwatch.rologia.gui.components.images;
+package net.geforcemods.rologia.os.gui.components.images;
 
 import java.awt.image.BufferedImage;
 
 import org.lwjgl.opengl.GL11;
 
-import net.geforcemods.smartwatch.rologia.os.Rologia;
-import net.geforcemods.smartwatch.rologia.os.misc.Position;
+import net.geforcemods.rologia.os.Rologia;
+import net.geforcemods.rologia.os.misc.Position;
 import net.minecraft.util.ResourceLocation;
 
 public class ScreenRotatingImage extends ScreenImage {

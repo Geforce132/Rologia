@@ -1,4 +1,4 @@
-package net.geforcemods.smartwatch;
+package net.geforcemods.rologia;
 
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;

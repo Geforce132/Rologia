@@ -1,10 +1,10 @@
-package net.geforcemods.smartwatch.rologia.gui.components;
+package net.geforcemods.rologia.os.gui.components;
 
 import org.lwjgl.opengl.GL11;
 
-import net.geforcemods.smartwatch.rologia.gui.screens.Screen;
-import net.geforcemods.smartwatch.rologia.os.Rologia;
-import net.geforcemods.smartwatch.rologia.os.misc.Position;
+import net.geforcemods.rologia.os.Rologia;
+import net.geforcemods.rologia.os.gui.screens.Screen;
+import net.geforcemods.rologia.os.misc.Position;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;

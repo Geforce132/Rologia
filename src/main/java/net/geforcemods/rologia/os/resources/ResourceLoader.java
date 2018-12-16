@@ -1,4 +1,4 @@
-package net.geforcemods.smartwatch.resources;
+package net.geforcemods.rologia.os.resources;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -17,14 +17,14 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import net.geforcemods.smartwatch.MineWatch;
-import net.geforcemods.smartwatch.rologia.gui.components.ComponentDeserializer;
-import net.geforcemods.smartwatch.rologia.gui.components.ScreenComponent;
-import net.geforcemods.smartwatch.rologia.gui.components.images.ScreenImage;
-import net.geforcemods.smartwatch.rologia.gui.components.images.ScreenRotatingImage;
-import net.geforcemods.smartwatch.rologia.os.Rologia;
-import net.geforcemods.smartwatch.rologia.os.apps.App;
-import net.geforcemods.smartwatch.rologia.os.apps.AppDeserializer;
+import net.geforcemods.rologia.MineWatch;
+import net.geforcemods.rologia.os.Rologia;
+import net.geforcemods.rologia.os.apps.App;
+import net.geforcemods.rologia.os.apps.AppDeserializer;
+import net.geforcemods.rologia.os.gui.components.ComponentDeserializer;
+import net.geforcemods.rologia.os.gui.components.ScreenComponent;
+import net.geforcemods.rologia.os.gui.components.images.ScreenImage;
+import net.geforcemods.rologia.os.gui.components.images.ScreenRotatingImage;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.IResource;
 import net.minecraft.util.ResourceLocation;

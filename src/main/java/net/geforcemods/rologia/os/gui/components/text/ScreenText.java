@@ -1,8 +1,8 @@
-package net.geforcemods.smartwatch.rologia.gui.components.text;
+package net.geforcemods.rologia.os.gui.components.text;
 
-import net.geforcemods.smartwatch.rologia.gui.components.ScreenComponent;
-import net.geforcemods.smartwatch.rologia.os.Rologia;
-import net.geforcemods.smartwatch.rologia.os.misc.Position;
+import net.geforcemods.rologia.os.Rologia;
+import net.geforcemods.rologia.os.gui.components.ScreenComponent;
+import net.geforcemods.rologia.os.misc.Position;
 
 public class ScreenText extends ScreenComponent {
 	

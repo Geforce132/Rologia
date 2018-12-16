@@ -1,4 +1,4 @@
-package net.geforcemods.smartwatch.rologia.gui.components;
+package net.geforcemods.rologia.os.gui.components;
 
 import java.lang.reflect.Type;
 
@@ -7,7 +7,7 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 
-import net.geforcemods.smartwatch.rologia.gui.components.text.ScreenText;
+import net.geforcemods.rologia.os.gui.components.text.ScreenText;
 
 public class ComponentDeserializer implements JsonDeserializer<ScreenComponent> {
 	

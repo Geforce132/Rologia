@@ -1,4 +1,4 @@
-package net.geforcemods.smartwatch.network;
+package net.geforcemods.rologia.network;
 
 public class ServerProxy {
 
