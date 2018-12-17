@@ -67,10 +67,10 @@ public abstract class ScreenComponent extends Gui {
 		if(getScale() != 1.0F)
 		{
             //TODO Fix scale crash
-			//Position pos = new Position((int) (defaultPos.getX() / getScale()), (int) (defaultPos.getY() / getScale()));
+			Position pos = new Position((int) (defaultPos.getX() / getScale()), (int) (defaultPos.getY() / getScale()));
 
-			//if(!getPosition().matches(pos))
-			//	setPosition(pos);
+			if(!getPosition().matches(pos))
+				setPosition(pos);
 		}
 	}
 

@@ -9,9 +9,15 @@ public class ScreenButton extends ScreenComponent {
 	private String text;
 	//private int width;
 	//private int height;
+	
+	public ScreenButton(Rologia OS, String string) {
+		super(OS);
+		text = string;
+	}
 
 	public ScreenButton(Rologia OS, Position pos, String string) {
 		super(OS, pos);
+		text = string;
 	}
 
 	@Override

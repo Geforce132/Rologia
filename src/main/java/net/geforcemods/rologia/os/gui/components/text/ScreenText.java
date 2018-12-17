@@ -3,6 +3,7 @@ package net.geforcemods.rologia.os.gui.components.text;
 import net.geforcemods.rologia.os.Rologia;
 import net.geforcemods.rologia.os.gui.components.ScreenComponent;
 import net.geforcemods.rologia.os.gui.rendering.GuiUtils;
+import net.geforcemods.rologia.os.gui.screens.Screen;
 import net.geforcemods.rologia.os.misc.Position;
 
 public class ScreenText extends ScreenComponent {
@@ -22,9 +23,9 @@ public class ScreenText extends ScreenComponent {
 	}
 	
 	@Override
-	public void drawComponent() {
+	public void drawComponent() {		
 		if(getScreen() != null)
-		drawString(getFontRenderer(), getText(), getPosition().getX(), getPosition().getY() + 2, colorValue);
+			getFontRenderer().drawSplitString(getText(), getPosition().getX(), getPosition().getY() + 2, Screen.WATCH_SCREEN_X_SIZE, colorValue);
 	}
 
 	@Override
@@ -38,12 +39,12 @@ public class ScreenText extends ScreenComponent {
 	
 	@Override
 	public int getWidth() {
-		return (int) ((getFontRenderer().getStringWidth(getText())) * scale);
+		return (int) (GuiUtils.getWordWrappedWidth(getFontRenderer(), getText(), Screen.WATCH_SCREEN_X_SIZE) * scale);
 	}
 	
 	@Override
 	public int getHeight() {
-		return (int) (12 * scale);
+		return (int) (getFontRenderer().getWordWrappedHeight(getText(), Screen.WATCH_SCREEN_X_SIZE) * scale) + 2;
 	}
 
 }

@@ -9,8 +9,8 @@ import java.util.HashMap;
 import net.geforcemods.rologia.MineWatch;
 import net.geforcemods.rologia.os.apps.App;
 import net.geforcemods.rologia.os.gui.components.ScreenComponent;
-import net.geforcemods.rologia.os.gui.screens.BootScreen;
 import net.geforcemods.rologia.os.gui.screens.Screen;
+import net.geforcemods.rologia.os.gui.screens.input.InputYesNoScreen;
 import net.geforcemods.rologia.os.misc.Position;
 import net.geforcemods.rologia.os.resources.ResourceLoader;
 import net.geforcemods.rologia.os.stats.UserStats;
@@ -56,9 +56,16 @@ public class Rologia {
 		user = player;
 
 		if(currentScreen == null) {
-			setScreen(new BootScreen(this, new Position(screenXPos, screenYPos)));
+			//setScreen(new BootScreen(this, new Position(screenXPos, screenYPos)));
+			setScreen(new InputYesNoScreen(this, new Position(screenXPos, screenYPos)));
 			currentScreen.addStartupComponents();
 			currentScreen.initializeScreen();
+		}
+		else {
+			Position p = new Position(screenXPos, screenYPos);
+			if(!currentScreen.getPosition().matches(p)) {
+				currentScreen.setPosition(p);
+			}
 		}
 		
 		tasks.add(new TaskUpdateTime(this));

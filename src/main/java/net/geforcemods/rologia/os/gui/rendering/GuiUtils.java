@@ -5,6 +5,7 @@ import org.lwjgl.opengl.GL11;
 
 import net.geforcemods.rologia.os.Rologia;
 import net.geforcemods.rologia.os.misc.Position;
+import net.minecraft.client.gui.FontRenderer;
 
 public class GuiUtils {
 	
@@ -42,6 +43,18 @@ public class GuiUtils {
 		}
 		
 		return text;
+	}
+	
+	public static int getWordWrappedWidth(FontRenderer renderer, String text, int width) {
+		int longestWidth = 0;
+
+		for(String line : renderer.listFormattedStringToWidth(text, width)) {
+			int lineWidth = renderer.getStringWidth(line);
+			if(renderer.getStringWidth(line) > longestWidth)
+				longestWidth = lineWidth;
+		}
+		
+		return longestWidth;
 	}
 
 

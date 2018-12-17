@@ -74,19 +74,14 @@ public abstract class Screen extends Gui {
 
 	public void drawImages() {
 		GL11.glPushMatrix();
-		
+
 		if(OS.isAppOpen()) {
-			//TODO Uncomment two lines below if the screen needs to be drawn in the future.
-			if(OS.getCurrentApp().getAppBackgroundImage() == null)
-			{
-				//backgroundImage.performPrerenderGLFixes();
-				//backgroundImage.drawComponent();
-			}
-			else
-			{
-				OS.getCurrentApp().getAppBackgroundImage().performPrerenderGLFixes();
-				OS.getCurrentApp().getAppBackgroundImage().drawComponent();
-			}
+			OS.getCurrentApp().getAppBackgroundImage().performPrerenderGLFixes();
+			OS.getCurrentApp().getAppBackgroundImage().drawComponent();
+		}
+		else {
+			backgroundImage.performPrerenderGLFixes();
+			backgroundImage.drawComponent();
 		}
 		
 		GL11.glPopMatrix();
@@ -131,6 +126,7 @@ public abstract class Screen extends Gui {
 	public void editStatusBar() {}
 	
 	public void drawDebuggingTools(int mouseX, int mouseY) {
+		/*
 		GL11.glEnable(GL11.GL_BLEND);
         GL11.glDisable(GL11.GL_TEXTURE_2D);
         
@@ -148,6 +144,7 @@ public abstract class Screen extends Gui {
 
         GL11.glEnable(GL11.GL_TEXTURE_2D);
         GL11.glDisable(GL11.GL_BLEND);
+        */
         
 		this.drawString(getFontRenderer(), "Mouse pos: (" + mouseX + ", " + mouseY + ")", mouseX + 10, mouseY + 5, 555555);
 		
@@ -216,7 +213,7 @@ public abstract class Screen extends Gui {
 		mousePosY = y;
 	}
 	
-	public Screen setScreenPosition(Position pos) {
+	public Screen setPosition(Position pos) {
 		screenPos = pos;
 
 		backgroundImage.setPositionAndOrigin(pos.shiftX(3).shiftY(3));
