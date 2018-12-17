@@ -54,9 +54,12 @@ public class Rologia {
 	
 	public void openSmartwatchGUI(EntityPlayer player, int screenXPos, int screenYPos) {
 		user = player;
-		setScreen(new BootScreen(this, new Position(screenXPos, screenYPos)));
-		currentScreen.addStartupComponents();
-		currentScreen.initializeScreen();
+
+		if(currentScreen == null) {
+			setScreen(new BootScreen(this, new Position(screenXPos, screenYPos)));
+			currentScreen.addStartupComponents();
+			currentScreen.initializeScreen();
+		}
 		
 		tasks.add(new TaskUpdateTime(this));
 	}

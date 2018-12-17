@@ -2,7 +2,6 @@ package net.geforcemods.rologia.os.gui.screens;
 
 import java.util.ArrayList;
 
-import org.apache.commons.lang3.StringUtils;
 import org.lwjgl.opengl.GL11;
 
 import net.geforcemods.rologia.os.Rologia;
