@@ -1,6 +1,7 @@
 package net.geforcemods.rologia.os.gui.components;
 
 import net.geforcemods.rologia.os.Rologia;
+import net.geforcemods.rologia.os.gui.rendering.Colors;
 import net.geforcemods.rologia.os.gui.rendering.GuiUtils;
 import net.geforcemods.rologia.os.misc.Position;
 
@@ -22,7 +23,8 @@ public class ScreenButton extends ScreenComponent {
 
 	@Override
 	public void drawComponent() {
-		GuiUtils.drawHollowRect(position, getWidth(), getHeight());
+		GuiUtils.drawHollowRect(position, getWidth(), getHeight(), Colors.BLUE);
+		GuiUtils.drawFilledRect(getPosition(), getWidth(), getHeight(), Colors.BLUE, true);
 		drawString(getFontRenderer(), text, getPosition().getX() + 2, getPosition().getY() + 2, 55555);
 	}
 

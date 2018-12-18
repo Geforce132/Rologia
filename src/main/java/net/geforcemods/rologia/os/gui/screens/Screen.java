@@ -149,7 +149,7 @@ public abstract class Screen extends Gui {
 		this.drawString(getFontRenderer(), "Mouse pos: (" + mouseX + ", " + mouseY + ")", mouseX + 10, mouseY + 5, 555555);
 		
 		for(ScreenComponent comp : components) {
-			GuiUtils.drawHollowRect(comp.getPosition(), comp.getWidth(), comp.getHeight());
+			GuiUtils.drawHollowRect(comp.getPosition(), comp.getWidth(), comp.getHeight(), Colors.BLUE);
 			
 	        if(statusBar.isMouseHoveringOver(mouseX, mouseY)) {
 	        	this.drawString(getFontRenderer(), "--- Status bar: ---", mouseX + 10, mouseY + 25, 555555);
