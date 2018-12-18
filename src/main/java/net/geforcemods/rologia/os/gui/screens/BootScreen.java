@@ -25,7 +25,7 @@ public class BootScreen extends Screen {
 	}
 
 	@Override
-	public void onComponentClicked(ScreenComponent component, int mouseX, int mouseY) {
+	public void onComponentClicked(ScreenComponent component, Position mousePos, int mouseButtonClicked) {
 		//if(component == arrow)
 			//ResourceLoader.loadComponents(getOS());
 	}

@@ -15,7 +15,7 @@ public class HomeScreen extends Screen {
 	public void initializeScreen() {}
 
 	@Override
-	public void onComponentClicked(ScreenComponent component, int mouseX, int mouseY) {
+	public void onComponentClicked(ScreenComponent component, Position mousePos, int mouseButtonClicked) {
 
 	}
 

@@ -8,8 +8,6 @@ import net.geforcemods.rologia.os.misc.Position;
 public class ScreenButton extends ScreenComponent {
 	
 	private String text;
-	//private int width;
-	//private int height;
 	
 	public ScreenButton(Rologia OS, String string) {
 		super(OS);
@@ -24,13 +22,19 @@ public class ScreenButton extends ScreenComponent {
 	@Override
 	public void drawComponent() {
 		GuiUtils.drawHollowRect(position, getWidth(), getHeight(), Colors.BLUE);
-		GuiUtils.drawFilledRect(getPosition(), getWidth(), getHeight(), Colors.BLUE, true);
+
+		if(this.isMouseHoveringOver(getScreen().getMousePosition())) {
+			GuiUtils.drawFilledRect(getPosition(), getWidth(), getHeight(), Colors.DARK_BLUE, true);
+		}
+		else {
+			GuiUtils.drawFilledRect(getPosition(), getWidth(), getHeight(), Colors.BLUE, true);
+		}
+
 		drawString(getFontRenderer(), text, getPosition().getX() + 2, getPosition().getY() + 2, 55555);
 	}
 
 	@Override
 	public void mouseClick(int mouseX, int mouseY, int mouseButtonClicked) {
-		System.out.println("clicked");
 	}
 
 	@Override

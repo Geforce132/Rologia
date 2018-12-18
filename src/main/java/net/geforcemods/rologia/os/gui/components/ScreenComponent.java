@@ -45,13 +45,13 @@ public abstract class ScreenComponent extends Gui {
 
 	public abstract void mouseClick(int mouseX, int mouseY, int mouseButtonClicked);
 	
-	public boolean isMouseHoveringOver(int mouseX, int mouseY) {
-		Position pos = getPosition();
+	public boolean isMouseHoveringOver(Position mousePosition) {
+		Position compPos = getPosition();
 		int compWidth, compHeight;
 		compWidth = getWidth();
 		compHeight = getHeight();
 
-		if(mouseX >= pos.getX() && mouseX <= (pos.getX() + compWidth) && mouseY >= pos.getY() && mouseY <= (pos.getY() + compHeight))
+		if(mousePosition.getX() >= compPos.getX() && mousePosition.getX() <= (compPos.getX() + compWidth) && mousePosition.getY() >= compPos.getY() && mousePosition.getY() <= (compPos.getY() + compHeight))
 			return true;
 		
 		return false;

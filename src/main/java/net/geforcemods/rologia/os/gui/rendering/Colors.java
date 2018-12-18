@@ -9,6 +9,7 @@ public class Colors {
 	public static final Color RED = getNewColor(255, 0, 0, 1);
 	public static final Color GREEN = getNewColor(0, 255, 0, 1);
 	public static final Color BLUE = getNewColor(0, 0, 255, 1);
+	public static final Color DARK_BLUE = getNewColor(0, 0, 160, 255);
 	public static final Color YELLOW = getNewColor(255, 255, 0, 1);
 	public static final Color AQUA = getNewColor(0, 255, 255, 1);
 	public static final Color MAGENTA = getNewColor(255, 0, 255, 1);

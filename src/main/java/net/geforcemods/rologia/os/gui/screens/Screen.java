@@ -16,6 +16,7 @@ import net.geforcemods.rologia.os.misc.Position;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.texture.TextureManager;
 
 public abstract class Screen extends Gui {
@@ -28,9 +29,7 @@ public abstract class Screen extends Gui {
 	private Rologia OS;
 	
 	private Position screenPos;
-	
-	private int mousePosX = 0;
-	private int mousePosY = 0;
+	private Position mousePos = new Position();
 	
 	protected ArrayList<ScreenImage> images = new ArrayList<ScreenImage>();
 	protected ArrayList<ScreenComponent> components = new ArrayList<ScreenComponent>();
@@ -52,7 +51,7 @@ public abstract class Screen extends Gui {
 
 	public abstract void initializeScreen();
 	
-	public abstract void onComponentClicked(ScreenComponent component, int mouseX, int mouseY);
+	public abstract void onComponentClicked(ScreenComponent component, Position mousePos, int mouseButtonClicked);
 	
 	public void addStartupComponents() {
 		statusBar = new ScreenStatusBar(OS, getPosition(), Colors.RED);
@@ -73,7 +72,7 @@ public abstract class Screen extends Gui {
 	public void editImages() {}
 
 	public void drawImages() {
-		GL11.glPushMatrix();
+		GlStateManager.pushMatrix();
 
 		if(OS.isAppOpen()) {
 			OS.getCurrentApp().getAppBackgroundImage().performPrerenderGLFixes();
@@ -84,14 +83,14 @@ public abstract class Screen extends Gui {
 			backgroundImage.drawComponent();
 		}
 		
-		GL11.glPopMatrix();
+		GlStateManager.popMatrix();
 		
 		for(ScreenImage image : images)
 		{
-			GL11.glPushMatrix();
+			GlStateManager.pushMatrix();
 			image.performPrerenderGLFixes();
 			image.drawComponent();
-			GL11.glPopMatrix();
+			GlStateManager.popMatrix();
 		}
 	}
 	
@@ -109,18 +108,18 @@ public abstract class Screen extends Gui {
 	public void drawComponents() {
 		for(ScreenComponent component : components)
 		{
-			GL11.glPushMatrix();
+			GlStateManager.pushMatrix();
 			component.performPrerenderGLFixes();
 			component.drawComponent();
-			GL11.glPopMatrix();
+			GlStateManager.popMatrix();
 		}
 	}
 
 	public void drawStatusBar() {
-		GL11.glPushMatrix();
+		GlStateManager.pushMatrix();
 		statusBar.performPrerenderGLFixes();
 		statusBar.drawComponent();
-		GL11.glPopMatrix();
+		GlStateManager.popMatrix();
 	}
 
 	public void editStatusBar() {}
@@ -151,13 +150,13 @@ public abstract class Screen extends Gui {
 		for(ScreenComponent comp : components) {
 			GuiUtils.drawHollowRect(comp.getPosition(), comp.getWidth(), comp.getHeight(), Colors.BLUE);
 			
-	        if(statusBar.isMouseHoveringOver(mouseX, mouseY)) {
+	        if(statusBar.isMouseHoveringOver(getMousePosition())) {
 	        	this.drawString(getFontRenderer(), "--- Status bar: ---", mouseX + 10, mouseY + 25, 555555);
 				this.drawString(getFontRenderer(), "X, Y pos: (" + comp.getPosition().getX() + ", " + comp.getPosition().getY() + ")" + " -> " + " w, h: (" + (comp.getPosition().getX() + comp.getWidth()) + ", " + (comp.getPosition().getY() + comp.getHeight()) + ")", mouseX + 10, mouseY + 35, 555555);
 				this.drawString(getFontRenderer(), "Default pos: (" + comp.getDefaultPosition().getX() + ", " + comp.getDefaultPosition().getY() + ")", mouseX + 10, mouseY + 45, 555555);	
 			}
 
-			if(comp.isMouseHoveringOver(mouseX, mouseY)) {
+			if(comp.isMouseHoveringOver(getMousePosition())) {
 				this.drawString(getFontRenderer(), "--- Component: ---", mouseX + 10, mouseY + 25, 555555);
 				this.drawString(getFontRenderer(), "X, Y pos: (" + comp.getPosition().getX() + ", " + comp.getPosition().getY() + ")" + " -> " + " w, h: (" + (comp.getPosition().getX() + comp.getWidth()) + ", " + (comp.getPosition().getY() + comp.getHeight()) + ")", mouseX + 10, mouseY + 35, 555555);
 				this.drawString(getFontRenderer(), "Default pos: (" + comp.getDefaultPosition().getX() + ", " + comp.getDefaultPosition().getY() + ")", mouseX + 10, mouseY + 45, 555555);
@@ -203,14 +202,14 @@ public abstract class Screen extends Gui {
 	public void handleMouseClick(int mouseX, int mouseY, int mouseButtonClicked) {
 		for(ScreenComponent component : components)
 		{
-			if(component.isMouseHoveringOver(mouseX, mouseY))
-				onComponentClicked(component, mouseX, mouseY);
+			if(component.isMouseHoveringOver(getMousePosition()))
+				onComponentClicked(component, getMousePosition(), mouseButtonClicked); //TODO
 		}
 	}
 
 	public void setMousePos(int x, int y) {
-		mousePosX = x;
-		mousePosY = y;
+		mousePos.setX(x);
+		mousePos.setY(y);
 	}
 	
 	public Screen setPosition(Position pos) {
@@ -221,12 +220,8 @@ public abstract class Screen extends Gui {
 		return this;
 	}
 	
-	public int getMouseX() {
-		return mousePosX;
-	}
-	
-	public int getMouseY() {
-		return mousePosY;
+	public Position getMousePosition() {
+		return mousePos;
 	}
 	
 	public Position getPosition() {

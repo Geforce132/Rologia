@@ -58,6 +58,7 @@ public class Rologia {
 		if(currentScreen == null) {
 			//setScreen(new BootScreen(this, new Position(screenXPos, screenYPos)));
 			setScreen(new InputYesNoScreen(this, new Position(screenXPos, screenYPos)));
+			//setScreen(new InputTextScreen(this, new Position(screenXPos, screenYPos)));
 			currentScreen.addStartupComponents();
 			currentScreen.initializeScreen();
 		}
@@ -87,7 +88,7 @@ public class Rologia {
 	}
 
 	public void renderScreen(int mouseX, int mouseY) {
-		if(currentScreen.getMouseX() != mouseX || currentScreen.getMouseY() != mouseY)
+		if(currentScreen.getMousePosition() == null || currentScreen.getMousePosition().getX() != mouseX || currentScreen.getMousePosition().getY() != mouseY)
 			currentScreen.setMousePos(mouseX, mouseY);
 		
 		currentScreen.editImages();

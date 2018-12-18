@@ -7,50 +7,51 @@ import org.lwjgl.util.Color;
 import net.geforcemods.rologia.os.Rologia;
 import net.geforcemods.rologia.os.misc.Position;
 import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.renderer.GlStateManager;
 
 public class GuiUtils {
 	
 	public static void drawHollowRect(Position startPos, int width, int height, Color color) {
-		GL11.glEnable(GL11.GL_BLEND);
-        GL11.glDisable(GL11.GL_TEXTURE_2D);
+		GlStateManager.enableBlend();
+		GlStateManager.disableTexture2D();
         
-		GL11.glBegin(GL11.GL_LINES);
-		GL11.glColor4f(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
-		GL11.glVertex2f(startPos.getX(), startPos.getY());
-		GL11.glVertex2f(startPos.getX() + width, startPos.getY());
+		GlStateManager.glBegin(GL11.GL_LINES);
+		GlStateManager.color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
+		GlStateManager.glVertex3f(startPos.getX(), startPos.getY(), 0);
+		GlStateManager.glVertex3f(startPos.getX() + width, startPos.getY(), 0);
 		
-		GL11.glVertex2f(startPos.getX() + width, startPos.getY());
-		GL11.glVertex2f(startPos.getX() + width, startPos.getY() + height);
+		GlStateManager.glVertex3f(startPos.getX() + width, startPos.getY(), 0);
+		GlStateManager.glVertex3f(startPos.getX() + width, startPos.getY() + height, 0);
 		
-		GL11.glVertex2f(startPos.getX() + width, startPos.getY() + height);
-		GL11.glVertex2f(startPos.getX(), startPos.getY() + height);
+		GlStateManager.glVertex3f(startPos.getX() + width, startPos.getY() + height, 0);
+		GlStateManager.glVertex3f(startPos.getX(), startPos.getY() + height, 0);
 		
-		GL11.glVertex2f(startPos.getX(), startPos.getY());
-		GL11.glVertex2f(startPos.getX(), startPos.getY() + height);
+		GlStateManager.glVertex3f(startPos.getX(), startPos.getY(), 0);
+		GlStateManager.glVertex3f(startPos.getX(), startPos.getY() + height, 0);
 
-		GL11.glEnd();
+		GlStateManager.glEnd();
 
-        GL11.glEnable(GL11.GL_TEXTURE_2D);
-        GL11.glDisable(GL11.GL_BLEND);
+		GlStateManager.enableTexture2D();
+		GlStateManager.disableBlend();
 	}
 	
 	public static void drawFilledRect(Position startPos, int width, int height, Color color, boolean transparent) {
-		GL11.glEnable(GL11.GL_BLEND);
-        GL11.glDisable(GL11.GL_TEXTURE_2D);
+		GlStateManager.enableBlend();
+		GlStateManager.disableTexture2D();
 
-        GL11.glPolygonMode(GL11.GL_FRONT, GL11.GL_FILL);
-        GL11.glBegin(GL11.GL_QUADS);
+		GlStateManager.glPolygonMode(GL11.GL_FRONT, GL11.GL_FILL);
+		GlStateManager.glBegin(GL11.GL_QUADS);
 
-		GL11.glColor4f(color.getRed(), color.getGreen(), color.getBlue(), transparent ? (color.getAlpha() - 0.5F) : color.getAlpha());
-		GL11.glVertex2f(startPos.getX(), startPos.getY());
-		GL11.glVertex2f(startPos.getX(), startPos.getY() + height);
-		GL11.glVertex2f(startPos.getX() + width, startPos.getY() + height);
-		GL11.glVertex2f(startPos.getX() + width, startPos.getY());
+		GlStateManager.color(color.getRed(), color.getGreen(), color.getBlue(), transparent ? (color.getAlpha() - 0.5F) : color.getAlpha());
+		GlStateManager.glVertex3f(startPos.getX(), startPos.getY(), 0);
+		GlStateManager.glVertex3f(startPos.getX(), startPos.getY() + height, 0);
+		GlStateManager.glVertex3f(startPos.getX() + width, startPos.getY() + height, 0);
+		GlStateManager.glVertex3f(startPos.getX() + width, startPos.getY(), 0);
 
-		GL11.glEnd();
+		GlStateManager.glEnd();
 
-        GL11.glEnable(GL11.GL_TEXTURE_2D);
-        GL11.glDisable(GL11.GL_BLEND);
+		GlStateManager.enableTexture2D();
+		GlStateManager.disableBlend();
 	}
 	
 	public static String formatString(Rologia OS, String text) {

@@ -6,6 +6,7 @@ import org.lwjgl.opengl.GL11;
 
 import net.geforcemods.rologia.os.Rologia;
 import net.geforcemods.rologia.os.misc.Position;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
 
 public class ScreenRotatingImage extends ScreenImage {
@@ -44,11 +45,11 @@ public class ScreenRotatingImage extends ScreenImage {
 	
 	@Override
 	public void performPrerenderGLFixes() {
-		GL11.glTranslatef(getWidth() / 2 + getScreen().getCenteredPositionForComponent(this).getX(), getHeight() / 2 + getScreen().getCenteredPositionForComponent(this).getY(), 0);
-		GL11.glRotatef(rotation += getRotation(), 0, 0, 1);
-		GL11.glTranslatef(-getWidth() / 2 - getScreen().getCenteredPositionForComponent(this).getX(), -getHeight() / 2 - getScreen().getCenteredPositionForComponent(this).getY(), 0);
+		GlStateManager.translate(getWidth() / 2 + getScreen().getCenteredPositionForComponent(this).getX(), getHeight() / 2 + getScreen().getCenteredPositionForComponent(this).getY(), 0);
+		GlStateManager.rotate(rotation += getRotation(), 0, 0, 1);
+		GlStateManager.translate(-getWidth() / 2 - getScreen().getCenteredPositionForComponent(this).getX(), -getHeight() / 2 - getScreen().getCenteredPositionForComponent(this).getY(), 0);
 		
-		GL11.glScalef(getScale(), getScale(), 1F);
+		GlStateManager.scale(getScale(), getScale(), 1F);
 		if(getScale() != 1.0F)
 		{
 			Position pos = getScreen().getCenteredPositionForComponent(this).scalePos(getScale());
