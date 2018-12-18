@@ -16,7 +16,8 @@
 /eclipse/assets
 /libs
 /bin/
-/run/
+/run/*
+!/run/rologia
 /out/
 gradle.properties
 /eclipse/
