@@ -53,7 +53,7 @@ public class MineWatch {
 		ResourceLoader.MC_DIR = event.getModConfigurationDirectory().getParentFile();
 		network = NetworkRegistry.INSTANCE.newSimpleChannel(MOD_ID);
 		
-		mineWatch = new ItemMineWatch().setCreativeTab(CreativeTabs.REDSTONE).setMaxStackSize(1).setRegistryName("mine_watch").setUnlocalizedName("mine_watch");
+		mineWatch = new ItemMineWatch().setCreativeTab(CreativeTabs.REDSTONE).setMaxStackSize(1).setRegistryName("mine_watch").setTranslationKey("rologia:mine_watch");
 		GameData.register_impl(mineWatch);
 	}
 	

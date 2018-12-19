@@ -16,7 +16,7 @@ public class RologiaEventHandler {
 		if(event.getEntity() == null) return;
 
 		EntityPlayer player = Minecraft.getMinecraft().player;
-		if(event.getEntity() == player && event.getSound().getSoundName().getResourcePath().endsWith(".step")) {
+		if(event.getEntity() == player && event.getSound().getSoundName().getPath().endsWith(".step")) {
 			Rologia os = Rologia.getInstanceForPlayer(player);
 			UserStats stats = os.getUserStats();
 			
