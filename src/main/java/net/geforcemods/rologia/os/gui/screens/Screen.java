@@ -2,8 +2,6 @@ package net.geforcemods.rologia.os.gui.screens;
 
 import java.util.ArrayList;
 
-import org.lwjgl.opengl.GL11;
-
 import net.geforcemods.rologia.os.Rologia;
 import net.geforcemods.rologia.os.apps.App;
 import net.geforcemods.rologia.os.gui.components.ScreenComponent;
@@ -212,9 +210,9 @@ public abstract class Screen extends Gui {
 	public void handleMouseClick(int mouseX, int mouseY, int mouseButtonClicked) {
 		for(ScreenComponent component : components)
 		{
-			if(component.isMouseHoveringOver(getMousePosition()))
+			if(component.isMouseHoveringOver(getMousePosition())) {
 				focusedComponent = component;
-				onComponentClicked(component, mouseX, mouseY);
+				onComponentClicked(component, getMousePosition(), mouseButtonClicked);
 			}
 		}
 	}
