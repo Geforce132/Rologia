@@ -34,6 +34,8 @@ public abstract class Screen extends Gui {
 	protected ArrayList<ScreenImage> images = new ArrayList<ScreenImage>();
 	protected ArrayList<ScreenComponent> components = new ArrayList<ScreenComponent>();
 	
+	private ScreenComponent focusedComponent;
+	
 	private ScreenStatusBar statusBar;
 	private ScreenScrollBar scrollBar;
 	private ScreenImage backgroundImage;
@@ -199,11 +201,29 @@ public abstract class Screen extends Gui {
 		return image;
 	}
 	
+	public ScreenComponent getFocusedComponent() {
+		return focusedComponent;
+	}
+	
+	public boolean hasFocusedComponent() {
+		return focusedComponent != null;
+	}
+	
 	public void handleMouseClick(int mouseX, int mouseY, int mouseButtonClicked) {
 		for(ScreenComponent component : components)
 		{
 			if(component.isMouseHoveringOver(getMousePosition()))
-				onComponentClicked(component, getMousePosition(), mouseButtonClicked); //TODO
+				focusedComponent = component;
+				onComponentClicked(component, mouseX, mouseY);
+			}
+		}
+	}
+
+	public void handleKeyTyped(char key, int keyCode) {
+		for(ScreenComponent component : components)
+		{
+			if(hasFocusedComponent() && focusedComponent.acceptsKeyboardInput())
+				component.keyTyped(key, keyCode);
 		}
 	}
 

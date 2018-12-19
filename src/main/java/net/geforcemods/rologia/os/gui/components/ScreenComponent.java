@@ -45,6 +45,8 @@ public abstract class ScreenComponent extends Gui {
 
 	public abstract void mouseClick(int mouseX, int mouseY, int mouseButtonClicked);
 	
+	public void keyTyped(char key, int keyCode) {}
+
 	public boolean isMouseHoveringOver(Position mousePosition) {
 		Position compPos = getPosition();
 		int compWidth, compHeight;
@@ -72,6 +74,10 @@ public abstract class ScreenComponent extends Gui {
 			if(!getPosition().matches(pos))
 				setPosition(pos);
 		}
+	}
+
+	public boolean acceptsKeyboardInput() {
+		return false;
 	}
 
 	public ScreenComponent setPosition(Position pos) {

@@ -1,5 +1,9 @@
 package net.geforcemods.rologia.gui;
 
+import java.io.IOException;
+
+import org.lwjgl.input.Keyboard;
+
 import net.geforcemods.rologia.item.ItemMineWatch;
 import net.geforcemods.rologia.os.Rologia;
 import net.geforcemods.rologia.os.gui.screens.Screen;
@@ -29,6 +33,7 @@ public class GuiMineWatch extends GuiScreen {
 	@Override
 	public void initGui() {
 		super.initGui();
+		Keyboard.enableRepeatEvents(true);
 		rologia.openSmartwatchGUI(player, (width - Screen.WATCH_SCREEN_X_SIZE) / 2, (height - Screen.WATCH_SCREEN_Y_SIZE) / 2);
 	}
 	
@@ -49,8 +54,19 @@ public class GuiMineWatch extends GuiScreen {
 	
 	@Override
 	public void mouseClicked(int mouseX, int mouseY, int buttonClicked) {
-		Screen screen = rologia.getCurrentScreen();
-		screen.handleMouseClick(mouseX, mouseY, buttonClicked);
+		rologia.getCurrentScreen().handleMouseClick(mouseX, mouseY, buttonClicked);
+	}
+	
+	@Override
+	protected void keyTyped(char character, int keyCode) throws IOException {
+		super.keyTyped(character, keyCode);
+		rologia.getCurrentScreen().handleKeyTyped(character, keyCode);
+	}
+	
+	@Override
+	public void onGuiClosed(){
+		super.onGuiClosed();
+		Keyboard.enableRepeatEvents(false);
 	}
 
 	@Override
