@@ -1,8 +1,8 @@
 package net.geforcemods.rologia.os.gui.components;
 
 import net.geforcemods.rologia.os.Rologia;
-import net.geforcemods.rologia.os.gui.rendering.Colors;
-import net.geforcemods.rologia.os.gui.rendering.GuiUtils;
+import net.geforcemods.rologia.os.gui.utils.Colors;
+import net.geforcemods.rologia.os.gui.utils.GuiUtils;
 import net.geforcemods.rologia.os.misc.Position;
 
 public class ScreenButton extends ScreenComponent {
@@ -34,8 +34,7 @@ public class ScreenButton extends ScreenComponent {
 	}
 
 	@Override
-	public void mouseClick(int mouseX, int mouseY, int mouseButtonClicked) {
-	}
+	public void mouseClick(Position mousePos, int mouseButtonClicked) {}
 
 	@Override
 	public int getWidth() {

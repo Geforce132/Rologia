@@ -7,6 +7,7 @@ import com.sun.javafx.scene.traversal.Direction;
 
 import net.geforcemods.rologia.os.Rologia;
 import net.geforcemods.rologia.os.gui.components.ScreenComponent;
+import net.geforcemods.rologia.os.misc.Position;
 
 public class ScreenShapeArrowSimple extends ScreenComponent {
 
@@ -86,7 +87,7 @@ public class ScreenShapeArrowSimple extends ScreenComponent {
 	}
 
 	@Override
-	public void mouseClick(int mouseX, int mouseY, int mouseButtonClicked) {
+	public void mouseClick(Position mousePos, int mouseButtonClicked) {
 
 	}
 

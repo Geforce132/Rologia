@@ -2,8 +2,8 @@ package net.geforcemods.rologia.os.gui.components.text;
 
 import net.geforcemods.rologia.os.Rologia;
 import net.geforcemods.rologia.os.gui.components.ScreenComponent;
-import net.geforcemods.rologia.os.gui.rendering.GuiUtils;
 import net.geforcemods.rologia.os.gui.screens.Screen;
+import net.geforcemods.rologia.os.gui.utils.GuiUtils;
 import net.geforcemods.rologia.os.misc.Position;
 
 public class ScreenText extends ScreenComponent {
@@ -29,7 +29,7 @@ public class ScreenText extends ScreenComponent {
 	}
 
 	@Override
-	public void mouseClick(int mouseX, int mouseY, int mouseButtonClicked) {
+	public void mouseClick(Position mousePos, int mouseButtonClicked) {
 		
 	}
 	

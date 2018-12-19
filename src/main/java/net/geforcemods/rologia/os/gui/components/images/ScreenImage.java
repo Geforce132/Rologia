@@ -93,9 +93,6 @@ public class ScreenImage extends ScreenComponent {
 	}
 
 	@Override
-	public void mouseClick(int mouseX, int mouseY, int mouseButtonClicked) {
-		// TODO Auto-generated method stub
-		
-	}
+	public void mouseClick(Position mousePos, int mouseButtonClicked) {}
 
 }

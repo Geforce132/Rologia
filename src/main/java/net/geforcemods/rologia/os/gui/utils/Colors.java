@@ -1,4 +1,4 @@
-package net.geforcemods.rologia.os.gui.rendering;
+package net.geforcemods.rologia.os.gui.utils;
 
 import org.lwjgl.util.Color;
 

@@ -1,6 +1,6 @@
-package net.geforcemods.rologia.os.misc;
+package net.geforcemods.rologia.os.time;
 
-public class Constants {
+public class TimeConstants {
 	
 	public static final String HM = "hh:mm a";
 	public static final String HMS = "HH:mm:ss";

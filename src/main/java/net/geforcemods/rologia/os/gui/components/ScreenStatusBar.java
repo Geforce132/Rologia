@@ -5,8 +5,8 @@ import org.lwjgl.util.Color;
 
 import net.geforcemods.rologia.os.Rologia;
 import net.geforcemods.rologia.os.gui.screens.Screen;
-import net.geforcemods.rologia.os.misc.Constants;
 import net.geforcemods.rologia.os.misc.Position;
+import net.geforcemods.rologia.os.time.TimeConstants;
 
 public class ScreenStatusBar extends ScreenComponent {
 
@@ -40,13 +40,11 @@ public class ScreenStatusBar extends ScreenComponent {
         
         float scaleOfText = 0.85F;
 		GL11.glScalef(scaleOfText, scaleOfText, 1F);
-        this.drawString(getFontRenderer(), getScreen().getOS().getTime(Constants.HM), (int) ((getPosition().getX() + 50) / scaleOfText), (int) ((getPosition().getY() + 1) / scaleOfText), 44444);
+        this.drawString(getFontRenderer(), getScreen().getOS().getTime(TimeConstants.HM), (int) ((getPosition().getX() + 50) / scaleOfText), (int) ((getPosition().getY() + 1) / scaleOfText), 44444);
 	}
 	
 	@Override
-	public void mouseClick(int mouseX, int mouseY, int mouseButtonClicked) {
-		
-	}
+	public void mouseClick(Position mousePos, int mouseButtonClicked) {}
 	
 	public void setColor(Color rgbColor) {
 		color = rgbColor;

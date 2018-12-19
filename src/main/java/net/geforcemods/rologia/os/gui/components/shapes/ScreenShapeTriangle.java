@@ -91,7 +91,7 @@ public class ScreenShapeTriangle extends ScreenComponent {
 	}
 
 	@Override
-	public void mouseClick(int mouseX, int mouseY, int mouseButtonClicked) {
+	public void mouseClick(Position mousePos, int mouseButtonClicked) {
 		
 	}
 	

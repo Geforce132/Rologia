@@ -13,7 +13,7 @@ import net.minecraftforge.common.ForgeHooks;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
 
-public class PlayerUtils{
+public class PlayerUtils {
 
 	/**
 	 * Sets the given player's position and rotation. <p>

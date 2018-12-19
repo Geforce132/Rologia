@@ -1,13 +1,16 @@
 package net.geforcemods.rologia.os.gui.components;
 
+import org.apache.commons.lang3.StringUtils;
 import org.lwjgl.opengl.GL11;
 
 import net.geforcemods.rologia.os.Rologia;
+import net.geforcemods.rologia.os.gui.utils.GuiUtils;
 import net.geforcemods.rologia.os.misc.Position;
 import net.minecraft.client.renderer.GlStateManager;
 
 public class ScreenTextField extends ScreenComponent {
 	
+	private String text = "";
 	private int width;
 	private int height;
 	
@@ -30,17 +33,34 @@ public class ScreenTextField extends ScreenComponent {
         
 		GlStateManager.glBegin(GL11.GL_LINES);
 		GlStateManager.color(255, 0, 0);
-		GlStateManager.glVertex3f(getPosition().getX(), getPosition().getY(), 0);
-		GlStateManager.glVertex3f(getPosition().getX() + width, getPosition().getY(), 0);
+		GlStateManager.glVertex3f(getPosition().getX(), getPosition().getY() + height, 0);
+		GlStateManager.glVertex3f(getPosition().getX() + width, getPosition().getY() + height, 0);
 		GlStateManager.glEnd();
 		
 		GlStateManager.enableTexture2D();
 		GlStateManager.disableBlend();
+		this.drawString(getFontRenderer(), text, getPosition().getX(), getPosition().getY(), 55555);
 	}
 
 	@Override
-	public void mouseClick(int mouseX, int mouseY, int mouseButtonClicked) {
-
+	public void mouseClick(Position mousePos, int mouseButtonClicked) {
+		System.out.println("clicked");
+	}
+	
+	@Override
+	public void keyTyped(char key, int keyCode) {
+		// Remove the last character in text if someone presses the backspace button.
+		if(key == GuiUtils.BACKSPACE) {
+			text = StringUtils.left(text, text.length() - 1);
+		}
+		else {
+			text += key;
+		}	
+	}
+	
+	@Override
+	public boolean acceptsKeyboardInput() {
+		return true;
 	}
 
 	@Override

@@ -1,4 +1,4 @@
-package net.geforcemods.rologia.os.gui.rendering;
+package net.geforcemods.rologia.os.gui.utils;
 
 import org.apache.commons.lang3.StringUtils;
 import org.lwjgl.opengl.GL11;
@@ -10,6 +10,8 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.GlStateManager;
 
 public class GuiUtils {
+	
+	public static final char BACKSPACE = '';
 	
 	public static void drawHollowRect(Position startPos, int width, int height, Color color) {
 		GlStateManager.enableBlend();

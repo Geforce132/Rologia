@@ -8,8 +8,8 @@ import net.geforcemods.rologia.os.gui.components.ScreenComponent;
 import net.geforcemods.rologia.os.gui.components.ScreenScrollBar;
 import net.geforcemods.rologia.os.gui.components.ScreenStatusBar;
 import net.geforcemods.rologia.os.gui.components.images.ScreenImage;
-import net.geforcemods.rologia.os.gui.rendering.Colors;
-import net.geforcemods.rologia.os.gui.rendering.GuiUtils;
+import net.geforcemods.rologia.os.gui.utils.Colors;
+import net.geforcemods.rologia.os.gui.utils.GuiUtils;
 import net.geforcemods.rologia.os.misc.Position;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -213,6 +213,7 @@ public abstract class Screen extends Gui {
 			if(component.isMouseHoveringOver(getMousePosition())) {
 				focusedComponent = component;
 				onComponentClicked(component, getMousePosition(), mouseButtonClicked);
+				component.mouseClick(getMousePosition(), mouseButtonClicked);
 			}
 		}
 	}
