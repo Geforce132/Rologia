@@ -5,6 +5,7 @@ import org.lwjgl.opengl.GL11;
 import net.geforcemods.rologia.os.Rologia;
 import net.geforcemods.rologia.os.gui.screens.Screen;
 import net.geforcemods.rologia.os.misc.Position;
+import net.minecraft.client.renderer.GlStateManager;
 
 public class ScreenScrollBar extends ScreenComponent {
 
@@ -14,19 +15,19 @@ public class ScreenScrollBar extends ScreenComponent {
 
 	@Override
 	public void drawComponent() {
-		GL11.glEnable(GL11.GL_BLEND);
-        GL11.glDisable(GL11.GL_TEXTURE_2D);
+		GlStateManager.enableBlend();
+        GlStateManager.disableTexture2D();
         
-        GL11.glBegin(GL11.GL_QUADS);
-        GL11.glColor4f(0, 255, 0, 1);
-        GL11.glVertex3d((double)getPosition().getX(), (double)getPosition().getY() + getHeight(), 0.0D);
-        GL11.glVertex3d((double)getPosition().getX() + getWidth(), (double)getPosition().getY() + getHeight(), 0.0D);
-        GL11.glVertex3d((double)getPosition().getX() + getWidth(), (double)getPosition().getY(), 0.0D);
-        GL11.glVertex3d((double)getPosition().getX(), (double)getPosition().getY(), 0.0D);
-        GL11.glEnd();
+        GlStateManager.glBegin(GL11.GL_QUADS);
+        GlStateManager.color(0, 255, 0, 1);
+        GlStateManager.glVertex3f((float)getPosition().getX(), (float)getPosition().getY() + getHeight(), 0.0F);
+        GlStateManager.glVertex3f((float)getPosition().getX() + getWidth(), (float)getPosition().getY() + getHeight(), 0.0F);
+        GlStateManager.glVertex3f((float)getPosition().getX() + getWidth(), (float)getPosition().getY(), 0.0F);
+        GlStateManager.glVertex3f((float)getPosition().getX(), (float)getPosition().getY(), 0.0F);
+        GlStateManager.glEnd();
         
-		GL11.glDisable(GL11.GL_BLEND);
-        GL11.glEnable(GL11.GL_TEXTURE_2D);
+		GlStateManager.disableBlend();
+        GlStateManager.enableTexture2D();
 	}
 
 	@Override

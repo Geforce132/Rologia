@@ -12,6 +12,7 @@ import net.geforcemods.rologia.os.gui.components.ScreenComponent;
 import net.geforcemods.rologia.os.gui.screens.Screen;
 import net.geforcemods.rologia.os.gui.screens.input.InputYesNoScreen;
 import net.geforcemods.rologia.os.misc.Position;
+import net.geforcemods.rologia.os.notifications.Notification;
 import net.geforcemods.rologia.os.resources.ResourceLoader;
 import net.geforcemods.rologia.os.stats.UserStats;
 import net.geforcemods.rologia.os.tasks.TaskUpdateTime;
@@ -30,7 +31,8 @@ public class Rologia {
 	private App currentApp;
 	private LocalDateTime time = LocalDateTime.now();
 	private ArrayList<Task> tasks = new ArrayList<Task>();
-	public ArrayList<App> apps = new ArrayList<App>();
+	private ArrayList<App> apps = new ArrayList<App>();
+	private ArrayList<Notification> notifications = new ArrayList<Notification>();
 
 	public HashMap<String, ScreenComponent> components = new HashMap<String, ScreenComponent>();
 
@@ -61,6 +63,12 @@ public class Rologia {
 			//setScreen(new InputTextScreen(this, new Position(screenXPos, screenYPos)));
 			currentScreen.addStartupComponents();
 			currentScreen.initializeScreen();
+
+			// Just for testing purposes, obviously 
+			notifications.add(new Notification(null, "test"));
+			notifications.add(new Notification(null, "test1"));
+			notifications.add(new Notification(null, "test2"));
+			notifications.add(new Notification(null, "test3"));
 		}
 		else {
 			Position p = new Position(screenXPos, screenYPos);
@@ -200,6 +208,10 @@ public class Rologia {
 
 	public boolean isAppOpen() {
 		return currentApp != null;
+	}
+
+	public ArrayList<Notification> getNotifications() {
+		return notifications;
 	}
 
 	public EntityPlayer getUser() {

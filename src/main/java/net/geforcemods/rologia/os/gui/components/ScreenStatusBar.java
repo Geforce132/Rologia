@@ -7,6 +7,7 @@ import net.geforcemods.rologia.os.Rologia;
 import net.geforcemods.rologia.os.gui.screens.Screen;
 import net.geforcemods.rologia.os.misc.Position;
 import net.geforcemods.rologia.os.time.TimeConstants;
+import net.minecraft.client.renderer.GlStateManager;
 
 public class ScreenStatusBar extends ScreenComponent {
 
@@ -24,23 +25,29 @@ public class ScreenStatusBar extends ScreenComponent {
 
 	@Override
 	public void drawComponent() {
-		GL11.glEnable(GL11.GL_BLEND);
-        GL11.glDisable(GL11.GL_TEXTURE_2D);
+		GlStateManager.pushMatrix();
+		GlStateManager.enableBlend();
+		GlStateManager.disableTexture2D();
+		
+		GlStateManager.glBegin(GL11.GL_QUADS);
+		GlStateManager.color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
+		GlStateManager.glVertex3f((float)getPosition().getX(), (float)getPosition().getY() + getHeight(), 0.0F);
+        GlStateManager.glVertex3f((float)getPosition().getX() + getWidth(), (float)getPosition().getY() + getHeight(), 0.0F);
+        GlStateManager.glVertex3f((float)getPosition().getX() + getWidth(), (float)getPosition().getY(), 0.0F);
+        GlStateManager.glVertex3f((float)getPosition().getX(), (float)getPosition().getY(), 0.0F);
+        GlStateManager.glEnd();
         
-        GL11.glBegin(GL11.GL_QUADS);
-        GL11.glColor4f(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
-        GL11.glVertex3d((double)getPosition().getX(), (double)getPosition().getY() + getHeight(), 0.0D);
-        GL11.glVertex3d((double)getPosition().getX() + getWidth(), (double)getPosition().getY() + getHeight(), 0.0D);
-        GL11.glVertex3d((double)getPosition().getX() + getWidth(), (double)getPosition().getY(), 0.0D);
-        GL11.glVertex3d((double)getPosition().getX(), (double)getPosition().getY(), 0.0D);
-        GL11.glEnd();
-        
-		GL11.glDisable(GL11.GL_BLEND);
-        GL11.glEnable(GL11.GL_TEXTURE_2D);
+		GlStateManager.disableBlend();
+		GlStateManager.enableTexture2D();
         
         float scaleOfText = 0.85F;
-		GL11.glScalef(scaleOfText, scaleOfText, 1F);
-        this.drawString(getFontRenderer(), getScreen().getOS().getTime(TimeConstants.HM), (int) ((getPosition().getX() + 50) / scaleOfText), (int) ((getPosition().getY() + 1) / scaleOfText), 44444);
+		GlStateManager.scale(scaleOfText, scaleOfText, 1F);
+        drawString(getFontRenderer(), getScreen().getOS().getTime(TimeConstants.HM), (int) ((getPosition().getX() + 50) / scaleOfText), (int) ((getPosition().getY() + 1) / scaleOfText), 44444);
+		GlStateManager.popMatrix();
+        
+        //Draw notifications
+        for(int i = 0; i < getOS().getNotifications().size(); i++)
+        	getOS().getNotifications().get(i).drawNotification(getScreen(), getPosition().shiftX(i * 10));
 	}
 	
 	@Override

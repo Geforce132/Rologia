@@ -1,7 +1,6 @@
 package net.geforcemods.rologia.os.gui.screens.input;
 
 import net.geforcemods.rologia.os.Rologia;
-import net.geforcemods.rologia.os.gui.components.ScreenButton;
 import net.geforcemods.rologia.os.gui.components.ScreenComponent;
 import net.geforcemods.rologia.os.gui.components.ScreenTextField;
 import net.geforcemods.rologia.os.gui.components.images.ScreenImage;
