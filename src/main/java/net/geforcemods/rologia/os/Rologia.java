@@ -65,10 +65,11 @@ public class Rologia {
 			currentScreen.initializeScreen();
 
 			// Just for testing purposes, obviously 
-			notifications.add(new Notification(null, "test"));
-			notifications.add(new Notification(null, "test1"));
-			notifications.add(new Notification(null, "test2"));
-			notifications.add(new Notification(null, "test3"));
+			notifications.add(new Notification(currentScreen, null, "test", 1));
+			notifications.add(new Notification(currentScreen, null, "test1", 2));
+			notifications.add(new Notification(currentScreen, null, "test2", 3));
+			notifications.add(new Notification(currentScreen, null, "test3", 4));
+			notifications.add(new Notification(currentScreen, null, "test4", 5));
 		}
 		else {
 			Position p = new Position(screenXPos, screenYPos);

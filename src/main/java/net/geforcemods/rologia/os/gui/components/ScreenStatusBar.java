@@ -6,7 +6,9 @@ import org.lwjgl.util.Color;
 import net.geforcemods.rologia.os.Rologia;
 import net.geforcemods.rologia.os.gui.screens.Screen;
 import net.geforcemods.rologia.os.misc.Position;
+import net.geforcemods.rologia.os.notifications.Notification;
 import net.geforcemods.rologia.os.time.TimeConstants;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 
 public class ScreenStatusBar extends ScreenComponent {
@@ -46,9 +48,24 @@ public class ScreenStatusBar extends ScreenComponent {
 		GlStateManager.popMatrix();
         
         //Draw notifications
-        for(int i = 0; i < getOS().getNotifications().size(); i++)
-        	getOS().getNotifications().get(i).drawNotification(getScreen(), getPosition().shiftX(i * 10));
-	}
+        for(int i = 0; i < getOS().getNotifications().size(); i++) {
+        	if(i > 3) {
+        		GlStateManager.pushMatrix();
+        		Minecraft.getMinecraft().getTextureManager().bindTexture(Notification.NOTIFICATION_ICONS_LIGHT);
+        		
+        		GlStateManager.color(1, 1, 1, 1);
+        		GlStateManager.translate(getPosition().shiftX(40).getX(), getPosition().getY(), 0);
+        		GlStateManager.scale(0.2F, 0.2F, 0);
+        		GlStateManager.translate(-getPosition().shiftX(40).getX(), -getPosition().getY(), 0);
+        		drawTexturedModalRect(getPosition().shiftX(40).getX(), getPosition().getY(), 38, 0, 37, 33);
+        		GlStateManager.popMatrix();
+        		
+        		break;
+        	}
+        	
+        	getOS().getNotifications().get(i).drawNotification(getScreen());
+        }
+    }
 	
 	@Override
 	public void mouseClick(Position mousePos, int mouseButtonClicked) {}

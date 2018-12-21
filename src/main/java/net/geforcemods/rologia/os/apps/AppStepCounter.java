@@ -36,10 +36,10 @@ public class AppStepCounter extends App {
 	
 	public Object replaceKeywords(String keyword) {
 		if(keyword.matches("step_count"))
-			return os.getUserStats().getStepCount();
+			return getOS().getUserStats().getStepCount();
 		
 		if(keyword.matches("distance_walked"))
-			return getDistanceInMiles(os.getUser());
+			return getDistanceInMiles(getOS().getUser());
 
 		return "unknown";
 	}

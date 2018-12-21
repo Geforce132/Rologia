@@ -24,7 +24,7 @@ public abstract class App {
 	private transient ScreenImage appIcon = null;	
 	private transient ScreenImage appBackgroundImage = null;
 
-	protected transient Rologia os;
+	private transient Rologia os;
 	
 	public App(Rologia rologia) {
 		os = rologia;
@@ -116,6 +116,10 @@ public abstract class App {
 		this.components = components;
 	}
 	
+	public Rologia getOS() {
+		return os;
+	}
+
 	public void setOS(Rologia os) {
 		this.os = os;
 

@@ -10,18 +10,23 @@ import net.minecraft.util.ResourceLocation;
 
 public class Notification {
 	
+	public static ResourceLocation NOTIFICATION_ICONS_LIGHT = new ResourceLocation(ResourceLoader.TEXTURE_FOLDER_PATH + "icons_light.png");
+	public static ResourceLocation NOTIFICATION_ICONS_DARK = new ResourceLocation(ResourceLoader.TEXTURE_FOLDER_PATH + "icons_dark.png");
+
+	private Position position;
+
 	private App sourceApp;
-	private ResourceLocation notificationIcon = new ResourceLocation(ResourceLoader.TEXTURE_FOLDER_PATH + "icons_light.png");
 	private String notificationText;
 	
-	public Notification(App app, String text) {
+	public Notification(Screen screen, App app, String text, int slotInStatusBar) {
 		sourceApp = app;
 		notificationText = text;
+		position = screen.getStatusBar().getPosition().shiftX((slotInStatusBar - 1) * 10);
 	}
 	
-	public void drawNotification(Screen screen, Position position) {		
+	public void drawNotification(Screen screen) {		
 		GlStateManager.pushMatrix();
-		Minecraft.getMinecraft().getTextureManager().bindTexture(notificationIcon);
+		Minecraft.getMinecraft().getTextureManager().bindTexture(NOTIFICATION_ICONS_LIGHT);
 		
 		GlStateManager.color(1, 1, 1, 1);
 		GlStateManager.translate(position.getX(), position.getY(), 0);
@@ -31,6 +36,10 @@ public class Notification {
 		GlStateManager.popMatrix();
 	}
 	
+	public Position getPosition() {
+		return position;
+	}
+
 	public App getSourceApp() {
 		return sourceApp;
 	}
