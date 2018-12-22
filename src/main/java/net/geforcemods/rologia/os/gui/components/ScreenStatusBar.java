@@ -63,7 +63,7 @@ public class ScreenStatusBar extends ScreenComponent {
         		break;
         	}
         	
-        	getOS().getNotifications().get(i).drawNotification(getScreen());
+        	getOS().getNotifications().get(i).drawNotification(getScreen(), getPosition().shiftX(i * 10));
         }
     }
 	

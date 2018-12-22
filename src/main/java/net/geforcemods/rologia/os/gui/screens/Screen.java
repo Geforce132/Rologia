@@ -64,6 +64,7 @@ public abstract class Screen extends Gui {
 
 		addComponent(leftArrow);
 		addComponent(rightArrow);
+		addComponent(statusBar);
 		addComponent(scrollBar);
 	}
 	
@@ -149,12 +150,6 @@ public abstract class Screen extends Gui {
 		
 		for(ScreenComponent comp : components) {
 			GuiUtils.drawHollowRect(comp.getPosition(), comp.getWidth(), comp.getHeight(), Colors.BLUE);
-			
-	        if(statusBar.isMouseHoveringOver(getMousePosition())) {
-	        	this.drawString(getFontRenderer(), "--- Status bar: ---", mouseX + 10, mouseY + 25, 555555);
-				this.drawString(getFontRenderer(), "X, Y pos: (" + comp.getPosition().getX() + ", " + comp.getPosition().getY() + ")" + " -> " + " w, h: (" + (comp.getPosition().getX() + comp.getWidth()) + ", " + (comp.getPosition().getY() + comp.getHeight()) + ")", mouseX + 10, mouseY + 35, 555555);
-				this.drawString(getFontRenderer(), "Default pos: (" + comp.getDefaultPosition().getX() + ", " + comp.getDefaultPosition().getY() + ")", mouseX + 10, mouseY + 45, 555555);	
-			}
 
 			if(comp.isMouseHoveringOver(getMousePosition())) {
 				this.drawString(getFontRenderer(), "--- Component: ---", mouseX + 10, mouseY + 25, 555555);
@@ -232,9 +227,21 @@ public abstract class Screen extends Gui {
 	}
 	
 	public Screen setPosition(Position pos) {
-		screenPos = pos;
+		// Save the distance that all components have from the screen's (0, 0) position before
+		// resizing the screen, then shift them back that many pixels away from the screen's origin
+		int[][] componentOffsets = new int[components.size()][2];
 
-		backgroundImage.setPositionAndOrigin(pos.shiftX(3).shiftY(3));
+		for(int i = 0; i < components.size(); i++) {
+			componentOffsets[i][0] = components.get(i).getPosition().getX() - screenPos.getX(); 
+			componentOffsets[i][1] = components.get(i).getPosition().getY() - screenPos.getY(); 
+		}
+
+		screenPos = pos;
+		backgroundImage.setPositionAndOrigin(pos);
+
+		for(int i = 0; i < components.size(); i++) {
+			components.get(i).setPositionAndOrigin(screenPos.shiftX(componentOffsets[i][0]).shiftY(componentOffsets[i][1]));
+		}
 
 		return this;
 	}

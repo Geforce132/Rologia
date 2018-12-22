@@ -56,4 +56,8 @@ public class Position {
 		return pos.getX() == xPos && pos.getY() == yPos;
 	}
 
+	public boolean matches(int x, int y) {
+		return x == xPos && y == yPos;
+	}
+
 }
