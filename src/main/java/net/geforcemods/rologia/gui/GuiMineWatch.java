@@ -8,6 +8,7 @@ import net.geforcemods.rologia.item.ItemMineWatch;
 import net.geforcemods.rologia.os.Rologia;
 import net.geforcemods.rologia.os.gui.screens.Screen;
 import net.geforcemods.rologia.os.resources.ResourceLoader;
+import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
@@ -18,11 +19,13 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class GuiMineWatch extends GuiScreen {
 	
 	private static final ResourceLocation SCREEN_EDGE_TEXTURE = new ResourceLocation(ResourceLoader.TEXTURE_FOLDER_PATH + "watch_screen_background_2.png");
+	private static final ResourceLocation DEBUG_ICONS = new ResourceLocation(ResourceLoader.TEXTURE_FOLDER_PATH + "debug_icons.png");
 
 	private EntityPlayer player;
-	
 	private Rologia rologia;
 	private ItemMineWatch mineWatch;
+
+	private GuiButton[] debugButtons = new GuiButton[3];
 
 	public GuiMineWatch(EntityPlayer playerWhoOpenedGUI, ItemMineWatch watch) {
 		player = playerWhoOpenedGUI;
@@ -35,6 +38,17 @@ public class GuiMineWatch extends GuiScreen {
 		super.initGui();
 		Keyboard.enableRepeatEvents(true);
 		rologia.openSmartwatchGUI(player, (width - Screen.WATCH_SCREEN_X_SIZE) / 2, (height - Screen.WATCH_SCREEN_Y_SIZE) / 2);
+
+		if(Rologia.debugMode) {
+			debugButtons[0] = new GuiButton(0, this.width - 90, 10, 20, 20, "off");
+			debugButtons[1] = new GuiIconButton(1, this.width - 65, 10, 20, 20, 0, 0, 1, 1, DEBUG_ICONS);
+			debugButtons[2] = new GuiIconButton(2, this.width - 40, 10, 20, 20, 19, 0, 1, 1, DEBUG_ICONS);
+
+			for(int i = 0; i < debugButtons.length; i++)
+				buttonList.add(debugButtons[i]);
+
+			debugButtons[0].enabled = false;
+		}
 	}
 	
 	@Override
@@ -50,10 +64,23 @@ public class GuiMineWatch extends GuiScreen {
 		int startY = (height / 2) - (Screen.WATCH_BACKGROUND_Y_SIZE / 2);
 		drawTexturedModalRect(startX, startY, 0, 0, Screen.WATCH_BACKGROUND_X_SIZE, Screen.WATCH_BACKGROUND_Y_SIZE);
 		rologia.renderScreen(mouseX, mouseY);
+		
+		//draw debugging info here
 	}
 	
 	@Override
-	public void mouseClicked(int mouseX, int mouseY, int buttonClicked) {
+	protected void actionPerformed(GuiButton clickedButton) {
+		clickedButton.enabled = false;
+
+		for(int i = 0; i < debugButtons.length; i++) {
+			if(debugButtons[i].id != clickedButton.id)
+				debugButtons[i].enabled = true;
+		}
+	}
+
+	@Override
+	public void mouseClicked(int mouseX, int mouseY, int buttonClicked) throws IOException {
+		super.mouseClicked(mouseX, mouseY, buttonClicked);
 		rologia.getCurrentScreen().handleMouseClick(mouseX, mouseY, buttonClicked);
 	}
 	
