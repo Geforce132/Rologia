@@ -1,13 +1,13 @@
 package net.geforcemods.rologia.os.gui.screens;
 
-import net.geforcemods.rologia.os.Rologia;
+import net.geforcemods.rologia.os.RologiaOS;
 import net.geforcemods.rologia.os.gui.components.ScreenComponent;
 import net.geforcemods.rologia.os.gui.components.images.ScreenImage;
 import net.geforcemods.rologia.os.misc.Position;
 
 public class HomeScreen extends Screen {
 
-	public HomeScreen(Rologia OS, Position pos) {
+	public HomeScreen(RologiaOS OS, Position pos) {
 		super(OS, pos);
 	}
 

@@ -1,8 +1,8 @@
 package net.geforcemods.rologia.item;
 
-import net.geforcemods.rologia.MineWatch;
+import net.geforcemods.rologia.Rologia;
 import net.geforcemods.rologia.gui.GuiHandler;
-import net.geforcemods.rologia.os.Rologia;
+import net.geforcemods.rologia.os.RologiaOS;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -23,14 +23,14 @@ public class ItemMineWatch extends Item {
 		ItemStack itemStackIn = player.getHeldItem(hand);
 
 		if(player.isSneaking()) {
-			Rologia.removeInstanceForPlayer(player);
+			RologiaOS.removeInstanceForPlayer(player);
 			return ActionResult.newResult(EnumActionResult.PASS, itemStackIn);
 		}
 
 		if(world.isRemote)
 			return ActionResult.newResult(EnumActionResult.PASS, itemStackIn);
 		else{
-			player.openGui(MineWatch.instance, GuiHandler.BOOT_SCREEN_ID, world, (int)player.posX, (int)player.posY, (int)player.posZ);
+			player.openGui(Rologia.instance, GuiHandler.BOOT_SCREEN_ID, world, (int)player.posX, (int)player.posY, (int)player.posZ);
 			return ActionResult.newResult(EnumActionResult.PASS, itemStackIn);
 		}
 	}

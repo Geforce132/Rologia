@@ -3,7 +3,7 @@ package net.geforcemods.rologia.os.gui.components;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.Color;
 
-import net.geforcemods.rologia.os.Rologia;
+import net.geforcemods.rologia.os.RologiaOS;
 import net.geforcemods.rologia.os.gui.screens.Screen;
 import net.geforcemods.rologia.os.misc.Position;
 import net.geforcemods.rologia.os.notifications.Notification;
@@ -15,12 +15,12 @@ public class ScreenStatusBar extends ScreenComponent {
 
 	private Color color;
 
-	public ScreenStatusBar(Rologia os, Color rgbColor) {
+	public ScreenStatusBar(RologiaOS os, Color rgbColor) {
 		super(os);
 		color = rgbColor;
 	}
 	
-	public ScreenStatusBar(Rologia os, Position pos, Color rgbColor) {
+	public ScreenStatusBar(RologiaOS os, Position pos, Color rgbColor) {
 		super(os, pos);
 		color = rgbColor;
 	}

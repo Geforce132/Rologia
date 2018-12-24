@@ -1,15 +1,15 @@
 package net.geforcemods.rologia.os.time;
 
-import net.geforcemods.rologia.os.Rologia;
+import net.geforcemods.rologia.os.RologiaOS;
 import net.geforcemods.rologia.os.gui.screens.Screen;
 
 public abstract class Task {
 	
-	private Rologia os;
+	private RologiaOS os;
 	
 	protected int sleepCounter = getTickDelay();
 	
-	public Task(Rologia rologia) {
+	public Task(RologiaOS rologia) {
 		os = rologia;
 	}
 	
@@ -25,7 +25,7 @@ public abstract class Task {
 		}
 	}
 	
-	public abstract void execute(Rologia os, Screen currentScreen);
+	public abstract void execute(RologiaOS os, Screen currentScreen);
 	
 	public abstract boolean shouldRepeat();
 	

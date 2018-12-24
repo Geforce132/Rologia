@@ -5,7 +5,7 @@ import java.io.IOException;
 import org.lwjgl.input.Keyboard;
 
 import net.geforcemods.rologia.item.ItemMineWatch;
-import net.geforcemods.rologia.os.Rologia;
+import net.geforcemods.rologia.os.RologiaOS;
 import net.geforcemods.rologia.os.gui.screens.Screen;
 import net.geforcemods.rologia.os.resources.ResourceLoader;
 import net.minecraft.client.gui.GuiButton;
@@ -22,7 +22,7 @@ public class GuiMineWatch extends GuiScreen {
 	private static final ResourceLocation DEBUG_ICONS = new ResourceLocation(ResourceLoader.TEXTURE_FOLDER_PATH + "debug_icons.png");
 
 	private EntityPlayer player;
-	private Rologia rologia;
+	private RologiaOS rologia;
 	private ItemMineWatch mineWatch;
 
 	private GuiButton[] debugButtons = new GuiButton[3];
@@ -30,7 +30,7 @@ public class GuiMineWatch extends GuiScreen {
 	public GuiMineWatch(EntityPlayer playerWhoOpenedGUI, ItemMineWatch watch) {
 		player = playerWhoOpenedGUI;
 		mineWatch = watch;
-		rologia = Rologia.getInstanceForPlayer(playerWhoOpenedGUI);
+		rologia = RologiaOS.getInstanceForPlayer(playerWhoOpenedGUI);
 	}
 	
 	@Override
@@ -39,7 +39,7 @@ public class GuiMineWatch extends GuiScreen {
 		Keyboard.enableRepeatEvents(true);
 		rologia.openSmartwatchGUI(player, (width - Screen.WATCH_SCREEN_X_SIZE) / 2, (height - Screen.WATCH_SCREEN_Y_SIZE) / 2);
 
-		if(Rologia.debugMode) {
+		if(RologiaOS.debugMode) {
 			debugButtons[0] = new GuiButton(0, this.width - 90, 10, 20, 20, "off");
 			debugButtons[1] = new GuiIconButton(1, this.width - 65, 10, 20, 20, 0, 0, 1, 1, DEBUG_ICONS);
 			debugButtons[2] = new GuiIconButton(2, this.width - 40, 10, 20, 20, 19, 0, 1, 1, DEBUG_ICONS);

@@ -4,7 +4,7 @@ import org.lwjgl.opengl.GL11;
 
 import com.google.gson.JsonObject;
 
-import net.geforcemods.rologia.os.Rologia;
+import net.geforcemods.rologia.os.RologiaOS;
 import net.geforcemods.rologia.os.apps.events.AppEvent;
 import net.geforcemods.rologia.os.apps.events.AppEventType;
 import net.geforcemods.rologia.os.gui.components.ScreenComponent;
@@ -24,9 +24,9 @@ public abstract class App {
 	private transient ScreenImage appIcon = null;	
 	private transient ScreenImage appBackgroundImage = null;
 
-	private transient Rologia os;
+	private transient RologiaOS os;
 	
-	public App(Rologia rologia) {
+	public App(RologiaOS rologia) {
 		os = rologia;
 	}
 	
@@ -116,11 +116,11 @@ public abstract class App {
 		this.components = components;
 	}
 	
-	public Rologia getOS() {
+	public RologiaOS getOS() {
 		return os;
 	}
 
-	public void setOS(Rologia os) {
+	public void setOS(RologiaOS os) {
 		this.os = os;
 
 		for(int i = 0; i < components.length; i++) {

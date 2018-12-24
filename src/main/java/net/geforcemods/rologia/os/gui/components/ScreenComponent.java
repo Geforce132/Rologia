@@ -2,7 +2,7 @@ package net.geforcemods.rologia.os.gui.components;
 
 import org.lwjgl.opengl.GL11;
 
-import net.geforcemods.rologia.os.Rologia;
+import net.geforcemods.rologia.os.RologiaOS;
 import net.geforcemods.rologia.os.gui.screens.Screen;
 import net.geforcemods.rologia.os.misc.Position;
 import net.minecraft.client.Minecraft;
@@ -22,16 +22,16 @@ public abstract class ScreenComponent extends Gui {
 	
 	private String type;
 	
-	private transient Rologia os;
+	private transient RologiaOS os;
 
-	protected ScreenComponent(Rologia OS) {
+	protected ScreenComponent(RologiaOS OS) {
 		os = OS;
 
 		rotation = 0F;
 		scale = 1F;
 	}
 
-	protected ScreenComponent(Rologia OS, Position pos) {
+	protected ScreenComponent(RologiaOS OS, Position pos) {
 		os = OS;
 
 		setPosition(pos);
@@ -112,7 +112,7 @@ public abstract class ScreenComponent extends Gui {
 		return this;
 	}
 
-	public void setOS(Rologia OS) {
+	public void setOS(RologiaOS OS) {
 		os = OS;
 	}
 
@@ -152,7 +152,7 @@ public abstract class ScreenComponent extends Gui {
 		return colorValue;
 	}
 
-	public Rologia getOS() {
+	public RologiaOS getOS() {
 		return os;
 	}
 

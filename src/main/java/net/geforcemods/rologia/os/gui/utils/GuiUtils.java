@@ -4,7 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.util.Color;
 
-import net.geforcemods.rologia.os.Rologia;
+import net.geforcemods.rologia.os.RologiaOS;
 import net.geforcemods.rologia.os.misc.Position;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.GlStateManager;
@@ -56,7 +56,7 @@ public class GuiUtils {
 		GlStateManager.disableBlend();
 	}
 	
-	public static String formatString(Rologia OS, String text) {
+	public static String formatString(RologiaOS OS, String text) {
 		String[] keywords = StringUtils.substringsBetween(text, "$$", "$$");
 		
 		if(keywords != null) {

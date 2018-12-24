@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 
 import org.lwjgl.opengl.GL11;
 
-import net.geforcemods.rologia.os.Rologia;
+import net.geforcemods.rologia.os.RologiaOS;
 import net.geforcemods.rologia.os.misc.Position;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
@@ -13,32 +13,32 @@ public class ScreenRotatingImage extends ScreenImage {
 	
 	private float rotation = 0F;
 
-	public ScreenRotatingImage(Rologia os, BufferedImage image, float rotationValue) {
+	public ScreenRotatingImage(RologiaOS os, BufferedImage image, float rotationValue) {
 		super(os, image);
 		setRotation(rotationValue);
 	}
 	
-	public ScreenRotatingImage(Rologia os, ResourceLocation imageLocation, int width, int height, float rotationValue) {
+	public ScreenRotatingImage(RologiaOS os, ResourceLocation imageLocation, int width, int height, float rotationValue) {
 		super(os, imageLocation, width, height);
 		setRotation(rotationValue);
 	}
 	
-	public ScreenRotatingImage(Rologia os, String imagePath, int width, int height, float rotationValue) {
+	public ScreenRotatingImage(RologiaOS os, String imagePath, int width, int height, float rotationValue) {
 		super(os, imagePath, width, height);
 		setRotation(rotationValue);
 	}
 
-	public ScreenRotatingImage(Rologia os, BufferedImage image, Position pos, float rotationValue) {
+	public ScreenRotatingImage(RologiaOS os, BufferedImage image, Position pos, float rotationValue) {
 		super(os, image, pos);
 		setRotation(rotationValue);
 	}
 	
-	public ScreenRotatingImage(Rologia os, ResourceLocation imageLocation, Position pos, int width, int height, float rotationValue) {
+	public ScreenRotatingImage(RologiaOS os, ResourceLocation imageLocation, Position pos, int width, int height, float rotationValue) {
 		super(os, imageLocation, pos, width, height);
 		setRotation(rotationValue);
 	}
 	
-	public ScreenRotatingImage(Rologia os, String imagePath, Position pos, int width, int height, float rotationValue) {
+	public ScreenRotatingImage(RologiaOS os, String imagePath, Position pos, int width, int height, float rotationValue) {
 		super(os, imagePath, pos, width, height);
 		setRotation(rotationValue);
 	}

@@ -3,7 +3,7 @@ package net.geforcemods.rologia.os.gui.components;
 import org.apache.commons.lang3.StringUtils;
 import org.lwjgl.opengl.GL11;
 
-import net.geforcemods.rologia.os.Rologia;
+import net.geforcemods.rologia.os.RologiaOS;
 import net.geforcemods.rologia.os.gui.utils.GuiUtils;
 import net.geforcemods.rologia.os.misc.Position;
 import net.minecraft.client.renderer.GlStateManager;
@@ -14,13 +14,13 @@ public class ScreenTextField extends ScreenComponent {
 	private int width;
 	private int height;
 	
-	public ScreenTextField(Rologia OS, int w, int h) {
+	public ScreenTextField(RologiaOS OS, int w, int h) {
 		super(OS);
 		width = w;
 		height = h;
 	}
 
-	public ScreenTextField(Rologia OS, Position pos, int w, int h) {
+	public ScreenTextField(RologiaOS OS, Position pos, int w, int h) {
 		super(OS, pos);
 		width = w;
 		height = h;

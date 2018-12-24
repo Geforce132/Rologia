@@ -15,7 +15,7 @@ public class RegistrationHandler {
 	@SubscribeEvent
 	public static void registerResourceLocations(ModelRegistryEvent event)
 	{
-		ModelLoader.setCustomModelResourceLocation(MineWatch.mineWatch, 0, new ModelResourceLocation("rologia:mine_watch", "inventory"));
+		ModelLoader.setCustomModelResourceLocation(Rologia.smartwatch, 0, new ModelResourceLocation("rologia:smart_watch", "inventory"));
 	}
 
 }

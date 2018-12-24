@@ -1,7 +1,7 @@
 package net.geforcemods.rologia.events;
 
-import net.geforcemods.rologia.MineWatch;
-import net.geforcemods.rologia.os.Rologia;
+import net.geforcemods.rologia.Rologia;
+import net.geforcemods.rologia.os.RologiaOS;
 import net.geforcemods.rologia.os.apps.events.AppEventPlayerStep;
 import net.geforcemods.rologia.os.stats.UserStats;
 import net.minecraft.client.Minecraft;
@@ -17,10 +17,10 @@ public class RologiaEventHandler {
 
 		EntityPlayer player = Minecraft.getMinecraft().player;
 		if(event.getEntity() == player && event.getSound().getSoundName().getPath().endsWith(".step")) {
-			Rologia os = Rologia.getInstanceForPlayer(player);
+			RologiaOS os = RologiaOS.getInstanceForPlayer(player);
 			UserStats stats = os.getUserStats();
 			
-			MineWatch.instance.postRologiaEvent(new AppEventPlayerStep(Minecraft.getMinecraft().player, stats.getStepCount(), stats.increaseStepCount(1)));
+			Rologia.instance.postRologiaEvent(new AppEventPlayerStep(Minecraft.getMinecraft().player, stats.getStepCount(), stats.increaseStepCount(1)));
 		}
 	}
 	

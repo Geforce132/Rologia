@@ -2,7 +2,7 @@ package net.geforcemods.rologia.os.gui.screens;
 
 import java.util.ArrayList;
 
-import net.geforcemods.rologia.os.Rologia;
+import net.geforcemods.rologia.os.RologiaOS;
 import net.geforcemods.rologia.os.apps.App;
 import net.geforcemods.rologia.os.gui.components.ScreenComponent;
 import net.geforcemods.rologia.os.gui.components.ScreenScrollBar;
@@ -24,7 +24,7 @@ public abstract class Screen extends Gui {
 	public static final int WATCH_SCREEN_X_SIZE = WATCH_BACKGROUND_X_SIZE - 8;
 	public static final int WATCH_SCREEN_Y_SIZE = WATCH_BACKGROUND_Y_SIZE - 7;
 
-	private Rologia OS;
+	private RologiaOS OS;
 
 	private Position screenPos;
 	private Position mousePos = new Position();
@@ -41,7 +41,7 @@ public abstract class Screen extends Gui {
 	private ScreenComponent leftArrow;
 	private ScreenComponent rightArrow;
 
-	public Screen(Rologia os, Position pos) {
+	public Screen(RologiaOS os, Position pos) {
 		OS = os;
 
 		screenPos = pos;
@@ -247,7 +247,7 @@ public abstract class Screen extends Gui {
 		return statusBar;
 	}
 
-	public Rologia getOS() {
+	public RologiaOS getOS() {
 		return OS;
 	}
 

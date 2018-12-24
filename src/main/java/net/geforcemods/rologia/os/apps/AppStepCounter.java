@@ -5,7 +5,7 @@ import java.text.DecimalFormat;
 
 import com.google.gson.JsonObject;
 
-import net.geforcemods.rologia.os.Rologia;
+import net.geforcemods.rologia.os.RologiaOS;
 import net.geforcemods.rologia.os.apps.events.AppEvent;
 import net.geforcemods.rologia.os.apps.events.AppEventType;
 import net.geforcemods.rologia.os.gui.screens.Screen;
@@ -14,7 +14,7 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
 
 public class AppStepCounter extends App {
 	
-	public AppStepCounter(Rologia rologia) {
+	public AppStepCounter(RologiaOS rologia) {
 		super(rologia);
 	}
 

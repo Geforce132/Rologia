@@ -2,18 +2,18 @@ package net.geforcemods.rologia.os.tasks;
 
 import java.time.LocalDateTime;
 
-import net.geforcemods.rologia.os.Rologia;
+import net.geforcemods.rologia.os.RologiaOS;
 import net.geforcemods.rologia.os.gui.screens.Screen;
 import net.geforcemods.rologia.os.time.Task;
 
 public class TaskUpdateTime extends Task {
 
-	public TaskUpdateTime(Rologia rologia) {
+	public TaskUpdateTime(RologiaOS rologia) {
 		super(rologia);
 	}
 
 	@Override
-	public void execute(Rologia os, Screen currentScreen) {
+	public void execute(RologiaOS os, Screen currentScreen) {
 		LocalDateTime localTime = LocalDateTime.now();
 		
 		if(!os.getTime().isEqual(localTime)) {

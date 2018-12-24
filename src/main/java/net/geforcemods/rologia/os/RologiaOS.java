@@ -6,7 +6,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import net.geforcemods.rologia.MineWatch;
+import net.geforcemods.rologia.Rologia;
 import net.geforcemods.rologia.os.apps.App;
 import net.geforcemods.rologia.os.gui.components.ScreenComponent;
 import net.geforcemods.rologia.os.gui.screens.Screen;
@@ -21,7 +21,7 @@ import net.geforcemods.rologia.utils.PlayerUtils;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 
-public class Rologia {
+public class RologiaOS {
 	
 	public static final String VERSION = "0.0.1";
 	public static final boolean debugMode = true;
@@ -150,29 +150,29 @@ public class Rologia {
 		return time.format(formatter);
 	}
 
-	public static Rologia getInstanceForPlayer(EntityPlayer player) {
+	public static RologiaOS getInstanceForPlayer(EntityPlayer player) {
 		if(player == null || player.getGameProfile().getId() == null)
 			return null;
 
 		String uuid = player.getGameProfile().getId().toString();
 
-		if(!MineWatch.instance.rologiaInstances.containsKey(uuid))
+		if(!Rologia.instance.rologiaInstances.containsKey(uuid))
 		{
 			System.out.println("loading new");
-			Rologia newOS = new Rologia();
+			RologiaOS newOS = new RologiaOS();
 			newOS.initOS();
-			MineWatch.instance.rologiaInstances.put(uuid, newOS);
+			Rologia.instance.rologiaInstances.put(uuid, newOS);
 		}
 
-		return MineWatch.instance.rologiaInstances.get(uuid);
+		return Rologia.instance.rologiaInstances.get(uuid);
 	}
 	
 	public static void removeInstanceForPlayer(EntityPlayer player) {
 		String uuid = PlayerUtils.getPlayerUUID(player);
 
-		if(MineWatch.instance.rologiaInstances.containsKey(uuid)) {
-			MineWatch.instance.rologiaInstances.get(uuid).apps.clear();
-			MineWatch.instance.rologiaInstances.remove(uuid);
+		if(Rologia.instance.rologiaInstances.containsKey(uuid)) {
+			Rologia.instance.rologiaInstances.get(uuid).apps.clear();
+			Rologia.instance.rologiaInstances.remove(uuid);
 			System.out.println("removing " + FMLCommonHandler.instance().getSide());
 		}
 	}

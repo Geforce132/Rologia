@@ -1,6 +1,6 @@
 package net.geforcemods.rologia.gui;
 
-import net.geforcemods.rologia.MineWatch;
+import net.geforcemods.rologia.Rologia;
 import net.geforcemods.rologia.containers.ContainerEmpty;
 import net.geforcemods.rologia.item.ItemMineWatch;
 import net.geforcemods.rologia.utils.PlayerUtils;
@@ -28,7 +28,7 @@ public class GuiHandler implements IGuiHandler {
 		switch(ID)
 		{
 		case BOOT_SCREEN_ID:
-			if(!PlayerUtils.isHoldingItem(player, MineWatch.mineWatch)) return null;
+			if(!PlayerUtils.isHoldingItem(player, Rologia.smartwatch)) return null;
 			
 			return new GuiMineWatch(player, (ItemMineWatch) player.inventory.getCurrentItem().getItem());
 		}

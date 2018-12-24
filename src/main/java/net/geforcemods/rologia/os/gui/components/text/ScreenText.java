@@ -1,6 +1,6 @@
 package net.geforcemods.rologia.os.gui.components.text;
 
-import net.geforcemods.rologia.os.Rologia;
+import net.geforcemods.rologia.os.RologiaOS;
 import net.geforcemods.rologia.os.gui.components.ScreenComponent;
 import net.geforcemods.rologia.os.gui.screens.Screen;
 import net.geforcemods.rologia.os.gui.utils.GuiUtils;
@@ -10,13 +10,13 @@ public class ScreenText extends ScreenComponent {
 	
 	private String text;
 	
-	public ScreenText(Rologia os, String string, int color) {
+	public ScreenText(RologiaOS os, String string, int color) {
 		super(os);
 		text = string;
 		setColor(color);
 	}
 
-	public ScreenText(Rologia os, String string, Position pos, int color) {
+	public ScreenText(RologiaOS os, String string, Position pos, int color) {
 		super(os, pos);
 		text = string;
 		setColor(color);

@@ -2,8 +2,8 @@
 	"credit": "Made with Blockbench",
 	"ambientocclusion": false,
 	"textures": {
-		"0": "rologia:items/mine_watch",
-		"particle": "rologia:items/mine_watch"
+		"0": "rologia:items/smart_watch",
+		"particle": "rologia:items/smart_watch"
 	},
 	"elements": [
 		{

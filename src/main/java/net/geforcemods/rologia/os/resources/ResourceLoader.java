@@ -17,8 +17,8 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import net.geforcemods.rologia.MineWatch;
-import net.geforcemods.rologia.os.Rologia;
+import net.geforcemods.rologia.Rologia;
+import net.geforcemods.rologia.os.RologiaOS;
 import net.geforcemods.rologia.os.apps.App;
 import net.geforcemods.rologia.os.apps.AppDeserializer;
 import net.geforcemods.rologia.os.gui.components.ComponentDeserializer;
@@ -32,15 +32,15 @@ import net.minecraft.util.ResourceLocation;
 public class ResourceLoader {
 	
 	/**
-	 * Minecraft's root folder. MC_DIR gets set during {@link MineWatch}.preInit()
+	 * Minecraft's root folder. MC_DIR gets set during {@link Rologia}.preInit()
 	 */
 	public static File MC_DIR;
 	
-	public static final String TEXTURE_FOLDER_PATH = MineWatch.MOD_ID + ":textures/gui/watch/";
-	public static final String APPS_FOLDER_PATH = MineWatch.MOD_ID + ":os/apps/";
-	public static final String OS_FOLDER_PATH = MineWatch.MOD_ID + ":os/";
+	public static final String TEXTURE_FOLDER_PATH = Rologia.MOD_ID + ":textures/gui/watch/";
+	public static final String APPS_FOLDER_PATH = Rologia.MOD_ID + ":os/apps/";
+	public static final String OS_FOLDER_PATH = Rologia.MOD_ID + ":os/";
 
-	public static void loadComponents(Rologia os) {
+	public static void loadComponents(RologiaOS os) {
 		Gson gson = new Gson();
 
 		try {
@@ -91,7 +91,7 @@ public class ResourceLoader {
 		return folder;
 	}
 	
-	public static void loadApps(Rologia os) {
+	public static void loadApps(RologiaOS os) {
 		File appsFolder = new File(getRologiaFolder(), "apps/");
 		
 		if(!appsFolder.exists())

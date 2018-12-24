@@ -1,6 +1,6 @@
 package net.geforcemods.rologia.os.gui.components;
 
-import net.geforcemods.rologia.os.Rologia;
+import net.geforcemods.rologia.os.RologiaOS;
 import net.geforcemods.rologia.os.gui.utils.Colors;
 import net.geforcemods.rologia.os.gui.utils.GuiUtils;
 import net.geforcemods.rologia.os.misc.Position;
@@ -9,12 +9,12 @@ public class ScreenButton extends ScreenComponent {
 	
 	private String text;
 	
-	public ScreenButton(Rologia OS, String string) {
+	public ScreenButton(RologiaOS OS, String string) {
 		super(OS);
 		text = string;
 	}
 
-	public ScreenButton(Rologia OS, Position pos, String string) {
+	public ScreenButton(RologiaOS OS, Position pos, String string) {
 		super(OS, pos);
 		text = string;
 	}

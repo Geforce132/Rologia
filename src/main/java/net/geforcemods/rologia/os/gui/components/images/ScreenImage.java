@@ -2,7 +2,7 @@ package net.geforcemods.rologia.os.gui.components.images;
 
 import java.awt.image.BufferedImage;
 
-import net.geforcemods.rologia.os.Rologia;
+import net.geforcemods.rologia.os.RologiaOS;
 import net.geforcemods.rologia.os.gui.components.ScreenComponent;
 import net.geforcemods.rologia.os.misc.Position;
 import net.minecraft.client.Minecraft;
@@ -16,7 +16,7 @@ public class ScreenImage extends ScreenComponent {
 	private int imageHeight;
 	private boolean isDynamicImage;
 	
-	public ScreenImage(Rologia os, String imagePath, int width, int height) {
+	public ScreenImage(RologiaOS os, String imagePath, int width, int height) {
 		super(os);
 		location = new ResourceLocation(imagePath);
 		imageWidth = width;
@@ -24,21 +24,21 @@ public class ScreenImage extends ScreenComponent {
 		isDynamicImage = false;
 	}
 	
-	public ScreenImage(Rologia os, ResourceLocation imageLocation, int width, int height) {
+	public ScreenImage(RologiaOS os, ResourceLocation imageLocation, int width, int height) {
 		super(os);
 		location = imageLocation;
 		imageWidth = width;
 		imageHeight = height;
 	}
 
-	public ScreenImage(Rologia os, BufferedImage image) {
+	public ScreenImage(RologiaOS os, BufferedImage image) {
 		super(os);
 		location = Minecraft.getMinecraft().getTextureManager().getDynamicTextureLocation(image.toString(), new DynamicTexture(image));
 		imageWidth = image.getWidth();
 		imageHeight = image.getHeight();
 	}
 	
-	public ScreenImage(Rologia os, BufferedImage image, Position pos) {
+	public ScreenImage(RologiaOS os, BufferedImage image, Position pos) {
 		super(os, pos);
 		location = Minecraft.getMinecraft().getTextureManager().getDynamicTextureLocation(image.toString(), new DynamicTexture(image));
 		imageWidth = image.getWidth();
@@ -46,7 +46,7 @@ public class ScreenImage extends ScreenComponent {
 		isDynamicImage = true;
 	}
 	
-	public ScreenImage(Rologia os, ResourceLocation imageLocation, Position pos, int width, int height) {
+	public ScreenImage(RologiaOS os, ResourceLocation imageLocation, Position pos, int width, int height) {
 		super(os, pos);
 		location = imageLocation;
 		imageWidth = width;
@@ -54,7 +54,7 @@ public class ScreenImage extends ScreenComponent {
 		isDynamicImage = false;
 	}
 	
-	public ScreenImage(Rologia os, String imagePath, Position pos, int width, int height) {
+	public ScreenImage(RologiaOS os, String imagePath, Position pos, int width, int height) {
 		super(os, pos);
 		location = new ResourceLocation(imagePath);
 		imageWidth = width;

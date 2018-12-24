@@ -2,14 +2,14 @@ package net.geforcemods.rologia.os.gui.components;
 
 import org.lwjgl.opengl.GL11;
 
-import net.geforcemods.rologia.os.Rologia;
+import net.geforcemods.rologia.os.RologiaOS;
 import net.geforcemods.rologia.os.gui.screens.Screen;
 import net.geforcemods.rologia.os.misc.Position;
 import net.minecraft.client.renderer.GlStateManager;
 
 public class ScreenScrollBar extends ScreenComponent {
 
-	public ScreenScrollBar(Rologia OS, Position pos) {
+	public ScreenScrollBar(RologiaOS OS, Position pos) {
 		super(OS, pos);
 	}
 

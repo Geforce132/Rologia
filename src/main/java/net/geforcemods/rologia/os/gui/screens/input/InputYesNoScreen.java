@@ -1,6 +1,6 @@
 package net.geforcemods.rologia.os.gui.screens.input;
 
-import net.geforcemods.rologia.os.Rologia;
+import net.geforcemods.rologia.os.RologiaOS;
 import net.geforcemods.rologia.os.gui.components.ScreenButton;
 import net.geforcemods.rologia.os.gui.components.ScreenComponent;
 import net.geforcemods.rologia.os.gui.components.images.ScreenImage;
@@ -14,7 +14,7 @@ public class InputYesNoScreen extends Screen {
 	private ScreenButton yesButton = new ScreenButton(getOS(), "Yes");
 	private ScreenButton noButton = new ScreenButton(getOS(), "No");
 
-	public InputYesNoScreen(Rologia os, Position pos) {
+	public InputYesNoScreen(RologiaOS os, Position pos) {
 		super(os, pos);
 	}
 
