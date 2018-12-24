@@ -33,6 +33,7 @@ public class GuiIconButton extends GuiButton {
     	super.drawButton(mc, mouseX, mouseY, partialTicks);
 
     	GlStateManager.pushMatrix();
+    	GlStateManager.color(1, 1, 1, 1);
     	mc.getTextureManager().bindTexture(iconLocation);
     	GlStateManager.disableDepth();
     	int i = xTextureOffset;

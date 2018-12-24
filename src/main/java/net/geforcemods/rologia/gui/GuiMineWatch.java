@@ -66,6 +66,12 @@ public class GuiMineWatch extends GuiScreen {
 		rologia.renderScreen(mouseX, mouseY);
 		
 		//draw debugging info here
+		if(debugButtons[0] != null && rologia.getCurrentScreen() != null) {
+			if(debugButtons[1].enabled == false)
+				rologia.getCurrentScreen().drawScreenInfo(width - 150, height);
+			else if(debugButtons[2].enabled == false)
+				rologia.getCurrentScreen().drawComponentInfo(width - 150, height);
+		}
 	}
 	
 	@Override

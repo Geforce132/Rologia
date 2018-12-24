@@ -115,10 +115,6 @@ public class Rologia {
 		// else on the screen.
 		currentScreen.editStatusBar();
 		currentScreen.drawStatusBar();
-		
-		if(debugMode) {
-			currentScreen.drawDebuggingTools(mouseX, mouseY);
-		}
 	}
 
 	private void loadComponents() {
