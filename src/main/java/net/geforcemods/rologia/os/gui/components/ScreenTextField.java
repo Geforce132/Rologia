@@ -4,6 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.lwjgl.opengl.GL11;
 
 import net.geforcemods.rologia.os.RologiaOS;
+import net.geforcemods.rologia.os.gui.utils.Colors;
 import net.geforcemods.rologia.os.gui.utils.GuiUtils;
 import net.geforcemods.rologia.os.misc.Position;
 import net.minecraft.client.renderer.GlStateManager;
@@ -39,7 +40,7 @@ public class ScreenTextField extends ScreenComponent {
 		
 		GlStateManager.enableTexture2D();
 		GlStateManager.disableBlend();
-		this.drawString(getFontRenderer(), text, getPosition().getX(), getPosition().getY(), 55555);
+		this.drawString(getFontRenderer(), text, getPosition().getX(), getPosition().getY(), Colors.GREEN.hexValue);
 	}
 
 	@Override

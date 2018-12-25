@@ -9,7 +9,6 @@ import net.geforcemods.rologia.os.gui.components.ScreenScrollBar;
 import net.geforcemods.rologia.os.gui.components.ScreenStatusBar;
 import net.geforcemods.rologia.os.gui.components.images.ScreenImage;
 import net.geforcemods.rologia.os.gui.utils.Colors;
-import net.geforcemods.rologia.os.gui.utils.GuiUtils;
 import net.geforcemods.rologia.os.misc.Position;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -54,7 +53,7 @@ public abstract class Screen extends Gui {
 	public abstract void onComponentClicked(ScreenComponent component, Position mousePos, int mouseButtonClicked);
 
 	public void addStartupComponents() {
-		statusBar = new ScreenStatusBar(OS, getPosition(), Colors.RED);
+		statusBar = new ScreenStatusBar(OS, getPosition(), Colors.RED.color);
 		scrollBar = new ScreenScrollBar(OS, getPosition().shiftX(90));
 
 		ScreenComponent leftArrow = getComponentAsImage("arrow_left_light");
@@ -124,18 +123,18 @@ public abstract class Screen extends Gui {
 	public void editStatusBar() {}
 
 	public void drawScreenInfo(int startingXPos, int startingYPos) {
-		drawString(getFontRenderer(), "Screen info:", startingXPos, 38, 55555);
-		drawString(getFontRenderer(), "Name: " + getClass().getSimpleName(), startingXPos, 50, 55555);
-		drawString(getFontRenderer(), "Position - X: " + getPosition().getX() + " Y: " + getPosition().getY(), startingXPos, 62, 55555);
-		drawString(getFontRenderer(), "Mouse position - X: " + mousePos.getX() + " Y: " + mousePos.getY(), startingXPos, 74, 55555);
+		drawString(getFontRenderer(), "Screen info:", startingXPos, 38, Colors.GREEN.hexValue);
+		drawString(getFontRenderer(), "Name: " + getClass().getSimpleName(), startingXPos, 50, Colors.GREEN.hexValue);
+		drawString(getFontRenderer(), "Position - X: " + getPosition().getX() + " Y: " + getPosition().getY(), startingXPos, 62, Colors.GREEN.hexValue);
+		drawString(getFontRenderer(), "Mouse position - X: " + mousePos.getX() + " Y: " + mousePos.getY(), startingXPos, 74, Colors.GREEN.hexValue);
 	}
 
 	public void drawComponentInfo(int startingXPos, int startingYPos) {
 		for (int i = 0; i < components.size(); i++) {
 			boolean isBeingHoveredOver = components.get(i).isMouseHoveringOver(mousePos);
 			
-			drawString(getFontRenderer(), "Components:", startingXPos, 38, 55555);
-			drawString(getFontRenderer(), i + ": " + components.get(i).getClass().getSimpleName(), startingXPos, 50 + (i * 12), isBeingHoveredOver ? 555555 : 55555);
+			drawString(getFontRenderer(), "Components:", startingXPos, 38, Colors.GREEN.hexValue);
+			drawString(getFontRenderer(), (focusedComponent == components.get(i) ? "* " : "") + i + ": " + components.get(i).getClass().getSimpleName(), startingXPos, 50 + (i * 12), isBeingHoveredOver ? Colors.DARK_GREEN.hexValue : Colors.GREEN.hexValue);
 		}
 	}
 
@@ -180,7 +179,11 @@ public abstract class Screen extends Gui {
 	public void handleMouseClick(int mouseX, int mouseY, int mouseButtonClicked) {
 		for(ScreenComponent component : components){
 			if(component.isMouseHoveringOver(getMousePosition())) {
-				focusedComponent = component;
+				if(focusedComponent == null)
+					focusedComponent = component;
+				else
+					focusedComponent = null;
+
 				onComponentClicked(component, getMousePosition(), mouseButtonClicked);
 				component.mouseClick(getMousePosition(), mouseButtonClicked);
 			}

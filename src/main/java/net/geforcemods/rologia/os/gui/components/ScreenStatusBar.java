@@ -5,6 +5,7 @@ import org.lwjgl.util.Color;
 
 import net.geforcemods.rologia.os.RologiaOS;
 import net.geforcemods.rologia.os.gui.screens.Screen;
+import net.geforcemods.rologia.os.gui.utils.Colors;
 import net.geforcemods.rologia.os.misc.Position;
 import net.geforcemods.rologia.os.notifications.Notification;
 import net.geforcemods.rologia.os.time.TimeConstants;
@@ -32,7 +33,7 @@ public class ScreenStatusBar extends ScreenComponent {
 		GlStateManager.disableTexture2D();
 		
 		GlStateManager.glBegin(GL11.GL_QUADS);
-		GlStateManager.color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
+		GlStateManager.color(color.getRed(), color.getGreen(), color.getBlue(), 0);
 		GlStateManager.glVertex3f((float)getPosition().getX(), (float)getPosition().getY() + getHeight(), 0.0F);
         GlStateManager.glVertex3f((float)getPosition().getX() + getWidth(), (float)getPosition().getY() + getHeight(), 0.0F);
         GlStateManager.glVertex3f((float)getPosition().getX() + getWidth(), (float)getPosition().getY(), 0.0F);
@@ -44,28 +45,34 @@ public class ScreenStatusBar extends ScreenComponent {
         
         float scaleOfText = 0.85F;
 		GlStateManager.scale(scaleOfText, scaleOfText, 1F);
-        drawString(getFontRenderer(), getScreen().getOS().getTime(TimeConstants.HM), (int) ((getPosition().getX() + 50) / scaleOfText), (int) ((getPosition().getY() + 1) / scaleOfText), 44444);
+        drawString(getFontRenderer(), getScreen().getOS().getTime(TimeConstants.HM), (int) ((getPosition().getX() + 50) / scaleOfText), (int) ((getPosition().getY() + 1) / scaleOfText), Colors.AQUAMARINE.hexValue);
 		GlStateManager.popMatrix();
         
         //Draw notifications
-        for(int i = 0; i < getOS().getNotifications().size(); i++) {
-        	if(i > 3) {
-        		GlStateManager.pushMatrix();
-        		Minecraft.getMinecraft().getTextureManager().bindTexture(Notification.NOTIFICATION_ICONS_LIGHT);
-        		
-        		GlStateManager.color(1, 1, 1, 1);
-        		GlStateManager.translate(getPosition().shiftX(40).getX(), getPosition().getY(), 0);
-        		GlStateManager.scale(0.2F, 0.2F, 0);
-        		GlStateManager.translate(-getPosition().shiftX(40).getX(), -getPosition().getY(), 0);
-        		drawTexturedModalRect(getPosition().shiftX(40).getX(), getPosition().getY(), 38, 0, 37, 33);
-        		GlStateManager.popMatrix();
-        		
-        		break;
-        	}
-        	
-        	getOS().getNotifications().get(i).drawNotification(getScreen(), getPosition().shiftX(i * 10));
-        }
+        drawNotifications();
     }
+
+	private void drawNotifications() {
+		boolean isExpanded = getScreen().getFocusedComponent() == this;
+
+		for(int i = 0; i < getOS().getNotifications().size(); i++) {
+			if(i > 3 && !isExpanded) {
+				GlStateManager.pushMatrix();
+				Minecraft.getMinecraft().getTextureManager().bindTexture(Notification.NOTIFICATION_ICONS_LIGHT);
+
+				GlStateManager.color(1, 1, 1, 1);
+				GlStateManager.translate(getPosition().shiftX(40).getX(), getPosition().getY(), 0);
+				GlStateManager.scale(0.2F, 0.2F, 0);
+				GlStateManager.translate(-getPosition().shiftX(40).getX(), -getPosition().getY(), 0);
+				drawTexturedModalRect(getPosition().shiftX(40).getX(), getPosition().getY(), 38, 0, 37, 33);
+				GlStateManager.popMatrix();
+
+				break;
+			}
+
+			getOS().getNotifications().get(i).drawNotification(getScreen(), getPosition().shiftX(1), i, isExpanded);
+		}
+	}
 	
 	@Override
 	public void mouseClick(Position mousePos, int mouseButtonClicked) {}

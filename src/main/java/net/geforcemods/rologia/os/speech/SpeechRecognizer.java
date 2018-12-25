@@ -1,9 +1,5 @@
 package net.geforcemods.rologia.os.speech;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.Arrays;
-
 //import com.ibm.watson.developer_cloud.speech_to_text.v1.SpeechToText;
 //import com.ibm.watson.developer_cloud.speech_to_text.v1.model.RecognizeOptions;
 //import com.ibm.watson.developer_cloud.speech_to_text.v1.model.SpeechRecognitionResults;

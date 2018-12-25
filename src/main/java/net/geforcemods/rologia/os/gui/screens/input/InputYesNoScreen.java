@@ -6,11 +6,12 @@ import net.geforcemods.rologia.os.gui.components.ScreenComponent;
 import net.geforcemods.rologia.os.gui.components.images.ScreenImage;
 import net.geforcemods.rologia.os.gui.components.text.ScreenText;
 import net.geforcemods.rologia.os.gui.screens.Screen;
+import net.geforcemods.rologia.os.gui.utils.Colors;
 import net.geforcemods.rologia.os.misc.Position;
 
 public class InputYesNoScreen extends Screen {
 	
-	private ScreenText prompt = new ScreenText(getOS(), "Do you want to delete all of your diamonds?", 55555);
+	private ScreenText prompt = new ScreenText(getOS(), "Do you want to delete all of your diamonds?", Colors.GREEN.hexValue);
 	private ScreenButton yesButton = new ScreenButton(getOS(), "Yes");
 	private ScreenButton noButton = new ScreenButton(getOS(), "No");
 

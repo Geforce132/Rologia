@@ -2,8 +2,6 @@ package net.geforcemods.rologia.os.gui.components.images;
 
 import java.awt.image.BufferedImage;
 
-import org.lwjgl.opengl.GL11;
-
 import net.geforcemods.rologia.os.RologiaOS;
 import net.geforcemods.rologia.os.misc.Position;
 import net.minecraft.client.renderer.GlStateManager;
