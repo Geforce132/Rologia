@@ -28,11 +28,6 @@ public class ScreenText extends ScreenComponent {
 			getFontRenderer().drawSplitString(getText(), getPosition().getX(), getPosition().getY() + 2, Screen.WATCH_SCREEN_X_SIZE, colorValue);
 	}
 
-	@Override
-	public void mouseClick(Position mousePos, int mouseButtonClicked) {
-		
-	}
-	
 	public String getText() {
 		return GuiUtils.formatString(getOS(), text);
 	}

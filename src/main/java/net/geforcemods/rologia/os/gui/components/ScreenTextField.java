@@ -44,8 +44,9 @@ public class ScreenTextField extends ScreenComponent {
 	}
 
 	@Override
-	public void mouseClick(Position mousePos, int mouseButtonClicked) {
+	public boolean mouseClick(Position mousePos, int mouseButtonClicked) {
 		System.out.println("clicked");
+		return true;
 	}
 	
 	@Override

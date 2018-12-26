@@ -92,7 +92,4 @@ public class ScreenImage extends ScreenComponent {
 		return null;
 	}
 
-	@Override
-	public void mouseClick(Position mousePos, int mouseButtonClicked) {}
-
 }

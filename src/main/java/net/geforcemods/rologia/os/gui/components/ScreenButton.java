@@ -34,9 +34,6 @@ public class ScreenButton extends ScreenComponent {
 	}
 
 	@Override
-	public void mouseClick(Position mousePos, int mouseButtonClicked) {}
-
-	@Override
 	public int getWidth() {
 		return getFontRenderer().getStringWidth(text) + 4;
 	}

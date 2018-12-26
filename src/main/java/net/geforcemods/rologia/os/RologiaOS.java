@@ -65,11 +65,11 @@ public class RologiaOS {
 			currentScreen.initializeScreen();
 
 			// Just for testing purposes, obviously 
-			notifications.add(new Notification(currentScreen, null, "t1", "body 1", 1));
-			notifications.add(new Notification(currentScreen, null, "t2", "body 2", 2));
-			notifications.add(new Notification(currentScreen, null, "t3", "body 3", 3));
-			notifications.add(new Notification(currentScreen, null, "t4", "body 4", 4));
-			notifications.add(new Notification(currentScreen, null, "t5", "body 5", 5));
+			addNotification(new Notification(currentScreen, null, "t1", "body 1"));
+			addNotification(new Notification(currentScreen, null, "t2", "body 2"));
+			addNotification(new Notification(currentScreen, null, "t3", "body 3"));
+			//notifications.add(new Notification(currentScreen, null, "t4", "body 4", 3));
+			//notifications.add(new Notification(currentScreen, null, "t5", "body 5", 4));
 		}
 		else {
 			Position p = new Position(screenXPos, screenYPos);
@@ -205,6 +205,27 @@ public class RologiaOS {
 
 	public boolean isAppOpen() {
 		return currentApp != null;
+	}
+
+	public void addNotification(Notification notification) {
+		notification.setSlotNumber(notifications.size());
+		notifications.add(notification);
+	}
+
+	public void removeNotification(Notification notification) {
+		int slotNumber = notification.getSlotNumber();
+		notifications.remove(notification);
+
+		for(int i = 0; i < notifications.size(); i++) {
+			if(notifications.get(i).getSlotNumber() > slotNumber) {
+				int number = notifications.get(i).getSlotNumber();
+				notifications.get(i).setSlotNumber(--number);
+			}
+		}
+	}
+
+	public boolean hasNotifications() {
+		return notifications.size() > 0;
 	}
 
 	public ArrayList<Notification> getNotifications() {

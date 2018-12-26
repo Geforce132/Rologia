@@ -43,7 +43,9 @@ public abstract class ScreenComponent extends Gui {
 	
 	public abstract void drawComponent();
 
-	public abstract void mouseClick(Position mousePos, int mouseButtonClicked);
+	public boolean mouseClick(Position mousePos, int mouseButtonClicked) {
+		return true;
+	}
 	
 	public void keyTyped(char key, int keyCode) {}
 

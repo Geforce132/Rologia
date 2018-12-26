@@ -31,9 +31,6 @@ public class ScreenScrollBar extends ScreenComponent {
 	}
 
 	@Override
-	public void mouseClick(Position mousePos, int mouseButtonClicked) {}
-
-	@Override
 	public int getWidth() {
 		return 4;
 	}

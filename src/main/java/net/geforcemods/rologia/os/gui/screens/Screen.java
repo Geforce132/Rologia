@@ -130,11 +130,17 @@ public abstract class Screen extends Gui {
 	}
 
 	public void drawComponentInfo(int startingXPos, int startingYPos) {
+		drawString(getFontRenderer(), "Components:", startingXPos, 38, Colors.GREEN.hexValue);
+
 		for (int i = 0; i < components.size(); i++) {
 			boolean isBeingHoveredOver = components.get(i).isMouseHoveringOver(mousePos);
 			
-			drawString(getFontRenderer(), "Components:", startingXPos, 38, Colors.GREEN.hexValue);
 			drawString(getFontRenderer(), (focusedComponent == components.get(i) ? "* " : "") + i + ": " + components.get(i).getClass().getSimpleName(), startingXPos, 50 + (i * 12), isBeingHoveredOver ? Colors.DARK_GREEN.hexValue : Colors.GREEN.hexValue);
+
+			if(isBeingHoveredOver) {
+				drawString(getFontRenderer(), "Component info:", startingXPos, 50 + ((components.size() + 1) * 12), Colors.GREEN.hexValue);
+				drawString(getFontRenderer(), " - Position - X: " + components.get(i).getPosition().getX() + " Y: " + components.get(i).getPosition().getY(), startingXPos, 50 + ((components.size() + 2) * 12), Colors.GREEN.hexValue);
+			}
 		}
 	}
 
@@ -172,22 +178,33 @@ public abstract class Screen extends Gui {
 		return focusedComponent;
 	}
 
+	public void setFocusedComponent(ScreenComponent comp) {
+		focusedComponent = comp;
+	}
+
 	public boolean hasFocusedComponent() {
 		return focusedComponent != null;
 	}
 
 	public void handleMouseClick(int mouseX, int mouseY, int mouseButtonClicked) {
+		boolean clickedOnComponent = false;
+
 		for(ScreenComponent component : components){
-			if(component.isMouseHoveringOver(getMousePosition())) {
-				if(focusedComponent == null)
-					focusedComponent = component;
-				else
-					focusedComponent = null;
+			if(component.isMouseHoveringOver(getMousePosition())) {				
+				if(component.mouseClick(getMousePosition(), mouseButtonClicked)) {
+					if(focusedComponent == component)
+						focusedComponent = null;
+					else
+						focusedComponent = component;
+				}
 
 				onComponentClicked(component, getMousePosition(), mouseButtonClicked);
-				component.mouseClick(getMousePosition(), mouseButtonClicked);
+				clickedOnComponent = true;
 			}
 		}
+
+		if(!clickedOnComponent)
+			focusedComponent = null;
 	}
 
 	public void handleKeyTyped(char key, int keyCode) {
