@@ -17,17 +17,42 @@ import net.geforcemods.rologia.os.resources.ResourceLoader;
 import net.geforcemods.rologia.os.stats.UserStats;
 import net.geforcemods.rologia.os.tasks.TaskUpdateTime;
 import net.geforcemods.rologia.os.time.Task;
-import net.geforcemods.rologia.utils.PlayerUtils;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 
+/**
+ * RologiaOS, or rOS, is the main Rologia "operating system" class which handles all of 
+ * the watch's functions. Sets up screens to draw and keeps track of running apps, 
+ * notifications, tasks, and other info such as the time and the owner of the watches
+ * 
+ * @author Geforce
+ */
 public class RologiaOS {
 	
+	/**
+	 * The current version of rOS
+	 */
 	public static final String VERSION = "0.0.1";
+
+	/**
+	 * Whether rOS is currently running in debug mode. Allows access to the debug GUI
+	 * when viewing a Screen or App
+	 */
 	public static final boolean debugMode = true;
+
+	/**
+	 * If this instance of rOS has been opened at least once
+	 */
 	private boolean hasInitialized = false;
-	
+
+	/**
+	 * The current Screen being rendered
+	 */
 	private Screen currentScreen;
+
+	/**
+	 * The App currently running (null if none)
+	 */
 	private App currentApp;
 	private LocalDateTime time = LocalDateTime.now();
 	private ArrayList<Task> tasks = new ArrayList<Task>();
@@ -39,6 +64,11 @@ public class RologiaOS {
 	private EntityPlayer user;
 	private UserStats userStats = new UserStats();
 	
+	/**
+	 * Loads info from the component and app .json files.
+	 * Only gets called the first time this instance of rOS 
+	 * tries to open a Screen
+	 */
 	public void initOS() {
 		if(hasInitialized) return;
 
@@ -54,6 +84,10 @@ public class RologiaOS {
 		hasInitialized = true;
 	}
 	
+	/**
+	 * Opens the watch GUI. Loads an initial Screen and starts important tasks. This
+	 * is also called when the Minecraft window is resized and adjusts the Screen's position
+	 */
 	public void openSmartwatchGUI(EntityPlayer player, int screenXPos, int screenYPos) {
 		user = player;
 
@@ -81,6 +115,9 @@ public class RologiaOS {
 		tasks.add(new TaskUpdateTime(this));
 	}
 	
+	/**
+	 * Called every tick by GuiRologia and is used to update the Screen, Apps, and components
+	 */
 	public void update() {
 		if(currentScreen != null)
 		{
@@ -96,6 +133,11 @@ public class RologiaOS {
 		}
 	}
 
+	/**
+	 * Renders the screen by calling all the "draw" functions of all the parts of a Screen,
+	 * including ScreenImages, ScreenComponents, and Apps. Also keeps track of the mouse
+	 * cursor's position.
+	 */
 	public void renderScreen(int mouseX, int mouseY) {
 		if(currentScreen.getMousePosition() == null || currentScreen.getMousePosition().getX() != mouseX || currentScreen.getMousePosition().getY() != mouseY)
 			currentScreen.setMousePos(mouseX, mouseY);
@@ -117,10 +159,16 @@ public class RologiaOS {
 		currentScreen.drawStatusBar();
 	}
 
+	/**
+	 * Loads all default ScreenComponents created in the components .json file
+	 */
 	private void loadComponents() {
 		ResourceLoader.loadComponents(this);
 	}
 	
+	/**
+	 * Loads Apps created by .json files in the /rologia/os/apps/ folder
+	 */
 	private void loadApps() throws IOException {		
 		ResourceLoader.loadApps(this);
 	}
@@ -150,29 +198,27 @@ public class RologiaOS {
 		return time.format(formatter);
 	}
 
-	public static RologiaOS getInstanceForPlayer(EntityPlayer player) {
-		if(player == null || player.getGameProfile().getId() == null)
-			return null;
-
-		String uuid = player.getGameProfile().getId().toString();
-
-		if(!Rologia.instance.rologiaInstances.containsKey(uuid))
+	/**
+	 * Gets the rOS instance for this Minecraft client
+	 */
+	public static RologiaOS getInstance() {
+		if(Rologia.instance.serverProxy.getRologiaInstance() == null)
 		{
 			System.out.println("loading new");
 			RologiaOS newOS = new RologiaOS();
 			newOS.initOS();
-			Rologia.instance.rologiaInstances.put(uuid, newOS);
+			Rologia.instance.serverProxy.setRologiaInstance(newOS);
 		}
 
-		return Rologia.instance.rologiaInstances.get(uuid);
+		return Rologia.instance.serverProxy.getRologiaInstance();
 	}
 	
-	public static void removeInstanceForPlayer(EntityPlayer player) {
-		String uuid = PlayerUtils.getPlayerUUID(player);
-
-		if(Rologia.instance.rologiaInstances.containsKey(uuid)) {
-			Rologia.instance.rologiaInstances.get(uuid).apps.clear();
-			Rologia.instance.rologiaInstances.remove(uuid);
+	/**
+	 * Removes the rOS instance for this Minecraft client, useful for debugging
+	 */
+	public static void removeInstance() {
+		if(Rologia.instance.serverProxy.getRologiaInstance() != null) {
+			Rologia.instance.serverProxy.setRologiaInstance(null);
 			System.out.println("removing " + FMLCommonHandler.instance().getSide());
 		}
 	}
@@ -207,11 +253,17 @@ public class RologiaOS {
 		return currentApp != null;
 	}
 
+	/**
+	 * Adds a Notification to the screen
+	 */
 	public void addNotification(Notification notification) {
 		notification.setSlotNumber(notifications.size());
 		notifications.add(notification);
 	}
 
+	/**
+	 * Deletes a tracked Notification.
+	 */
 	public void removeNotification(Notification notification) {
 		int slotNumber = notification.getSlotNumber();
 		notifications.remove(notification);

@@ -11,7 +11,7 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 
-public class ItemMineWatch extends Item {
+public class ItemRologia extends Item {
 	
 	@Override
 	public boolean isFull3D(){
@@ -23,7 +23,7 @@ public class ItemMineWatch extends Item {
 		ItemStack itemStackIn = player.getHeldItem(hand);
 
 		if(player.isSneaking()) {
-			RologiaOS.removeInstanceForPlayer(player);
+			RologiaOS.removeInstance();
 			return ActionResult.newResult(EnumActionResult.PASS, itemStackIn);
 		}
 

@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import org.lwjgl.input.Keyboard;
 
-import net.geforcemods.rologia.item.ItemMineWatch;
+import net.geforcemods.rologia.item.ItemRologia;
 import net.geforcemods.rologia.os.RologiaOS;
 import net.geforcemods.rologia.os.gui.screens.Screen;
 import net.geforcemods.rologia.os.resources.ResourceLoader;
@@ -16,21 +16,21 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class GuiMineWatch extends GuiScreen {
+public class GuiRologia extends GuiScreen {
 	
 	private static final ResourceLocation SCREEN_EDGE_TEXTURE = new ResourceLocation(ResourceLoader.TEXTURE_FOLDER_PATH + "watch_screen_background_2.png");
 	private static final ResourceLocation DEBUG_ICONS = new ResourceLocation(ResourceLoader.TEXTURE_FOLDER_PATH + "debug_icons.png");
 
 	private EntityPlayer player;
 	private RologiaOS rologia;
-	private ItemMineWatch mineWatch;
+	private ItemRologia mineWatch;
 
 	private GuiButton[] debugButtons = new GuiButton[3];
 
-	public GuiMineWatch(EntityPlayer playerWhoOpenedGUI, ItemMineWatch watch) {
+	public GuiRologia(EntityPlayer playerWhoOpenedGUI, ItemRologia watch) {
 		player = playerWhoOpenedGUI;
 		mineWatch = watch;
-		rologia = RologiaOS.getInstanceForPlayer(playerWhoOpenedGUI);
+		rologia = RologiaOS.getInstance();
 	}
 	
 	@Override

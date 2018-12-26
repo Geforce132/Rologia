@@ -12,7 +12,7 @@ public abstract class AppEvent {
 	}
 	
 	public RologiaOS getOS() {
-		return RologiaOS.getInstanceForPlayer(player);
+		return RologiaOS.getInstance();
 	}
 	
 	public EntityPlayer getPlayer() {
