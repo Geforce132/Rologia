@@ -57,7 +57,7 @@ public class ScreenStatusBar extends ScreenComponent {
 		if(isExpanded()) {
 			GlStateManager.pushMatrix();
 			GlStateManager.color(1, 1, 1, 1);
-			GuiUtils.drawFilledRect(getScreen().getPosition(), getWidth(), getHeight() + 1, Colors.BLACK.color, true);
+			GuiUtils.drawFilledRect(getScreen().getPosition(), getWidth(), getHeight() + 1, Colors.BLACK.color, 0.5F);
 			GlStateManager.popMatrix();
 		}
 
@@ -107,6 +107,11 @@ public class ScreenStatusBar extends ScreenComponent {
 		color = rgbColor;
 	}
 	
+	@Override
+	public boolean isSystemComponent() {
+		return true;
+	}
+
 	@Override
 	public int getWidth() {
 		return Screen.WATCH_SCREEN_X_SIZE;

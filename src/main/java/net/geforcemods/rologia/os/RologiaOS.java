@@ -9,9 +9,9 @@ import java.util.HashMap;
 import net.geforcemods.rologia.Rologia;
 import net.geforcemods.rologia.os.apps.App;
 import net.geforcemods.rologia.os.gui.components.ScreenComponent;
+import net.geforcemods.rologia.os.gui.screens.HomeScreen;
 import net.geforcemods.rologia.os.gui.screens.Screen;
 import net.geforcemods.rologia.os.gui.screens.input.InputManager;
-import net.geforcemods.rologia.os.gui.screens.input.InputTextScreen;
 import net.geforcemods.rologia.os.misc.Position;
 import net.geforcemods.rologia.os.notifications.Notification;
 import net.geforcemods.rologia.os.resources.ResourceLoader;
@@ -95,9 +95,9 @@ public class RologiaOS {
 		user = player;
 
 		if(currentScreen == null) {
-			//setScreen(new BootScreen(this, new Position(screenXPos, screenYPos)));
+			setScreen(new HomeScreen(this, new Position(screenXPos, screenYPos)));
 			//setScreen(new InputYesNoScreen(this, new Position(screenXPos, screenYPos), "This is a test ohai there o hai testing testing"));
-			setScreen(new InputTextScreen(this, new Position(screenXPos, screenYPos), "enter a number or smh even longer wowowow test"));
+			//setScreen(new InputTextScreen(this, new Position(screenXPos, screenYPos), "enter a number or smh even longer wowowow test"));
 			currentScreen.addStartupComponents();
 			currentScreen.initializeScreen();
 
@@ -124,6 +124,8 @@ public class RologiaOS {
 	public void update() {
 		if(currentScreen != null)
 		{
+
+			checkScrollBar();
 			currentScreen.updateScreen();
 
 			if(isAppOpen()) {
@@ -176,6 +178,16 @@ public class RologiaOS {
 		ResourceLoader.loadApps(this);
 	}
 	
+	public void checkScrollBar() {
+		if(currentScreen.getScreenHeight() > Screen.WATCH_SCREEN_Y_SIZE)
+			currentScreen.getScrollBar().setVisibility(true);
+		else {
+			if(currentScreen.getScrollBar().isVisible()) 
+				currentScreen.getScrollBar().setVisibility(false);
+		}
+
+	}
+
 	public void setScreen(Screen newScreen) {
 		currentScreen = newScreen;
 	}

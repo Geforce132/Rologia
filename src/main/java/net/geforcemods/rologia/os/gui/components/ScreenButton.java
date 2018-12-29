@@ -24,10 +24,10 @@ public class ScreenButton extends ScreenComponent {
 		GuiUtils.drawHollowRect(position, getWidth(), getHeight(), Colors.BLUE.color);
 
 		if(this.isMouseHoveringOver(getScreen().getMousePosition())) {
-			GuiUtils.drawFilledRect(getPosition(), getWidth(), getHeight(), Colors.DARK_BLUE.color, true);
+			GuiUtils.drawFilledRect(getPosition(), getWidth(), getHeight(), Colors.DARK_BLUE.color);
 		}
 		else {
-			GuiUtils.drawFilledRect(getPosition(), getWidth(), getHeight(), Colors.BLUE.color, true);
+			GuiUtils.drawFilledRect(getPosition(), getWidth(), getHeight(), Colors.BLUE.color, 0.5F);
 		}
 
 		drawString(getFontRenderer(), text, getPosition().getX() + 2, getPosition().getY() + 2, Colors.GREEN.hexValue);

@@ -37,14 +37,18 @@ public class GuiUtils {
 		GlStateManager.disableBlend();
 	}
 	
-	public static void drawFilledRect(Position startPos, int width, int height, Color color, boolean transparent) {
+	public static void drawFilledRect(Position startPos, int width, int height, Color color) {
+		drawFilledRect(startPos, width, height, color, color.getAlpha());
+	}
+	
+	public static void drawFilledRect(Position startPos, int width, int height, Color color, float transparency) {
 		GlStateManager.enableBlend();
 		GlStateManager.disableTexture2D();
 
 		GlStateManager.glPolygonMode(GL11.GL_FRONT, GL11.GL_FILL);
 		GlStateManager.glBegin(GL11.GL_QUADS);
 
-		GlStateManager.color(color.getRed(), color.getGreen(), color.getBlue(), transparent ? (color.getAlpha() - 0.5F) : color.getAlpha());
+		GlStateManager.color(color.getRed(), color.getGreen(), color.getBlue(), transparency);
 		GlStateManager.glVertex3f(startPos.getX(), startPos.getY(), 0);
 		GlStateManager.glVertex3f(startPos.getX(), startPos.getY() + height, 0);
 		GlStateManager.glVertex3f(startPos.getX() + width, startPos.getY() + height, 0);
@@ -55,7 +59,7 @@ public class GuiUtils {
 		GlStateManager.enableTexture2D();
 		GlStateManager.disableBlend();
 	}
-	
+
 	public static String formatString(RologiaOS OS, String text) {
 		String[] keywords = StringUtils.substringsBetween(text, "$$", "$$");
 		

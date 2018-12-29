@@ -31,6 +31,11 @@ public class ScreenScrollBar extends ScreenComponent {
 	}
 
 	@Override
+	public boolean isSystemComponent() {
+		return true;
+	}
+
+	@Override
 	public int getWidth() {
 		return 4;
 	}

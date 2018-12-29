@@ -14,14 +14,12 @@ public class ScreenImage extends ScreenComponent {
 	private ResourceLocation location;
 	private int imageWidth;
 	private int imageHeight;
-	private boolean isDynamicImage;
 	
 	public ScreenImage(RologiaOS os, String imagePath, int width, int height) {
 		super(os);
 		location = new ResourceLocation(imagePath);
 		imageWidth = width;
 		imageHeight = height;
-		isDynamicImage = false;
 	}
 	
 	public ScreenImage(RologiaOS os, ResourceLocation imageLocation, int width, int height) {
@@ -43,7 +41,6 @@ public class ScreenImage extends ScreenComponent {
 		location = Minecraft.getMinecraft().getTextureManager().getDynamicTextureLocation(image.toString(), new DynamicTexture(image));
 		imageWidth = image.getWidth();
 		imageHeight = image.getHeight();
-		isDynamicImage = true;
 	}
 	
 	public ScreenImage(RologiaOS os, ResourceLocation imageLocation, Position pos, int width, int height) {
@@ -51,7 +48,6 @@ public class ScreenImage extends ScreenComponent {
 		location = imageLocation;
 		imageWidth = width;
 		imageHeight = height;
-		isDynamicImage = false;
 	}
 	
 	public ScreenImage(RologiaOS os, String imagePath, Position pos, int width, int height) {
@@ -59,20 +55,11 @@ public class ScreenImage extends ScreenComponent {
 		location = new ResourceLocation(imagePath);
 		imageWidth = width;
 		imageHeight = height;
-		isDynamicImage = false;
 	}
 	
 	public void drawComponent() {
-		if(isDynamicImage)
-		{
-			getTextureManager().bindTexture(location);
-			drawModalRectWithCustomSizedTexture(getPosition().getX(), getPosition().getY(), 0, 0, imageWidth, imageHeight, imageWidth, imageHeight);
-		}
-		else
-		{
-			getTextureManager().bindTexture(location);
-			drawModalRectWithCustomSizedTexture(getPosition().getX(), getPosition().getY(), 0, 0, imageWidth, imageHeight, imageWidth, imageHeight);
-		}
+		getTextureManager().bindTexture(location);
+		drawModalRectWithCustomSizedTexture(getPosition().getX(), getPosition().getY(), 0, 0, imageWidth, imageHeight, imageWidth, imageHeight);
 	}
 	
 	@Override

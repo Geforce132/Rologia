@@ -10,6 +10,7 @@ import net.geforcemods.rologia.os.gui.components.ScreenScrollBar;
 import net.geforcemods.rologia.os.gui.components.ScreenStatusBar;
 import net.geforcemods.rologia.os.gui.components.images.ScreenImage;
 import net.geforcemods.rologia.os.gui.utils.Colors;
+import net.geforcemods.rologia.os.gui.utils.GuiUtils;
 import net.geforcemods.rologia.os.misc.Position;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -39,8 +40,7 @@ public abstract class Screen extends Gui {
 	private ScreenAppBar appBar;
 	private ScreenImage backgroundImage;
 
-	//private ScreenComponent leftArrow;
-	//private ScreenComponent rightArrow;
+	private int screenHeight = 0;
 
 	public Screen(RologiaOS os, Position pos) {
 		OS = os;
@@ -59,13 +59,6 @@ public abstract class Screen extends Gui {
 		scrollBar = new ScreenScrollBar(OS, getPosition().shiftX(90));
 		appBar = new ScreenAppBar(OS, getPosition());
 
-		/*ScreenComponent leftArrow = getComponentAsImage("arrow_left_light");
-		leftArrow.centerPosition(-54, 0);
-		ScreenComponent rightArrow = getComponentAsImage("arrow_right_light");
-		rightArrow.centerPosition(59, 0);
-
-		addComponent(leftArrow);
-		addComponent(rightArrow);*/
 		addComponent(statusBar);
 		addComponent(scrollBar);
 		addComponent(appBar);
@@ -87,9 +80,15 @@ public abstract class Screen extends Gui {
 			backgroundImage.drawComponent();
 		}
 
+		GlStateManager.pushMatrix();
+		GuiUtils.drawFilledRect(getPosition(), WATCH_SCREEN_X_SIZE, WATCH_SCREEN_Y_SIZE, Colors.BLACK.color, 0.6F);
+		GlStateManager.popMatrix();
+
 		GlStateManager.popMatrix();
 
 		for(ScreenImage image : images){
+			if(!image.isVisible()) continue;
+
 			GlStateManager.pushMatrix();
 			image.performPrerenderGLFixes();
 			image.drawComponent();
@@ -110,6 +109,8 @@ public abstract class Screen extends Gui {
 
 	public void drawComponents() {
 		for(ScreenComponent component : components){
+			if(!component.isVisible()) continue;
+
 			GlStateManager.pushMatrix();
 			component.performPrerenderGLFixes();
 			component.drawComponent();
@@ -139,7 +140,7 @@ public abstract class Screen extends Gui {
 		for (int i = 0; i < components.size(); i++) {
 			boolean isBeingHoveredOver = components.get(i).isMouseHoveringOver(mousePos);
 			
-			drawString(getFontRenderer(), (focusedComponent == components.get(i) ? "* " : "") + i + ": " + components.get(i).getClass().getSimpleName(), startingXPos, 50 + (i * 12), isBeingHoveredOver ? Colors.DARK_GREEN.hexValue : Colors.GREEN.hexValue);
+			drawString(getFontRenderer(), (focusedComponent == components.get(i) ? "* " : "") + i + ": " + components.get(i).getClass().getSimpleName() + (!components.get(i).isVisible() ? " (H)" : ""), startingXPos, 50 + (i * 12), isBeingHoveredOver ? Colors.DARK_GREEN.hexValue : Colors.GREEN.hexValue);
 
 			if(isBeingHoveredOver) {
 				drawString(getFontRenderer(), "Component info:", startingXPos, 50 + ((components.size() + 1) * 12), Colors.GREEN.hexValue);
@@ -158,6 +159,9 @@ public abstract class Screen extends Gui {
 		if(!components.contains(component)){
 			components.add(component);
 		}
+
+		if(!component.isSystemComponent() && (component.getPosition().getY() - WATCH_SCREEN_Y_SIZE) > screenHeight)
+			screenHeight = component.getPosition().getY() - WATCH_SCREEN_Y_SIZE;
 	}
 
 	public void addComponents(App app) {
@@ -194,7 +198,7 @@ public abstract class Screen extends Gui {
 		boolean clickedOnComponent = false;
 
 		for(ScreenComponent component : components){
-			if(component.isMouseHoveringOver(getMousePosition())) {				
+			if(component.isVisible() && component.isMouseHoveringOver(getMousePosition())) {				
 				if(component.mouseClick(getMousePosition(), mouseButtonClicked)) {
 					if(focusedComponent == component)
 						focusedComponent = null;
@@ -269,6 +273,14 @@ public abstract class Screen extends Gui {
 
 	public ScreenStatusBar getStatusBar() {
 		return statusBar;
+	}
+
+	public ScreenScrollBar getScrollBar() {
+		return scrollBar;
+	}
+
+	public int getScreenHeight() {
+		return screenHeight;
 	}
 
 	public RologiaOS getOS() {

@@ -17,6 +17,8 @@ public abstract class ScreenComponent extends Gui {
 	protected Position position = new Position(Screen.WATCH_SCREEN_X_SIZE, Screen.WATCH_SCREEN_Y_SIZE);
 	protected Position defaultPos = new Position(Screen.WATCH_SCREEN_X_SIZE, Screen.WATCH_SCREEN_Y_SIZE);
 	
+	private boolean visible = true;
+
 	protected float rotation;
 	protected float scale;
 	
@@ -131,6 +133,28 @@ public abstract class ScreenComponent extends Gui {
 
 	public void setOS(RologiaOS OS) {
 		os = OS;
+	}
+
+	/**
+	 * @return If this ScreenComponent is an essential component to the Screen, such as the scroll bar
+	 * or clock. These components will not be reset during a Screen change and will not be used
+	 * in calculations such as Screen.getScreenHeight().
+	 */
+	public boolean isSystemComponent() {
+		return false;
+	}
+
+	/**
+	 * @return If this ScreenComponent is visible, it will be rendered and will react to mouse clicks.
+	 * Setting its visibility to 'false' will stop it from being drawn and prevent users from
+	 * interacting with it.
+	 */
+	public boolean isVisible() {
+		return visible;
+	}
+
+	public void setVisibility(boolean visibility) {
+		visible = visibility;
 	}
 
 	public void setRotation(float newRotation) {
