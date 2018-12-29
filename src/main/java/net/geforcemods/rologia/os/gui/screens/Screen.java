@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import net.geforcemods.rologia.os.RologiaOS;
 import net.geforcemods.rologia.os.apps.App;
+import net.geforcemods.rologia.os.gui.components.ScreenAppBar;
 import net.geforcemods.rologia.os.gui.components.ScreenComponent;
 import net.geforcemods.rologia.os.gui.components.ScreenScrollBar;
 import net.geforcemods.rologia.os.gui.components.ScreenStatusBar;
@@ -35,10 +36,11 @@ public abstract class Screen extends Gui {
 
 	private ScreenStatusBar statusBar;
 	private ScreenScrollBar scrollBar;
+	private ScreenAppBar appBar;
 	private ScreenImage backgroundImage;
 
-	private ScreenComponent leftArrow;
-	private ScreenComponent rightArrow;
+	//private ScreenComponent leftArrow;
+	//private ScreenComponent rightArrow;
 
 	public Screen(RologiaOS os, Position pos) {
 		OS = os;
@@ -55,16 +57,18 @@ public abstract class Screen extends Gui {
 	public void addStartupComponents() {
 		statusBar = new ScreenStatusBar(OS, getPosition(), Colors.RED.color);
 		scrollBar = new ScreenScrollBar(OS, getPosition().shiftX(90));
+		appBar = new ScreenAppBar(OS, getPosition());
 
-		ScreenComponent leftArrow = getComponentAsImage("arrow_left_light");
+		/*ScreenComponent leftArrow = getComponentAsImage("arrow_left_light");
 		leftArrow.centerPosition(-54, 0);
 		ScreenComponent rightArrow = getComponentAsImage("arrow_right_light");
 		rightArrow.centerPosition(59, 0);
 
 		addComponent(leftArrow);
-		addComponent(rightArrow);
+		addComponent(rightArrow);*/
 		addComponent(statusBar);
 		addComponent(scrollBar);
+		addComponent(appBar);
 	}
 
 	public void updateScreen() {}

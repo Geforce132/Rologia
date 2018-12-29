@@ -11,12 +11,13 @@ import net.geforcemods.rologia.os.misc.Position;
 
 public class InputYesNoScreen extends Screen {
 	
-	private ScreenText prompt = new ScreenText(getOS(), "Do you want to delete all of your diamonds?", Colors.GREEN.hexValue);
+	private ScreenText prompt = new ScreenText(getOS(), null, Colors.GREEN.hexValue);
 	private ScreenButton yesButton = new ScreenButton(getOS(), "Yes");
 	private ScreenButton noButton = new ScreenButton(getOS(), "No");
 
-	public InputYesNoScreen(RologiaOS os, Position pos) {
+	public InputYesNoScreen(RologiaOS os, Position pos, String promptText) {
 		super(os, pos);
+		prompt.setText(promptText);
 	}
 
 	@Override
@@ -27,7 +28,7 @@ public class InputYesNoScreen extends Screen {
 		noButton.centerPosition(20, 30);
 		addComponent(noButton);
 		
-		prompt.centerPosition(0, -30);
+		prompt.centerPosition(0, -15 - (prompt.getHeight() / 4));
 		addComponent(prompt);
 	}
 	
@@ -38,7 +39,7 @@ public class InputYesNoScreen extends Screen {
 
 	@Override
 	public void onComponentClicked(ScreenComponent component, Position mousePos, int mouseButtonClicked) {
-		System.out.println("clicked");
+		//getOS().getInputManager().addChoice(component == yesButton);
 	}
 
 	@Override

@@ -8,7 +8,9 @@ import net.geforcemods.rologia.os.misc.Position;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.texture.TextureManager;
+import net.minecraft.util.ResourceLocation;
 
 public abstract class ScreenComponent extends Gui {
 	
@@ -80,6 +82,19 @@ public abstract class ScreenComponent extends Gui {
 
 	public boolean acceptsKeyboardInput() {
 		return false;
+	}
+
+	/**
+	 * Calls TextureManager.bindTexture(), but with pop/pushMatrix()
+	 * calls to prevent unwanted colors or translations being used
+	 * 
+	 * @param texture The ResourceLocation to bind
+	 */
+	public void bindTexture(ResourceLocation texture) {
+		GlStateManager.popMatrix();
+		GlStateManager.color(1, 1, 1, 1);
+		getTextureManager().bindTexture(texture);
+		GlStateManager.pushMatrix();
 	}
 
 	public ScreenComponent setPosition(Position pos) {

@@ -10,7 +10,8 @@ import net.geforcemods.rologia.Rologia;
 import net.geforcemods.rologia.os.apps.App;
 import net.geforcemods.rologia.os.gui.components.ScreenComponent;
 import net.geforcemods.rologia.os.gui.screens.Screen;
-import net.geforcemods.rologia.os.gui.screens.input.InputYesNoScreen;
+import net.geforcemods.rologia.os.gui.screens.input.InputManager;
+import net.geforcemods.rologia.os.gui.screens.input.InputTextScreen;
 import net.geforcemods.rologia.os.misc.Position;
 import net.geforcemods.rologia.os.notifications.Notification;
 import net.geforcemods.rologia.os.resources.ResourceLoader;
@@ -61,6 +62,8 @@ public class RologiaOS {
 
 	public HashMap<String, ScreenComponent> components = new HashMap<String, ScreenComponent>();
 
+	private InputManager inputManager = new InputManager();
+
 	private EntityPlayer user;
 	private UserStats userStats = new UserStats();
 	
@@ -93,8 +96,8 @@ public class RologiaOS {
 
 		if(currentScreen == null) {
 			//setScreen(new BootScreen(this, new Position(screenXPos, screenYPos)));
-			setScreen(new InputYesNoScreen(this, new Position(screenXPos, screenYPos)));
-			//setScreen(new InputTextScreen(this, new Position(screenXPos, screenYPos)));
+			//setScreen(new InputYesNoScreen(this, new Position(screenXPos, screenYPos), "This is a test ohai there o hai testing testing"));
+			setScreen(new InputTextScreen(this, new Position(screenXPos, screenYPos), "enter a number or smh even longer wowowow test"));
 			currentScreen.addStartupComponents();
 			currentScreen.initializeScreen();
 
@@ -282,6 +285,10 @@ public class RologiaOS {
 
 	public ArrayList<Notification> getNotifications() {
 		return notifications;
+	}
+
+	public InputManager getInputManager() {
+		return inputManager;
 	}
 
 	public EntityPlayer getUser() {

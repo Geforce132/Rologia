@@ -65,6 +65,10 @@ public class ScreenTextField extends ScreenComponent {
 		return true;
 	}
 
+	public String getText() {
+		return text;
+	}
+
 	@Override
 	public int getWidth() {
 		return width;

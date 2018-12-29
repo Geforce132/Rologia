@@ -32,6 +32,10 @@ public class ScreenText extends ScreenComponent {
 		return GuiUtils.formatString(getOS(), text);
 	}
 	
+	public void setText(String string) {
+		text = string;
+	}
+
 	@Override
 	public int getWidth() {
 		return (int) (GuiUtils.getWordWrappedWidth(getFontRenderer(), getText(), Screen.WATCH_SCREEN_X_SIZE) * scale);

@@ -18,18 +18,18 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class GuiRologia extends GuiScreen {
 	
-	private static final ResourceLocation SCREEN_EDGE_TEXTURE = new ResourceLocation(ResourceLoader.TEXTURE_FOLDER_PATH + "watch_screen_background_2.png");
+	private static final ResourceLocation SCREEN_EDGE_TEXTURE = new ResourceLocation(ResourceLoader.TEXTURE_FOLDER_PATH + "watch_screen_background.png");
 	private static final ResourceLocation DEBUG_ICONS = new ResourceLocation(ResourceLoader.TEXTURE_FOLDER_PATH + "debug_icons.png");
 
 	private EntityPlayer player;
 	private RologiaOS rologia;
-	private ItemRologia mineWatch;
+	private ItemRologia watch;
 
 	private GuiButton[] debugButtons = new GuiButton[3];
 
-	public GuiRologia(EntityPlayer playerWhoOpenedGUI, ItemRologia watch) {
+	public GuiRologia(EntityPlayer playerWhoOpenedGUI, ItemRologia watchItem) {
 		player = playerWhoOpenedGUI;
-		mineWatch = watch;
+		watch = watchItem;
 		rologia = RologiaOS.getInstance();
 	}
 	
@@ -42,7 +42,7 @@ public class GuiRologia extends GuiScreen {
 		if(RologiaOS.debugMode) {
 			debugButtons[0] = new GuiButton(0, this.width - 90, 10, 20, 20, "off");
 			debugButtons[1] = new GuiIconButton(1, this.width - 65, 10, 20, 20, 0, 0, 1, 1, DEBUG_ICONS);
-			debugButtons[2] = new GuiIconButton(2, this.width - 40, 10, 20, 20, 19, 0, 1, 1, DEBUG_ICONS);
+			debugButtons[2] = new GuiIconButton(2, this.width - 40, 10, 20, 20, 20, 0, 1, 1, DEBUG_ICONS);
 
 			for(int i = 0; i < debugButtons.length; i++)
 				buttonList.add(debugButtons[i]);
