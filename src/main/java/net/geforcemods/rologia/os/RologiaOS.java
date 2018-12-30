@@ -52,6 +52,7 @@ public class RologiaOS {
 	 * The current Screen being rendered
 	 */
 	private Screen currentScreen;
+	private Screen homeScreen;
 
 	/**
 	 * Used when another Screen/App requests a Screen change
@@ -98,7 +99,8 @@ public class RologiaOS {
 		user = player;
 
 		if(currentScreen == null) {
-			setScreen(new HomeScreen(this, new Position(screenXPos, screenYPos)));
+			homeScreen = new HomeScreen(this, new Position(screenXPos, screenYPos));
+			setScreen(homeScreen);
 			//setScreen(new InputYesNoScreen(this, new Position(screenXPos, screenYPos), "This is a test ohai there o hai testing testing"));
 			//setScreen(new InputTextScreen(this, new Position(screenXPos, screenYPos), "enter a number or smh even longer wowowow test"));
 			//currentScreen.addStartupComponents();
@@ -208,7 +210,7 @@ public class RologiaOS {
 		  Icons 2 - n: open apps
 		  Icon n + 1: "settings" screen */
 		if(index == 0)
-			setScreen(new HomeScreen(this, currentScreen.getPosition()));
+			setScreen(getHomeScreen());
 		else if(index == 1)
 			// selection
 			return;
@@ -218,7 +220,7 @@ public class RologiaOS {
 			// settings
 			return;
 	}
-	
+
 	public void setApp(String appID) {
 		if(currentApp != getApp(appID)) {
 			if(this.isAppOpen()) {
@@ -352,6 +354,10 @@ public class RologiaOS {
 
 	public Screen getCurrentScreen() {
 		return currentScreen;
+	}
+
+	public Screen getHomeScreen() {
+		return homeScreen;
 	}
 
 	/**
