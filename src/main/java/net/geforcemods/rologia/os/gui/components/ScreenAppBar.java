@@ -29,7 +29,7 @@ public class ScreenAppBar extends ScreenComponent {
 
 	@Override
 	public boolean mouseClick(Position mousePos, int mouseButtonClicked) {
-		System.out.println(getBarHoveringOver(mousePos));
+		getOS().setScreen(getBarHoveringOver(mousePos));
 		return false;
 	}
 

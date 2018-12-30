@@ -64,7 +64,7 @@ public class GuiRologia extends GuiScreen {
 		int startY = (height / 2) - (Screen.WATCH_BACKGROUND_Y_SIZE / 2);
 		drawTexturedModalRect(startX, startY, 0, 0, Screen.WATCH_BACKGROUND_X_SIZE, Screen.WATCH_BACKGROUND_Y_SIZE);
 		rologia.renderScreen(mouseX, mouseY);
-		
+
 		//draw debugging info here
 		if(debugButtons[0] != null && rologia.getCurrentScreen() != null) {
 			if(debugButtons[1].enabled == false)
@@ -87,13 +87,13 @@ public class GuiRologia extends GuiScreen {
 	@Override
 	public void mouseClicked(int mouseX, int mouseY, int buttonClicked) throws IOException {
 		super.mouseClicked(mouseX, mouseY, buttonClicked);
-		rologia.getCurrentScreen().handleMouseClick(mouseX, mouseY, buttonClicked);
+		rologia.getInputManager().handleMouseClick(mouseX, mouseY, buttonClicked);
 	}
 	
 	@Override
 	protected void keyTyped(char character, int keyCode) throws IOException {
 		super.keyTyped(character, keyCode);
-		rologia.getCurrentScreen().handleKeyTyped(character, keyCode);
+		rologia.getInputManager().handleKeyTyped(character, keyCode);
 	}
 	
 	@Override

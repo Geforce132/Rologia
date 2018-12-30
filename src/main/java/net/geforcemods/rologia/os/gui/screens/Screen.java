@@ -30,8 +30,7 @@ public abstract class Screen extends Gui {
 	private Position screenPos;
 	private Position mousePos = new Position();
 
-	protected ArrayList<ScreenImage> images = new ArrayList<ScreenImage>();
-	protected ArrayList<ScreenComponent> components = new ArrayList<ScreenComponent>();
+	private ArrayList<ScreenComponent> components = new ArrayList<ScreenComponent>();
 
 	private ScreenComponent focusedComponent;
 
@@ -66,9 +65,7 @@ public abstract class Screen extends Gui {
 
 	public void updateScreen() {}
 
-	public void editImages() {}
-
-	public void drawImages() {
+	public void drawBackgroundImage() {
 		GlStateManager.pushMatrix();
 
 		if(OS.isAppOpen()) {
@@ -85,15 +82,6 @@ public abstract class Screen extends Gui {
 		GlStateManager.popMatrix();
 
 		GlStateManager.popMatrix();
-
-		for(ScreenImage image : images){
-			if(!image.isVisible()) continue;
-
-			GlStateManager.pushMatrix();
-			image.performPrerenderGLFixes();
-			image.drawComponent();
-			GlStateManager.popMatrix();
-		}
 	}
 
 	public void editComponents() {
@@ -125,13 +113,17 @@ public abstract class Screen extends Gui {
 		GlStateManager.popMatrix();
 	}
 
-	public void editStatusBar() {}
-
 	public void drawScreenInfo(int startingXPos, int startingYPos) {
 		drawString(getFontRenderer(), "Screen info:", startingXPos, 38, Colors.GREEN.hexValue);
 		drawString(getFontRenderer(), "Name: " + getClass().getSimpleName(), startingXPos, 50, Colors.GREEN.hexValue);
 		drawString(getFontRenderer(), "Position - X: " + getPosition().getX() + " Y: " + getPosition().getY(), startingXPos, 62, Colors.GREEN.hexValue);
 		drawString(getFontRenderer(), "Mouse position - X: " + mousePos.getX() + " Y: " + mousePos.getY(), startingXPos, 74, Colors.GREEN.hexValue);
+
+		if(getOS().isAppOpen()) {
+			drawString(getFontRenderer(), "App info: ", startingXPos, 98, Colors.GREEN.hexValue);
+			drawString(getFontRenderer(), "ID: " + getOS().getCurrentApp().getAppID(), startingXPos, 110, Colors.GREEN.hexValue);
+			drawString(getFontRenderer(), "Name: " + getOS().getCurrentApp().getAppName(), startingXPos, 122, Colors.GREEN.hexValue);
+		}
 	}
 
 	public void drawComponentInfo(int startingXPos, int startingYPos) {
@@ -170,6 +162,7 @@ public abstract class Screen extends Gui {
 		}
 	}
 
+	/*
 	public ScreenComponent getComponent(String compName) {
 		ScreenComponent component = getOS().components.get(compName);
 		component.setOS(getOS());
@@ -180,6 +173,11 @@ public abstract class Screen extends Gui {
 		ScreenImage image = (ScreenImage) getOS().components.get(compName);
 		image.setOS(getOS());
 		return image;
+	}
+	*/
+
+	public ArrayList<ScreenComponent> getComponents() {
+		return components;
 	}
 
 	public ScreenComponent getFocusedComponent() {
@@ -192,34 +190,6 @@ public abstract class Screen extends Gui {
 
 	public boolean hasFocusedComponent() {
 		return focusedComponent != null;
-	}
-
-	public void handleMouseClick(int mouseX, int mouseY, int mouseButtonClicked) {
-		boolean clickedOnComponent = false;
-
-		for(ScreenComponent component : components){
-			if(component.isVisible() && component.isMouseHoveringOver(getMousePosition())) {				
-				if(component.mouseClick(getMousePosition(), mouseButtonClicked)) {
-					if(focusedComponent == component)
-						focusedComponent = null;
-					else
-						focusedComponent = component;
-				}
-
-				onComponentClicked(component, getMousePosition(), mouseButtonClicked);
-				clickedOnComponent = true;
-			}
-		}
-
-		if(!clickedOnComponent)
-			focusedComponent = null;
-	}
-
-	public void handleKeyTyped(char key, int keyCode) {
-		for(ScreenComponent component : components){
-			if(hasFocusedComponent() && focusedComponent.acceptsKeyboardInput())
-				component.keyTyped(key, keyCode);
-		}
 	}
 
 	public void setMousePos(int x, int y) {

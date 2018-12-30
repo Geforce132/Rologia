@@ -4,11 +4,11 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import net.geforcemods.rologia.Rologia;
 import net.geforcemods.rologia.os.apps.App;
-import net.geforcemods.rologia.os.gui.components.ScreenComponent;
 import net.geforcemods.rologia.os.gui.screens.HomeScreen;
 import net.geforcemods.rologia.os.gui.screens.Screen;
 import net.geforcemods.rologia.os.gui.screens.input.InputManager;
@@ -41,6 +41,8 @@ public class RologiaOS {
 	 */
 	public static final boolean debugMode = true;
 
+	public static final Logger LOGGER = Logger.getLogger("rOS");
+
 	/**
 	 * If this instance of rOS has been opened at least once
 	 */
@@ -52,6 +54,11 @@ public class RologiaOS {
 	private Screen currentScreen;
 
 	/**
+	 * Used when another Screen/App requests a Screen change
+	 */
+	private Screen screenToSwitchTo;
+
+	/**
 	 * The App currently running (null if none)
 	 */
 	private App currentApp;
@@ -60,9 +67,7 @@ public class RologiaOS {
 	private ArrayList<App> apps = new ArrayList<App>();
 	private ArrayList<Notification> notifications = new ArrayList<Notification>();
 
-	public HashMap<String, ScreenComponent> components = new HashMap<String, ScreenComponent>();
-
-	private InputManager inputManager = new InputManager();
+	private InputManager inputManager = new InputManager(this);
 
 	private EntityPlayer user;
 	private UserStats userStats = new UserStats();
@@ -75,8 +80,6 @@ public class RologiaOS {
 	public void initOS() {
 		if(hasInitialized) return;
 
-		loadComponents();
-		
 		try {
 			loadApps();
 		}
@@ -98,8 +101,8 @@ public class RologiaOS {
 			setScreen(new HomeScreen(this, new Position(screenXPos, screenYPos)));
 			//setScreen(new InputYesNoScreen(this, new Position(screenXPos, screenYPos), "This is a test ohai there o hai testing testing"));
 			//setScreen(new InputTextScreen(this, new Position(screenXPos, screenYPos), "enter a number or smh even longer wowowow test"));
-			currentScreen.addStartupComponents();
-			currentScreen.initializeScreen();
+			//currentScreen.addStartupComponents();
+			//currentScreen.initializeScreen();
 
 			// Just for testing purposes, obviously 
 			addNotification(new Notification(currentScreen, null, "t1", "body 1"));
@@ -122,6 +125,13 @@ public class RologiaOS {
 	 * Called every tick by GuiRologia and is used to update the Screen, Apps, and components
 	 */
 	public void update() {
+		if(isScreenBeingSwapped()) {
+			currentScreen = screenToSwitchTo;
+			currentScreen.addStartupComponents();
+			currentScreen.initializeScreen();
+			screenToSwitchTo = null;
+		}
+
 		if(currentScreen != null)
 		{
 
@@ -144,11 +154,12 @@ public class RologiaOS {
 	 * cursor's position.
 	 */
 	public void renderScreen(int mouseX, int mouseY) {
+		if(isScreenBeingSwapped()) return;
+
 		if(currentScreen.getMousePosition() == null || currentScreen.getMousePosition().getX() != mouseX || currentScreen.getMousePosition().getY() != mouseY)
 			currentScreen.setMousePos(mouseX, mouseY);
 		
-		currentScreen.editImages();
-		currentScreen.drawImages();
+		currentScreen.drawBackgroundImage();
 		
 		currentScreen.editComponents();
 		currentScreen.drawComponents();
@@ -160,17 +171,9 @@ public class RologiaOS {
 
 		// Edited last because this should always be drawn over everything
 		// else on the screen.
-		currentScreen.editStatusBar();
 		currentScreen.drawStatusBar();
 	}
 
-	/**
-	 * Loads all default ScreenComponents created in the components .json file
-	 */
-	private void loadComponents() {
-		ResourceLoader.loadComponents(this);
-	}
-	
 	/**
 	 * Loads Apps created by .json files in the /rologia/os/apps/ folder
 	 */
@@ -188,15 +191,48 @@ public class RologiaOS {
 
 	}
 
+	/**
+	 * Sets screenToSwitchTo to the new Screen. This is used instead of directly
+	 * updating currentScreen to prevent ConcurrentModificationExceptions due to
+	 * components currently being rendered/updated
+	 * 
+	 * @param newScreen The Screen to change to
+	 */
 	public void setScreen(Screen newScreen) {
-		currentScreen = newScreen;
+		screenToSwitchTo = newScreen;
+	}
+	
+	public void setScreen(int index) {
+		/*Icon 0: "home" screen
+		  Icon 1: "app selection" screen
+		  Icons 2 - n: open apps
+		  Icon n + 1: "settings" screen */
+		if(index == 0)
+			setScreen(new HomeScreen(this, currentScreen.getPosition()));
+		else if(index == 1)
+			// selection
+			return;
+		else if(index >= 2 && index <= (2 + apps.size()))
+			setApp(apps.get(index - 2));
+		else if(index == (3 + apps.size()))
+			// settings
+			return;
 	}
 	
 	public void setApp(String appID) {
 		if(currentApp != getApp(appID)) {
+			if(this.isAppOpen()) {
+				for(int i = 0; i < currentApp.getComponents().length; i++)
+					currentScreen.getComponents().remove(currentApp.getComponents()[i]);
+			}
+
 			currentApp = getApp(appID);
 			currentScreen.addComponents(currentApp);
 		}
+	}
+
+	public void setApp(App app) {
+		setApp(app.getAppID());
 	}
 
 	public void setTime(LocalDateTime newTime) {
@@ -243,6 +279,9 @@ public class RologiaOS {
 	}
 	
 	public void addApp(App app) {
+		if(getApp(app.getAppID()) != null)
+			LOGGER.log(Level.WARNING, "An app with an ID of '" + app.getAppID() + "' already exists. The oldest version will be kept.");
+
 		apps.add(app);
 	}
 	
@@ -313,6 +352,14 @@ public class RologiaOS {
 
 	public Screen getCurrentScreen() {
 		return currentScreen;
+	}
+
+	/**
+	 * @return If the Screen currently being used to about to changed. Used to prevent
+	 * ConcurrentModificationExceptions.
+	 */
+	public boolean isScreenBeingSwapped() {
+		return screenToSwitchTo != null;
 	}
 
 }

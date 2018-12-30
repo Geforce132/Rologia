@@ -58,9 +58,4 @@ public class AppStepCounter extends App {
 		return new AppEventType[] {AppEventType.PLAYER_STEP};
 	}
 
-	@Override
-	public String getAppID() {
-		return "step_counter";
-	}
-
 }

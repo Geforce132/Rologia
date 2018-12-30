@@ -1,9 +1,9 @@
 {
-  "app_id": "step_counter",
+  "app_id": "testing",
   "app_name": "Step Counter",
   "app_version": "1.0.0",
   "app_icon": "",
-  "app_background_image": "rologia:textures/gui/watch/boot_screen_light.png",
+  "app_background_image": "rologia:textures/gui/watch/boot_screen_dark.png",
   "components": [{
   	"type": "ScreenText",
     "text": "Step count: $$step_count$$",
@@ -15,6 +15,7 @@
       "xPos": 170,
       "yPos": 85
     },
+    "visible": true,
     "scale": 1.0,
     "colorValue": 55555
     },
@@ -29,6 +30,7 @@
       "xPos": 170,
       "yPos": 115
     },
+    "visible": true,
     "scale": 1.0,
     "colorValue": 55555
     }]
