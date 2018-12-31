@@ -21,7 +21,7 @@ public class ScreenAppBar extends ScreenComponent {
 		bindTexture(APP_ICONS);
 
 		for(int i = 0; i < getBarSize(); i++)
-			if(i == getBarHoveringOver(getScreen().getMousePosition()))
+			if(i == getBarHoveringOver(getScreen().getMousePosition()) || i == getBarActive())
 				getScreen().drawTexturedModalRect(getPosition().shiftX(i * ICON_X_SPACING).getX(), getPosition().getY(), 6, 0, 6, 6);
 			else
 				getScreen().drawTexturedModalRect(getPosition().shiftX(i * ICON_X_SPACING).getX(), getPosition().getY(), 0, 0, 6, 6);
@@ -29,7 +29,11 @@ public class ScreenAppBar extends ScreenComponent {
 
 	@Override
 	public boolean mouseClick(Position mousePos, int mouseButtonClicked) {
-		getOS().setScreen(getBarHoveringOver(mousePos));
+		int barClicked = getBarHoveringOver(mousePos);
+
+		if(getBarActive() != barClicked)
+			getOS().setScreen(barClicked);
+
 		return false;
 	}
 
@@ -45,6 +49,30 @@ public class ScreenAppBar extends ScreenComponent {
 		return -1;
 	}
 	
+	public int getBarActive() {
+		/*Icon 0: "home" screen
+		  Icon 1: "app selection" screen
+		  Icons 2 - n: open apps
+		  Icon n + 1: "settings" screen */
+		if(getOS().getCurrentScreen() == getOS().getHomeScreen() && !getOS().isAppOpen())
+			return 0;
+		//else if(index == 1)
+			// selection
+			//return 1;
+		else if(getOS().isAppOpen()) {
+			for(int i = 0; i < getOS().getApps().size(); i++) {
+				if(getOS().getApps().get(i) == getOS().getCurrentApp()) {
+					return i + 2;
+				}
+			}
+		}
+
+		return -1;
+		//else if(index == (3 + apps.size()))
+			// settings
+			//return;
+	}
+
 	public int getBarSize() {
 		/* This method returns the number of icons that should be rendered.
 		   Icon 1: "home" screen

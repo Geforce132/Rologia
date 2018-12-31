@@ -1,6 +1,7 @@
 package net.geforcemods.rologia.gui;
 
 import java.io.IOException;
+import java.util.logging.Level;
 
 import org.lwjgl.input.Keyboard;
 
@@ -53,7 +54,12 @@ public class GuiRologia extends GuiScreen {
 	
 	@Override
 	public void updateScreen() {
+		try {
 		rologia.update();
+		}
+		catch(Exception e) {
+			RologiaOS.LOGGER.log(Level.WARNING, "A problem has occured while updating a Screen!", e);
+		}
 	}
 	
 	@Override
@@ -63,7 +69,12 @@ public class GuiRologia extends GuiScreen {
 		int startX = (width / 2) - (Screen.WATCH_BACKGROUND_X_SIZE / 2);
 		int startY = (height / 2) - (Screen.WATCH_BACKGROUND_Y_SIZE / 2);
 		drawTexturedModalRect(startX, startY, 0, 0, Screen.WATCH_BACKGROUND_X_SIZE, Screen.WATCH_BACKGROUND_Y_SIZE);
-		rologia.renderScreen(mouseX, mouseY);
+
+		try {
+			rologia.renderScreen(mouseX, mouseY);
+		} catch (Exception e) {
+			RologiaOS.LOGGER.log(Level.WARNING, "A problem has occured while rendering a Screen!", e);
+		}
 
 		//draw debugging info here
 		if(debugButtons[0] != null && rologia.getCurrentScreen() != null) {
@@ -99,6 +110,7 @@ public class GuiRologia extends GuiScreen {
 	@Override
 	public void onGuiClosed(){
 		super.onGuiClosed();
+		rologia.getCurrentScreen().screenClosed();
 		Keyboard.enableRepeatEvents(false);
 	}
 

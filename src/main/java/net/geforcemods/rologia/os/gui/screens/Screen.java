@@ -54,13 +54,23 @@ public abstract class Screen extends Gui {
 	public abstract void onComponentClicked(ScreenComponent component, Position mousePos, int mouseButtonClicked);
 
 	public void addStartupComponents() {
-		statusBar = new ScreenStatusBar(OS, getPosition(), Colors.RED.color);
-		scrollBar = new ScreenScrollBar(OS, getPosition().shiftX(90));
-		appBar = new ScreenAppBar(OS, getPosition());
+		// Status bar
+		if(statusBar == null) {
+			statusBar = new ScreenStatusBar(OS, getPosition(), Colors.RED.color);
+			addComponent(statusBar);
+		}
 
-		addComponent(statusBar);
-		addComponent(scrollBar);
-		addComponent(appBar);
+		// Scroll bar
+		if(scrollBar == null) {
+			scrollBar = new ScreenScrollBar(OS, getPosition().shiftX(90));
+			addComponent(scrollBar);
+		}
+
+		// App selection bar
+		if(appBar == null) {
+			appBar = new ScreenAppBar(OS, getPosition());
+			addComponent(appBar);
+		}
 	}
 
 	public void updateScreen() {}
@@ -118,11 +128,12 @@ public abstract class Screen extends Gui {
 		drawString(getFontRenderer(), "Name: " + getClass().getSimpleName(), startingXPos, 50, Colors.GREEN.hexValue);
 		drawString(getFontRenderer(), "Position - X: " + getPosition().getX() + " Y: " + getPosition().getY(), startingXPos, 62, Colors.GREEN.hexValue);
 		drawString(getFontRenderer(), "Mouse position - X: " + mousePos.getX() + " Y: " + mousePos.getY(), startingXPos, 74, Colors.GREEN.hexValue);
+		drawString(getFontRenderer(), "# of notifications: " + getOS().getNotifications().size(), startingXPos, 98, Colors.GREEN.hexValue);
 
 		if(getOS().isAppOpen()) {
-			drawString(getFontRenderer(), "App info: ", startingXPos, 98, Colors.GREEN.hexValue);
-			drawString(getFontRenderer(), "ID: " + getOS().getCurrentApp().getAppID(), startingXPos, 110, Colors.GREEN.hexValue);
-			drawString(getFontRenderer(), "Name: " + getOS().getCurrentApp().getAppName(), startingXPos, 122, Colors.GREEN.hexValue);
+			drawString(getFontRenderer(), "App info: ", startingXPos, 110, Colors.GREEN.hexValue);
+			drawString(getFontRenderer(), "ID: " + getOS().getCurrentApp().getAppID(), startingXPos, 122, Colors.GREEN.hexValue);
+			drawString(getFontRenderer(), "Name: " + getOS().getCurrentApp().getAppName(), startingXPos, 134, Colors.GREEN.hexValue);
 		}
 	}
 
@@ -143,7 +154,12 @@ public abstract class Screen extends Gui {
 
 	public void onScreenOpened() {}
 
-	public void onScreenClosed() {}
+	/**
+	 * Called when the watch's GUI is closed.
+	 */
+	public void screenClosed() {
+		setFocusedComponent(null);
+	}
 
 	public void onScreenSwitched() {}
 
@@ -159,6 +175,12 @@ public abstract class Screen extends Gui {
 	public void addComponents(App app) {
 		for(ScreenComponent comp : app.getComponents()) {
 			addComponent(comp);
+		}
+	}
+
+	public void removeComponents(App app) {
+		for(int i = 0; i < app.getComponents().length; i++) {
+			components.remove(app.getComponents()[i]);
 		}
 	}
 

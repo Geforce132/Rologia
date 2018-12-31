@@ -16,8 +16,8 @@ import net.geforcemods.rologia.os.misc.Position;
 import net.geforcemods.rologia.os.notifications.Notification;
 import net.geforcemods.rologia.os.resources.ResourceLoader;
 import net.geforcemods.rologia.os.stats.UserStats;
+import net.geforcemods.rologia.os.tasks.Task;
 import net.geforcemods.rologia.os.tasks.TaskUpdateTime;
-import net.geforcemods.rologia.os.time.Task;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 
@@ -202,15 +202,18 @@ public class RologiaOS {
 	 */
 	public void setScreen(Screen newScreen) {
 		screenToSwitchTo = newScreen;
+		clearApp();
 	}
 	
 	public void setScreen(int index) {
+		//TODO
 		/*Icon 0: "home" screen
 		  Icon 1: "app selection" screen
 		  Icons 2 - n: open apps
 		  Icon n + 1: "settings" screen */
-		if(index == 0)
+		if(index == 0) {
 			setScreen(getHomeScreen());
+		}
 		else if(index == 1)
 			// selection
 			return;
@@ -235,6 +238,13 @@ public class RologiaOS {
 
 	public void setApp(App app) {
 		setApp(app.getAppID());
+	}
+
+	public void clearApp() {
+		if(currentApp == null) return;
+
+		currentScreen.removeComponents(currentApp);
+		currentApp = null;
 	}
 
 	public void setTime(LocalDateTime newTime) {
