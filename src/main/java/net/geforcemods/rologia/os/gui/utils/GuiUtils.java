@@ -6,8 +6,13 @@ import org.lwjgl.util.Color;
 
 import net.geforcemods.rologia.os.RologiaOS;
 import net.geforcemods.rologia.os.misc.Position;
+import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 
 public class GuiUtils {
 	
@@ -55,9 +60,31 @@ public class GuiUtils {
 		GlStateManager.glVertex3f(startPos.getX() + width, startPos.getY(), 0);
 
 		GlStateManager.glEnd();
-
 		GlStateManager.enableTexture2D();
 		GlStateManager.disableBlend();
+	}
+	
+	public static void drawItem(Position startPos, Item item) {
+		GlStateManager.pushMatrix();
+		GlStateManager.enableBlend();
+		RenderHelper.disableStandardItemLighting();
+		RenderHelper.enableGUIStandardItemLighting();
+		
+		Minecraft.getMinecraft().getRenderItem().renderItemIntoGUI(new ItemStack(item), startPos.getX(), startPos.getY());
+		Minecraft.getMinecraft().getRenderItem().renderItemOverlayIntoGUI(Minecraft.getMinecraft().fontRenderer, new ItemStack(item), startPos.getX(), startPos.getY(), "");
+
+		GlStateManager.disableBlend();
+		RenderHelper.disableStandardItemLighting();
+		GlStateManager.popMatrix();
+	}
+	
+	public static void drawItem(Position startPos, Block block) {
+		drawItem(startPos, Item.getItemFromBlock(block));
+	}
+	
+	public static int toHex(Color color) {
+		String hex = String.format("%02X%02X%02X", color.getRed(), color.getGreen(), color.getBlue());  
+		return Integer.parseInt(hex, 16);
 	}
 
 	public static String formatString(RologiaOS OS, String text) {

@@ -4,6 +4,7 @@ import org.lwjgl.opengl.GL11;
 
 import net.geforcemods.rologia.os.RologiaOS;
 import net.geforcemods.rologia.os.gui.screens.Screen;
+import net.geforcemods.rologia.os.gui.utils.Theme;
 import net.geforcemods.rologia.os.misc.Position;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -191,6 +192,10 @@ public abstract class ScreenComponent extends Gui {
 	
 	public int getColor() {
 		return colorValue;
+	}
+
+	public Theme getTheme() {
+		return os.getTheme();
 	}
 
 	public RologiaOS getOS() {

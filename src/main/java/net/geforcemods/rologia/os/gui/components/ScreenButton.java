@@ -1,7 +1,6 @@
 package net.geforcemods.rologia.os.gui.components;
 
 import net.geforcemods.rologia.os.RologiaOS;
-import net.geforcemods.rologia.os.gui.utils.Colors;
 import net.geforcemods.rologia.os.gui.utils.GuiUtils;
 import net.geforcemods.rologia.os.misc.Position;
 
@@ -21,16 +20,16 @@ public class ScreenButton extends ScreenComponent {
 
 	@Override
 	public void drawComponent() {
-		GuiUtils.drawHollowRect(position, getWidth(), getHeight(), Colors.BLUE.color);
+		GuiUtils.drawHollowRect(position, getWidth(), getHeight(), getTheme().BUTTON_OUTLINE);
 
 		if(this.isMouseHoveringOver(getScreen().getMousePosition())) {
-			GuiUtils.drawFilledRect(getPosition(), getWidth(), getHeight(), Colors.DARK_BLUE.color);
+			GuiUtils.drawFilledRect(getPosition(), getWidth(), getHeight(), getTheme().BUTTON_INTERIOR_HOVERING);
 		}
 		else {
-			GuiUtils.drawFilledRect(getPosition(), getWidth(), getHeight(), Colors.BLUE.color, 0.5F);
+			GuiUtils.drawFilledRect(getPosition(), getWidth(), getHeight(), getTheme().BUTTON_INTERIOR, 0.5F);
 		}
 
-		drawString(getFontRenderer(), text, getPosition().getX() + 2, getPosition().getY() + 2, Colors.GREEN.hexValue);
+		drawString(getFontRenderer(), text, getPosition().getX() + 2, getPosition().getY() + 2, GuiUtils.toHex(getTheme().BUTTON_TEXT));
 	}
 
 	@Override

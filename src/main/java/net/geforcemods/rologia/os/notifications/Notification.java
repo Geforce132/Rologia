@@ -2,7 +2,7 @@ package net.geforcemods.rologia.os.notifications;
 
 import net.geforcemods.rologia.os.apps.App;
 import net.geforcemods.rologia.os.gui.screens.Screen;
-import net.geforcemods.rologia.os.gui.utils.Colors;
+import net.geforcemods.rologia.os.gui.utils.GuiUtils;
 import net.geforcemods.rologia.os.misc.Position;
 import net.geforcemods.rologia.os.resources.ResourceLoader;
 import net.minecraft.client.Minecraft;
@@ -47,13 +47,13 @@ public class Notification {
 				GlStateManager.translate(position.getX(), 10 + position.getY(), 0);
 				GlStateManager.scale(0.9F, 0.9F, 0);
 				GlStateManager.translate(-position.getX(), -(10 + position.getY()), 0);
-				screen.drawString(Minecraft.getMinecraft().fontRenderer, notificationTitle, position.shiftX(22).getX(), 10 + position.getY(), Colors.DARK_GREEN.hexValue);
+				screen.drawString(Minecraft.getMinecraft().fontRenderer, notificationTitle, position.shiftX(22).getX(), 10 + position.getY(), GuiUtils.toHex(screen.getOS().getTheme().NOTIFICATION_TITLE));
 
 				// Draw body string
 				GlStateManager.translate(position.getX(), 22 + position.getY(), 0);
 				GlStateManager.scale(0.75F, 0.75F, 0);
 				GlStateManager.translate(-position.getX(), -(22 + position.getY()), 0);
-				screen.drawString(Minecraft.getMinecraft().fontRenderer, notificationBody, position.shiftX(31).getX(), 22 + position.getY(), Colors.GREEN.hexValue);
+				screen.drawString(Minecraft.getMinecraft().fontRenderer, notificationBody, position.shiftX(31).getX(), 22 + position.getY(), GuiUtils.toHex(screen.getOS().getTheme().NOTIFICATION_BODY));
 				GlStateManager.popMatrix();
 
 				// Render icon

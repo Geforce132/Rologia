@@ -1,0 +1,33 @@
+package net.geforcemods.rologia.os.gui.utils;
+
+import org.lwjgl.util.Color;
+
+/**
+ * This class contains the colors used by every component in GUIs. It starts off
+ * empty, but is populated by ResourceLoader.loadThemes() once a GUI is opened.
+ */
+public class Theme {
+	
+	public Color BACKGROUND_OVERLAY;
+	
+	public Color DEBUG_TEXT;
+	public Color DEBUG_TEXT_HOVERING;
+	
+	public Color BUTTON_OUTLINE;
+	public Color BUTTON_INTERIOR;
+	public Color BUTTON_INTERIOR_HOVERING;
+	public Color BUTTON_TEXT;
+	
+	public Color TEXT_FIELD_LINE;
+	public Color TEXT_FIELD_TEXT;
+
+	public Color STATUS_BAR;
+	public Color STATUS_BAR_CLOCK;
+	
+	public Color INPUT_TEXT_PROMPT;
+	public Color INPUT_YES_NO_PROMPT;
+	
+	public Color NOTIFICATION_TITLE;
+	public Color NOTIFICATION_BODY;
+
+}

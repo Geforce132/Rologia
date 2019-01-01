@@ -7,12 +7,12 @@ import net.geforcemods.rologia.os.gui.components.ScreenTextField;
 import net.geforcemods.rologia.os.gui.components.images.ScreenImage;
 import net.geforcemods.rologia.os.gui.components.text.ScreenText;
 import net.geforcemods.rologia.os.gui.screens.Screen;
-import net.geforcemods.rologia.os.gui.utils.Colors;
+import net.geforcemods.rologia.os.gui.utils.GuiUtils;
 import net.geforcemods.rologia.os.misc.Position;
 
 public class InputTextScreen extends Screen {
 	
-	private ScreenText prompt = new ScreenText(getOS(), null, Colors.GREEN.hexValue);
+	private ScreenText prompt = new ScreenText(getOS(), null, GuiUtils.toHex(getOS().getTheme().INPUT_TEXT_PROMPT));
 	private ScreenTextField textField = new ScreenTextField(getOS(), 50, 12);
 	private ScreenButton doneButton = new ScreenButton(getOS(), "Done");
 

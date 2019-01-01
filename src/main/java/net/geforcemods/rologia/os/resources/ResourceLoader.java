@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.logging.Level;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -20,6 +21,7 @@ import net.geforcemods.rologia.os.apps.App;
 import net.geforcemods.rologia.os.apps.AppDeserializer;
 import net.geforcemods.rologia.os.gui.components.ComponentDeserializer;
 import net.geforcemods.rologia.os.gui.components.ScreenComponent;
+import net.geforcemods.rologia.os.gui.utils.Theme;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.IResource;
 import net.minecraft.util.ResourceLocation;
@@ -89,9 +91,7 @@ public class ResourceLoader {
 	}
 	
 	public static void loadApps(RologiaOS os) throws IOException {
-		IResource appsJson = Minecraft.getMinecraft().getResourceManager().getResource(new ResourceLocation(APPS_FOLDER_PATH + "apps.json"));
-		JsonElement je = new Gson().fromJson(new BufferedReader(new InputStreamReader(appsJson.getInputStream())), JsonElement.class);
-		JsonObject json = je.getAsJsonObject();
+		JsonObject json = loadJsonObject(APPS_FOLDER_PATH + "apps.json");
 
 		ArrayList<String> appsToLoad = new ArrayList<String>();
 		for(int i = 0; i < json.get("apps").getAsJsonArray().size(); i++)
@@ -112,7 +112,40 @@ public class ResourceLoader {
 			app.setOS(os);	
 			os.addApp(app);
 		}
+	}
 
+	public static void loadThemes(RologiaOS os) throws IOException {
+		JsonObject themes = loadJsonObject(OS_FOLDER_PATH + "themes/themes.json");
+
+		ArrayList<String> themesToLoad = new ArrayList<String>();
+		for(int i = 0; i < themes.get("themes").getAsJsonArray().size(); i++)
+			themesToLoad.add(themes.get("themes").getAsJsonArray().get(i).getAsString());
+
+		for(String themeToLoad : themesToLoad) {
+			IResource appJson = Minecraft.getMinecraft().getResourceManager().getResource(new ResourceLocation(OS_FOLDER_PATH + "themes/" + themeToLoad));
+			InputStream in = appJson.getInputStream();
+			BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+
+			Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+			Type type = new TypeToken<Theme>(){}.getType();
+
+			Theme theme = gson.fromJson(reader, type);
+
+			String themeName = themeToLoad.replace(".json", "");
+
+			if(os.getThemes().containsKey(themeName))
+				RologiaOS.LOGGER.log(Level.WARNING, "A theme named '" + themeName + "' already exists, not loading " + themeToLoad);
+
+			os.addTheme(themeName, theme);
+		}
+
+	}
+
+	public static JsonObject loadJsonObject(String filename) throws IOException {
+		IResource themesJson = Minecraft.getMinecraft().getResourceManager().getResource(new ResourceLocation(filename));
+		JsonElement je = new Gson().fromJson(new BufferedReader(new InputStreamReader(themesJson.getInputStream())), JsonElement.class);
+		return je.getAsJsonObject();
 	}
 
 	/*

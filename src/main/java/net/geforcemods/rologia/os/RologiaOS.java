@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -12,6 +13,7 @@ import net.geforcemods.rologia.os.apps.App;
 import net.geforcemods.rologia.os.gui.screens.HomeScreen;
 import net.geforcemods.rologia.os.gui.screens.Screen;
 import net.geforcemods.rologia.os.gui.screens.input.InputManager;
+import net.geforcemods.rologia.os.gui.utils.Theme;
 import net.geforcemods.rologia.os.misc.Position;
 import net.geforcemods.rologia.os.notifications.Notification;
 import net.geforcemods.rologia.os.resources.ResourceLoader;
@@ -70,6 +72,9 @@ public class RologiaOS {
 
 	private InputManager inputManager = new InputManager(this);
 
+	private HashMap<String, Theme> themes = new HashMap<String, Theme>();
+	private Theme currentTheme;
+
 	private EntityPlayer user;
 	private UserStats userStats = new UserStats();
 	
@@ -83,6 +88,7 @@ public class RologiaOS {
 
 		try {
 			loadApps();
+			loadThemes();
 		}
 		catch(IOException e) {
 			e.printStackTrace();
@@ -100,6 +106,7 @@ public class RologiaOS {
 
 		if(currentScreen == null) {
 			homeScreen = new HomeScreen(this, new Position(screenXPos, screenYPos));
+			//homeScreen = new InputTextScreen(this, new Position(screenXPos, screenYPos), "This is a test ohai there o hai testing testing");
 			setScreen(homeScreen);
 			//setScreen(new InputYesNoScreen(this, new Position(screenXPos, screenYPos), "This is a test ohai there o hai testing testing"));
 			//setScreen(new InputTextScreen(this, new Position(screenXPos, screenYPos), "enter a number or smh even longer wowowow test"));
@@ -183,6 +190,14 @@ public class RologiaOS {
 		ResourceLoader.loadApps(this);
 	}
 	
+	/**
+	 * Loads color themes created by .json files in the /rologia/os/themes/ folder
+	 */
+	private void loadThemes() throws IOException {
+		ResourceLoader.loadThemes(this);
+		currentTheme = themes.get("light");
+	}
+
 	public void checkScrollBar() {
 		if(currentScreen.getScreenHeight() > Screen.WATCH_SCREEN_Y_SIZE)
 			currentScreen.getScrollBar().setVisibility(true);
@@ -352,6 +367,18 @@ public class RologiaOS {
 
 	public InputManager getInputManager() {
 		return inputManager;
+	}
+
+	public Theme getTheme() {
+		return currentTheme;
+	}
+
+	public HashMap<String, Theme> getThemes() {
+		return themes;
+	}
+
+	public void addTheme(String themeName, Theme theme) {
+		themes.put(themeName, theme);
 	}
 
 	public EntityPlayer getUser() {

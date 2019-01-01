@@ -9,7 +9,6 @@ import net.geforcemods.rologia.os.gui.components.ScreenComponent;
 import net.geforcemods.rologia.os.gui.components.ScreenScrollBar;
 import net.geforcemods.rologia.os.gui.components.ScreenStatusBar;
 import net.geforcemods.rologia.os.gui.components.images.ScreenImage;
-import net.geforcemods.rologia.os.gui.utils.Colors;
 import net.geforcemods.rologia.os.gui.utils.GuiUtils;
 import net.geforcemods.rologia.os.misc.Position;
 import net.minecraft.client.Minecraft;
@@ -56,7 +55,7 @@ public abstract class Screen extends Gui {
 	public void addStartupComponents() {
 		// Status bar
 		if(statusBar == null) {
-			statusBar = new ScreenStatusBar(OS, getPosition(), Colors.RED.color);
+			statusBar = new ScreenStatusBar(OS, getPosition());
 			addComponent(statusBar);
 		}
 
@@ -88,7 +87,7 @@ public abstract class Screen extends Gui {
 		}
 
 		GlStateManager.pushMatrix();
-		GuiUtils.drawFilledRect(getPosition(), WATCH_SCREEN_X_SIZE, WATCH_SCREEN_Y_SIZE, Colors.BLACK.color, 0.6F);
+		GuiUtils.drawFilledRect(getPosition(), WATCH_SCREEN_X_SIZE, WATCH_SCREEN_Y_SIZE, getOS().getTheme().BACKGROUND_OVERLAY, 0.6F);
 		GlStateManager.popMatrix();
 
 		GlStateManager.popMatrix();
@@ -124,30 +123,34 @@ public abstract class Screen extends Gui {
 	}
 
 	public void drawScreenInfo(int startingXPos, int startingYPos) {
-		drawString(getFontRenderer(), "Screen info:", startingXPos, 38, Colors.GREEN.hexValue);
-		drawString(getFontRenderer(), "Name: " + getClass().getSimpleName(), startingXPos, 50, Colors.GREEN.hexValue);
-		drawString(getFontRenderer(), "Position - X: " + getPosition().getX() + " Y: " + getPosition().getY(), startingXPos, 62, Colors.GREEN.hexValue);
-		drawString(getFontRenderer(), "Mouse position - X: " + mousePos.getX() + " Y: " + mousePos.getY(), startingXPos, 74, Colors.GREEN.hexValue);
-		drawString(getFontRenderer(), "# of notifications: " + getOS().getNotifications().size(), startingXPos, 98, Colors.GREEN.hexValue);
+		int color = GuiUtils.toHex(getOS().getTheme().DEBUG_TEXT);
+
+		drawString(getFontRenderer(), "Screen info:", startingXPos, 38, color);
+		drawString(getFontRenderer(), "Name: " + getClass().getSimpleName(), startingXPos, 50, color);
+		drawString(getFontRenderer(), "Position - X: " + getPosition().getX() + " Y: " + getPosition().getY(), startingXPos, 62, color);
+		drawString(getFontRenderer(), "Mouse position - X: " + mousePos.getX() + " Y: " + mousePos.getY(), startingXPos, 74, color);
+		drawString(getFontRenderer(), "# of notifications: " + getOS().getNotifications().size(), startingXPos, 98, color);
 
 		if(getOS().isAppOpen()) {
-			drawString(getFontRenderer(), "App info: ", startingXPos, 110, Colors.GREEN.hexValue);
-			drawString(getFontRenderer(), "ID: " + getOS().getCurrentApp().getAppID(), startingXPos, 122, Colors.GREEN.hexValue);
-			drawString(getFontRenderer(), "Name: " + getOS().getCurrentApp().getAppName(), startingXPos, 134, Colors.GREEN.hexValue);
+			drawString(getFontRenderer(), "App info: ", startingXPos, 110, color);
+			drawString(getFontRenderer(), "ID: " + getOS().getCurrentApp().getAppID(), startingXPos, 122, color);
+			drawString(getFontRenderer(), "Name: " + getOS().getCurrentApp().getAppName(), startingXPos, 134, color);
 		}
 	}
 
 	public void drawComponentInfo(int startingXPos, int startingYPos) {
-		drawString(getFontRenderer(), "Components:", startingXPos, 38, Colors.GREEN.hexValue);
+		int color = GuiUtils.toHex(getOS().getTheme().DEBUG_TEXT);
+
+		drawString(getFontRenderer(), "Components:", startingXPos, 38, color);
 
 		for (int i = 0; i < components.size(); i++) {
 			boolean isBeingHoveredOver = components.get(i).isMouseHoveringOver(mousePos);
 			
-			drawString(getFontRenderer(), (focusedComponent == components.get(i) ? "* " : "") + i + ": " + components.get(i).getClass().getSimpleName() + (!components.get(i).isVisible() ? " (H)" : ""), startingXPos, 50 + (i * 12), isBeingHoveredOver ? Colors.DARK_GREEN.hexValue : Colors.GREEN.hexValue);
+			drawString(getFontRenderer(), (focusedComponent == components.get(i) ? "* " : "") + i + ": " + components.get(i).getClass().getSimpleName() + (!components.get(i).isVisible() ? " (H)" : ""), startingXPos, 50 + (i * 12), isBeingHoveredOver ? GuiUtils.toHex(getOS().getTheme().DEBUG_TEXT_HOVERING) : color);
 
 			if(isBeingHoveredOver) {
-				drawString(getFontRenderer(), "Component info:", startingXPos, 50 + ((components.size() + 1) * 12), Colors.GREEN.hexValue);
-				drawString(getFontRenderer(), " - Position - X: " + components.get(i).getPosition().getX() + " Y: " + components.get(i).getPosition().getY(), startingXPos, 50 + ((components.size() + 2) * 12), Colors.GREEN.hexValue);
+				drawString(getFontRenderer(), "Component info:", startingXPos, 50 + ((components.size() + 1) * 12), color);
+				drawString(getFontRenderer(), " - Position - X: " + components.get(i).getPosition().getX() + " Y: " + components.get(i).getPosition().getY(), startingXPos, 50 + ((components.size() + 2) * 12), color);
 			}
 		}
 	}

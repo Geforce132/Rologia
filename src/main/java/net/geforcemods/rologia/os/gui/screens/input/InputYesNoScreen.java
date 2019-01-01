@@ -6,12 +6,12 @@ import net.geforcemods.rologia.os.gui.components.ScreenComponent;
 import net.geforcemods.rologia.os.gui.components.images.ScreenImage;
 import net.geforcemods.rologia.os.gui.components.text.ScreenText;
 import net.geforcemods.rologia.os.gui.screens.Screen;
-import net.geforcemods.rologia.os.gui.utils.Colors;
+import net.geforcemods.rologia.os.gui.utils.GuiUtils;
 import net.geforcemods.rologia.os.misc.Position;
 
 public class InputYesNoScreen extends Screen {
 	
-	private ScreenText prompt = new ScreenText(getOS(), null, Colors.GREEN.hexValue);
+	private ScreenText prompt = new ScreenText(getOS(), null, GuiUtils.toHex(getOS().getTheme().INPUT_YES_NO_PROMPT));
 	private ScreenButton yesButton = new ScreenButton(getOS(), "Yes");
 	private ScreenButton noButton = new ScreenButton(getOS(), "No");
 
