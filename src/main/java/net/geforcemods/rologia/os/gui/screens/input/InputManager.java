@@ -56,6 +56,9 @@ public class InputManager {
 		}
 	}
 
+	public void requestDecision(Screen returnScreen, String prompt) {
+		OS.setScreen(new InputYesNoScreen(OS, OS.getCurrentScreen().getPosition(), returnScreen, prompt));
+	}
 
 	public boolean getUserChoice() {
 		boolean choice = decisions.get(0);

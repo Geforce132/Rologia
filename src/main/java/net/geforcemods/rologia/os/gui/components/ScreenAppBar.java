@@ -2,6 +2,7 @@ package net.geforcemods.rologia.os.gui.components;
 
 import net.geforcemods.rologia.os.RologiaOS;
 import net.geforcemods.rologia.os.gui.screens.Screen;
+import net.geforcemods.rologia.os.gui.screens.SettingsScreen;
 import net.geforcemods.rologia.os.misc.Position;
 import net.geforcemods.rologia.os.resources.ResourceLoader;
 import net.minecraft.util.ResourceLocation;
@@ -32,7 +33,7 @@ public class ScreenAppBar extends ScreenComponent {
 		int barClicked = getBarHoveringOver(mousePos);
 
 		if(getBarActive() != barClicked)
-			getOS().setScreen(barClicked);
+			switchScreen(getScreen().getOS(), barClicked);
 
 		return false;
 	}
@@ -49,6 +50,19 @@ public class ScreenAppBar extends ScreenComponent {
 		return -1;
 	}
 	
+	public void switchScreen(RologiaOS os, int index) {
+		if(index == 0) {
+			os.setScreen(os.getHomeScreen());
+		}
+		else if(index == 1)
+			// selection
+			return;
+		else if(index >= 2 && index < (2 + os.getApps().size()))
+			os.setApp(os.getApps().get(index - 2));
+		else if(index == (2 + os.getApps().size()))
+			os.setScreen(new SettingsScreen(getOS(), getOS().getCurrentScreen().getPosition()));
+	}
+
 	public int getBarActive() {
 		/*Icon 0: "home" screen
 		  Icon 1: "app selection" screen
@@ -66,11 +80,10 @@ public class ScreenAppBar extends ScreenComponent {
 				}
 			}
 		}
+		else if(getOS().getCurrentScreen() instanceof SettingsScreen)
+			return getOS().getApps().size() + 3;
 
 		return -1;
-		//else if(index == (3 + apps.size()))
-			// settings
-			//return;
 	}
 
 	public int getBarSize() {

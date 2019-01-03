@@ -1,6 +1,7 @@
 package net.geforcemods.rologia.os.gui.screens;
 
 import java.util.ArrayList;
+import java.util.logging.Level;
 
 import net.geforcemods.rologia.os.RologiaOS;
 import net.geforcemods.rologia.os.apps.App;
@@ -45,6 +46,10 @@ public abstract class Screen extends Gui {
 
 		screenPos = pos;
 		backgroundImage = getBackgroundImage();
+
+		if(backgroundImage == null)
+			RologiaOS.LOGGER.log(Level.WARNING, getClass().getSimpleName() + " has no background image!");
+
 		backgroundImage.setPosition(pos);
 	}
 

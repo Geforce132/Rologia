@@ -15,8 +15,11 @@ public class InputYesNoScreen extends Screen {
 	private ScreenButton yesButton = new ScreenButton(getOS(), "Yes");
 	private ScreenButton noButton = new ScreenButton(getOS(), "No");
 
-	public InputYesNoScreen(RologiaOS os, Position pos, String promptText) {
+	private Screen screenToReturnTo;
+
+	public InputYesNoScreen(RologiaOS os, Position pos, Screen returnScreen, String promptText) {
 		super(os, pos);
+		screenToReturnTo = returnScreen;
 		prompt.setText(promptText);
 	}
 
@@ -39,7 +42,14 @@ public class InputYesNoScreen extends Screen {
 
 	@Override
 	public void onComponentClicked(ScreenComponent component, Position mousePos, int mouseButtonClicked) {
-		//getOS().getInputManager().addChoice(component == yesButton);
+		if(component == yesButton) {
+			getOS().getInputManager().addChoice(true);
+			getOS().setScreen(screenToReturnTo);
+		}
+		else if(component == noButton) {
+			getOS().getInputManager().addChoice(false);
+			getOS().setScreen(screenToReturnTo);
+		}
 	}
 
 	@Override

@@ -219,25 +219,6 @@ public class RologiaOS {
 		screenToSwitchTo = newScreen;
 		clearApp();
 	}
-	
-	public void setScreen(int index) {
-		//TODO
-		/*Icon 0: "home" screen
-		  Icon 1: "app selection" screen
-		  Icons 2 - n: open apps
-		  Icon n + 1: "settings" screen */
-		if(index == 0) {
-			setScreen(getHomeScreen());
-		}
-		else if(index == 1)
-			// selection
-			return;
-		else if(index >= 2 && index <= (2 + apps.size()))
-			setApp(apps.get(index - 2));
-		else if(index == (3 + apps.size()))
-			// settings
-			return;
-	}
 
 	public void setApp(String appID) {
 		if(currentApp != getApp(appID)) {
