@@ -3,6 +3,7 @@ package net.geforcemods.rologia.os.gui.components;
 import net.geforcemods.rologia.os.RologiaOS;
 import net.geforcemods.rologia.os.gui.screens.Screen;
 import net.geforcemods.rologia.os.gui.screens.SettingsScreen;
+import net.geforcemods.rologia.os.gui.utils.GuiUtils;
 import net.geforcemods.rologia.os.misc.Position;
 import net.geforcemods.rologia.os.resources.ResourceLoader;
 import net.minecraft.util.ResourceLocation;
@@ -19,6 +20,8 @@ public class ScreenAppBar extends ScreenComponent {
 
 	@Override
 	public void drawComponent() {
+		//TODO create variables for commonly used values instead of
+		//     calling the same methods repeatedly
 		bindTexture(APP_ICONS);
 
 		for(int i = 0; i < getBarSize(); i++)
@@ -26,6 +29,9 @@ public class ScreenAppBar extends ScreenComponent {
 				getScreen().drawTexturedModalRect(getPosition().shiftX(i * ICON_X_SPACING).getX(), getPosition().getY(), 6, 0, 6, 6);
 			else
 				getScreen().drawTexturedModalRect(getPosition().shiftX(i * ICON_X_SPACING).getX(), getPosition().getY(), 0, 0, 6, 6);
+
+		if(getBarHoveringOver(getScreen().getMousePosition()) != -1)
+			drawString(getFontRenderer(), getBarName(getBarHoveringOver(getScreen().getMousePosition())), getPosition().shiftX(getWidth() / 2 - getFontRenderer().getStringWidth(getBarName(getBarHoveringOver(getScreen().getMousePosition()))) / 2).getX(), getPosition().shiftY(10).getY(), GuiUtils.toHex(getOS().getTheme().APP_BAR_HOVERING_TEXT));
 	}
 
 	@Override
@@ -63,6 +69,19 @@ public class ScreenAppBar extends ScreenComponent {
 			os.setScreen(new SettingsScreen(getOS(), getOS().getCurrentScreen().getPosition()));
 	}
 
+	public String getBarName(int button) {
+		if(button == 0)
+			return "Home";
+		else if(button == 1)
+			return "Selection";
+		else if(button == getOS().getApps().size() + 2)
+			return "Settings";
+		else if(button > 1 && button < getOS().getApps().size() + 2)
+			return getOS().getApps().get(button - 2).getAppName();
+		else
+			return "???";
+	}
+
 	public int getBarActive() {
 		/*Icon 0: "home" screen
 		  Icon 1: "app selection" screen
@@ -81,18 +100,13 @@ public class ScreenAppBar extends ScreenComponent {
 			}
 		}
 		else if(getOS().getCurrentScreen() instanceof SettingsScreen)
-			return getOS().getApps().size() + 3;
+			return getOS().getApps().size() + 2;
 
 		return -1;
 	}
 
 	public int getBarSize() {
-		/* This method returns the number of icons that should be rendered.
-		   Icon 1: "home" screen
-		   Icon 2: "app selection" screen
-		   Icons 3 - n: open apps
-		   Icon n + 1: "settings" screen */
-		return 1 + 1 + 1 + getOS().getApps().size();
+		return 3 + getOS().getApps().size();
 	}
 
 	@Override

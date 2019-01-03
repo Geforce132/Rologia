@@ -1,5 +1,6 @@
 {
     "themes": [
-    	"light.json"
+    	"light.json",
+        "dark.json"
     ]
 }

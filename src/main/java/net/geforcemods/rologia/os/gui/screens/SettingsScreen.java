@@ -1,12 +1,21 @@
 package net.geforcemods.rologia.os.gui.screens;
 
+import org.lwjgl.opengl.GL11;
+
 import net.geforcemods.rologia.os.RologiaOS;
 import net.geforcemods.rologia.os.gui.components.ScreenButton;
 import net.geforcemods.rologia.os.gui.components.ScreenComponent;
 import net.geforcemods.rologia.os.gui.components.images.ScreenImage;
+import net.geforcemods.rologia.os.gui.components.text.ScreenText;
+import net.geforcemods.rologia.os.gui.utils.GuiUtils;
 import net.geforcemods.rologia.os.misc.Position;
+import net.minecraft.client.renderer.GlStateManager;
 
 public class SettingsScreen extends Screen {
+
+	private ScreenButton lightButton = new ScreenButton(getOS(), "Light");
+	private ScreenButton darkButton = new ScreenButton(getOS(), "Dark");
+	private ScreenText themeText = new ScreenText(getOS(), "Theme:", GuiUtils.toHex(getOS().getTheme().SETTINGS_TEXT));
 
 	public SettingsScreen(RologiaOS os, Position pos) {
 		super(os, pos);
@@ -14,12 +23,35 @@ public class SettingsScreen extends Screen {
 
 	@Override
 	public void initializeScreen() {
-		addComponent(new ScreenButton(getOS(), new Position(0, 0), "test"));
+		lightButton.centerPosition(-20, -20);
+		darkButton.centerPosition(20, -20);
+		themeText.centerPosition(0, -35);
+
+		if(getOS().getTheme().getName().equalsIgnoreCase(lightButton.getText()))
+			lightButton.setEnabled(false);
+
+		if(getOS().getTheme().getName().equalsIgnoreCase(darkButton.getText()))
+			darkButton.setEnabled(false);
+
+		addComponent(lightButton);
+		addComponent(darkButton);
+		addComponent(themeText);
 	}
 
 	@Override
 	public void onComponentClicked(ScreenComponent component, Position mousePos, int mouseButtonClicked) {
-		getOS().getInputManager().requestDecision(this, "ohaidere");
+		if(component == lightButton && lightButton.isEnabled()) {
+			//getOS().getInputManager().requestDecision(this, "ohaidere");
+			getOS().setTheme("light");
+			lightButton.setEnabled(false);
+			darkButton.setEnabled(true);
+		}
+		else if(component == darkButton && darkButton.isEnabled()) {
+			//getOS().getInputManager().requestDecision(this, "ohaidere");
+			getOS().setTheme("dark");
+			darkButton.setEnabled(false);
+			lightButton.setEnabled(true);
+		}
 	}
 
 	@Override

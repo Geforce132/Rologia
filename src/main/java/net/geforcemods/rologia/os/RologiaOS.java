@@ -358,6 +358,13 @@ public class RologiaOS {
 		return themes;
 	}
 
+	public void setTheme(String themeName) {
+		if(!themes.containsKey(themeName))
+			LOGGER.log(Level.WARNING, "Theme '" + themeName + "' doesn't exist!");
+
+		currentTheme = themes.get(themeName);
+	}
+
 	public void addTheme(String themeName, Theme theme) {
 		themes.put(themeName, theme);
 	}

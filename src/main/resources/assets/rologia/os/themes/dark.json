@@ -1,5 +1,5 @@
 {
-    "THEME_NAME": "light",
+    "THEME_NAME": "dark",
     "BACKGROUND_OVERLAY": {
       "red": 0,
       "green": 0,
@@ -61,9 +61,9 @@
       "alpha": 1
     },
     "APP_BAR_HOVERING_TEXT": {
-      "red": 245,
-      "green": 245,
-      "blue": 245,
+      "red": 90,
+      "green": 90,
+      "blue": 90,
       "alpha": 1
     },
     "STATUS_BAR": {
@@ -73,9 +73,9 @@
       "alpha": 1
     },
     "STATUS_BAR_CLOCK": {
-      "red": 15,
-      "green": 150,
-      "blue": 190,
+      "red": 90,
+      "green": 90,
+      "blue": 90,
       "alpha": 1
     },
     "INPUT_TEXT_PROMPT": {
@@ -91,15 +91,15 @@
       "alpha": 1
     },
     "NOTIFICATION_TITLE": {
-      "red": 8,
-      "green": 122,
-      "blue": 35,
+      "red": 60,
+      "green": 60,
+      "blue": 60,
       "alpha": 1
     },
     "NOTIFICATION_BODY": {
-      "red": 0,
-      "green": 217,
-      "blue": 3,
+      "red": 120,
+      "green": 120,
+      "blue": 120,
       "alpha": 1
     }
 }

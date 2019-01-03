@@ -8,6 +8,8 @@ import org.lwjgl.util.Color;
  */
 public class Theme {
 	
+	public String THEME_NAME;
+
 	public Color BACKGROUND_OVERLAY;
 	
 	public Color DEBUG_TEXT;
@@ -18,8 +20,12 @@ public class Theme {
 	public Color BUTTON_INTERIOR_HOVERING;
 	public Color BUTTON_TEXT;
 	
+	public Color SETTINGS_TEXT;
+
 	public Color TEXT_FIELD_LINE;
 	public Color TEXT_FIELD_TEXT;
+
+	public Color APP_BAR_HOVERING_TEXT;
 
 	public Color STATUS_BAR;
 	public Color STATUS_BAR_CLOCK;
@@ -29,5 +35,10 @@ public class Theme {
 	
 	public Color NOTIFICATION_TITLE;
 	public Color NOTIFICATION_BODY;
+
+
+	public String getName() {
+		return THEME_NAME;
+	}
 
 }
