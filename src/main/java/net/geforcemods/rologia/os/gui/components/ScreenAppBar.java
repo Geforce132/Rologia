@@ -20,31 +20,34 @@ public class ScreenAppBar extends ScreenComponent {
 
 	@Override
 	public void drawComponent() {
-		//TODO create variables for commonly used values instead of
-		//     calling the same methods repeatedly
+		// Useful variables
+		int barSize = getBarSize();
+		int iconHovering = getIconHoveringOver(getScreen().getMousePosition());
+		String iconName = getIconName(iconHovering);
+
 		bindTexture(APP_ICONS);
 
-		for(int i = 0; i < getBarSize(); i++)
-			if(i == getBarHoveringOver(getScreen().getMousePosition()) || i == getBarActive())
+		for(int i = 0; i < barSize; i++)
+			if(i == iconHovering || i == getIconActive())
 				getScreen().drawTexturedModalRect(getPosition().shiftX(i * ICON_X_SPACING).getX(), getPosition().getY(), 6, 0, 6, 6);
 			else
 				getScreen().drawTexturedModalRect(getPosition().shiftX(i * ICON_X_SPACING).getX(), getPosition().getY(), 0, 0, 6, 6);
 
-		if(getBarHoveringOver(getScreen().getMousePosition()) != -1)
-			drawString(getFontRenderer(), getBarName(getBarHoveringOver(getScreen().getMousePosition())), getPosition().shiftX(getWidth() / 2 - getFontRenderer().getStringWidth(getBarName(getBarHoveringOver(getScreen().getMousePosition()))) / 2).getX(), getPosition().shiftY(10).getY(), GuiUtils.toHex(getOS().getTheme().APP_BAR_HOVERING_TEXT));
+		if(iconHovering != -1)
+			drawString(getFontRenderer(), iconName, getPosition().shiftX((getWidth() / 2) - (getFontRenderer().getStringWidth(iconName) / 2)).getX(), getPosition().shiftY(10).getY(), GuiUtils.toHex(getOS().getTheme().APP_BAR_HOVERING_TEXT));
 	}
 
 	@Override
 	public boolean mouseClick(Position mousePos, int mouseButtonClicked) {
-		int barClicked = getBarHoveringOver(mousePos);
+		int barClicked = getIconHoveringOver(mousePos);
 
-		if(getBarActive() != barClicked)
+		if(getIconActive() != barClicked)
 			switchScreen(getScreen().getOS(), barClicked);
 
 		return false;
 	}
 
-	public int getBarHoveringOver(Position mousePosition) {
+	public int getIconHoveringOver(Position mousePosition) {
 		if(!isMouseHoveringOver(mousePosition)) return -1;
 
 		for(int i = 0; i < getBarSize(); i++) {
@@ -69,7 +72,7 @@ public class ScreenAppBar extends ScreenComponent {
 			os.setScreen(new SettingsScreen(getOS(), getOS().getCurrentScreen().getPosition()));
 	}
 
-	public String getBarName(int button) {
+	public String getIconName(int button) {
 		if(button == 0)
 			return "Home";
 		else if(button == 1)
@@ -82,7 +85,7 @@ public class ScreenAppBar extends ScreenComponent {
 			return "???";
 	}
 
-	public int getBarActive() {
+	public int getIconActive() {
 		/*Icon 0: "home" screen
 		  Icon 1: "app selection" screen
 		  Icons 2 - n: open apps

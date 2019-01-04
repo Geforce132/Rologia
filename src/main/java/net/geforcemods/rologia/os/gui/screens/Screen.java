@@ -101,7 +101,6 @@ public abstract class Screen extends Gui {
 	public void editComponents() {
 		int l = components.size();
 		for(int i = 0; i < l; i++)
-		//for(ScreenComponent component : components) //TODO throws an CME
 		{
 			editComponent(components.get(i));
 		}
