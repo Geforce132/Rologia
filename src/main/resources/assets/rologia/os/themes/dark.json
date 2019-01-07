@@ -107,5 +107,11 @@
       "green": 120,
       "blue": 120,
       "alpha": 1
+    },
+    "IM_BACKGROUND": {
+      "red": 10,
+      "green": 10,
+      "blue": 10,
+      "alpha": 1
     }
 }

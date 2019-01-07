@@ -12,10 +12,16 @@ import net.geforcemods.rologia.os.gui.screens.Screen;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 
+@AppInfo(id="step_counter", name = "Step Counter", version = "1.0.0")
 public class AppStepCounter extends App {
 	
 	public AppStepCounter(RologiaOS rologia) {
 		super(rologia);
+	}
+
+	@Override
+	public void initializeApp() {
+
 	}
 
 	@Override

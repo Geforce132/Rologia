@@ -37,6 +37,8 @@ public class Theme {
 	
 	public Color NOTIFICATION_TITLE;
 	public Color NOTIFICATION_BODY;
+	
+	public Color IM_BACKGROUND;
 
 
 	public String getName() {

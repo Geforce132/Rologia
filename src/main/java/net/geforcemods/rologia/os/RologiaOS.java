@@ -1,6 +1,8 @@
 package net.geforcemods.rologia.os;
 
 import java.io.IOException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -10,6 +12,7 @@ import java.util.logging.Logger;
 
 import net.geforcemods.rologia.Rologia;
 import net.geforcemods.rologia.os.apps.App;
+import net.geforcemods.rologia.os.apps.AppInfo;
 import net.geforcemods.rologia.os.gui.screens.AppScreen;
 import net.geforcemods.rologia.os.gui.screens.HomeScreen;
 import net.geforcemods.rologia.os.gui.screens.Screen;
@@ -141,8 +144,10 @@ public class RologiaOS {
 			currentScreen.addStartupComponents();
 			currentScreen.initializeScreen();
 
-			if(currentScreen instanceof AppScreen)
+			if(currentScreen instanceof AppScreen) {
+				((AppScreen) currentScreen).getApp().initializeApp();
 				currentScreen.addComponents(((AppScreen) currentScreen).getApp());
+			}
 
 			activeScreens.put(currentScreen.getScreenName(), currentScreen);
 			screenToSwitchTo = null;
@@ -168,7 +173,7 @@ public class RologiaOS {
 	 * cursor's position.
 	 */
 	public void renderScreen(int mouseX, int mouseY) {
-		if(isScreenBeingSwapped()) return;
+		if(isScreenBeingSwapped() || currentScreen == null) return;
 
 		if(currentScreen.getMousePosition() == null || currentScreen.getMousePosition().getX() != mouseX || currentScreen.getMousePosition().getY() != mouseY)
 			currentScreen.setMousePos(mouseX, mouseY);
@@ -192,7 +197,29 @@ public class RologiaOS {
 	 * Loads Apps created by .json files in the /rologia/os/apps/ folder
 	 */
 	private void loadApps() throws IOException {		
-		ResourceLoader.loadApps(this);
+		//ResourceLoader.loadApps(this);
+		String[] appsToLoad = new String[] {"net.geforcemods.rologia.os.apps.AppStepCounter", "net.geforcemods.rologia.os.apps.AppIM"};
+
+		for(String appPath : appsToLoad) {
+			try {
+				Class<? extends App> clazz = (Class<? extends App>) Class.forName(appPath);
+				AppInfo annotation = clazz.getDeclaredAnnotation(AppInfo.class);
+
+				Constructor<?> ctor = clazz.getConstructor(RologiaOS.class);
+
+				App app = (App) ctor.newInstance(new Object[] { this });
+
+				app.setAppID(annotation.id());
+				app.setAppName(annotation.name());
+				app.setAppVersion(annotation.version());
+				app.setAppBackgroundImage(annotation.background_image());
+
+				addApp(app);
+			} catch (ClassNotFoundException | NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+				e.printStackTrace();
+			} 
+			
+		}
 	}
 	
 	/**
@@ -252,8 +279,8 @@ public class RologiaOS {
 	public void setApp(String appID) {
 		if(currentApp != getApp(appID)) {
 			if(this.isAppOpen()) {
-				for(int i = 0; i < currentApp.getComponents().length; i++)
-					currentScreen.getComponents().remove(currentApp.getComponents()[i]);
+				for(int i = 0; i < currentApp.getComponents().size(); i++)
+					currentScreen.getComponents().remove(currentApp.getComponents().get(i));
 			}
 
 			currentApp = getApp(appID);

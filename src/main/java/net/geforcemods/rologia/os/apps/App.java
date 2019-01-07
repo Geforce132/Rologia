@@ -1,5 +1,7 @@
 package net.geforcemods.rologia.os.apps;
 
+import java.util.ArrayList;
+
 import org.lwjgl.opengl.GL11;
 
 import com.google.gson.JsonObject;
@@ -19,10 +21,11 @@ public abstract class App {
 	private String app_version;
 	private String app_icon = "";
 	private String app_background_image = "";
-	private ScreenComponent[] components;
 
 	private transient ScreenImage appIcon = null;	
 	private transient ScreenImage appBackgroundImage = null;
+	
+	private ArrayList<ScreenComponent> appComponents = new ArrayList<ScreenComponent>();
 
 	private transient RologiaOS os;
 	
@@ -30,6 +33,8 @@ public abstract class App {
 		os = rologia;
 	}
 	
+	public abstract void initializeApp();
+
 	public abstract void updateApp();
 	
 	public abstract void drawApp(Screen currentScreen);
@@ -43,7 +48,7 @@ public abstract class App {
 	public abstract AppEventType[] subscribeToEvents();
 	
 	public void drawComponents(Screen currentScreen) {
-		for(ScreenComponent comp : components) {
+		for(ScreenComponent comp : getComponents()) {
 			GL11.glPushMatrix();
 			comp.drawComponent();
 			GL11.glPopMatrix();
@@ -108,14 +113,14 @@ public abstract class App {
 		this.app_background_image = app_background_image;
 	}
 	
-	public ScreenComponent[] getComponents() {
-		return components;
+	public ArrayList<ScreenComponent> getComponents() {
+		return appComponents;
 	}
 
-	public void setComponents(ScreenComponent[] components) {
-		this.components = components;
+	public void addComponent(ScreenComponent comp) {
+		appComponents.add(comp);
 	}
-	
+
 	public RologiaOS getOS() {
 		return os;
 	}
@@ -123,8 +128,8 @@ public abstract class App {
 	public void setOS(RologiaOS os) {
 		this.os = os;
 
-		for(int i = 0; i < components.length; i++) {
-			components[i].setOS(os);
+		for(int i = 0; i < getComponents().size(); i++) {
+			getComponents().get(i).setOS(os);
 		}
 	}
 	

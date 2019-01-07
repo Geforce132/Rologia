@@ -110,7 +110,10 @@ public class GuiRologia extends GuiScreen {
 	@Override
 	public void onGuiClosed(){
 		super.onGuiClosed();
-		rologia.getCurrentScreen().screenClosed();
+
+		if(rologia.getCurrentScreen() != null)
+			rologia.getCurrentScreen().screenClosed();
+
 		Keyboard.enableRepeatEvents(false);
 	}
 

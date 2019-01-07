@@ -188,8 +188,8 @@ public abstract class Screen extends Gui {
 	}
 
 	public void removeComponents(App app) {
-		for(int i = 0; i < app.getComponents().length; i++) {
-			components.remove(app.getComponents()[i]);
+		for(int i = 0; i < app.getComponents().size(); i++) {
+			components.remove(app.getComponents().get(i));
 		}
 	}
 
