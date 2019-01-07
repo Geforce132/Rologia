@@ -7,6 +7,8 @@ import net.geforcemods.rologia.os.misc.Position;
 
 public class BootScreen extends Screen {
 
+	public static final String NAME = "Boot";
+
 	public BootScreen(RologiaOS OS, Position pos) {
 		super(OS, pos);
 	}
@@ -28,6 +30,11 @@ public class BootScreen extends Screen {
 	public void onComponentClicked(ScreenComponent component, Position mousePos, int mouseButtonClicked) {
 		//if(component == arrow)
 			//ResourceLoader.loadComponents(getOS());
+	}
+
+	@Override
+	public String getScreenName() {
+		return NAME;
 	}
 
 	@Override

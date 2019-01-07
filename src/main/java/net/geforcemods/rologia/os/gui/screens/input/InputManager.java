@@ -60,6 +60,10 @@ public class InputManager {
 		OS.setScreen(new InputYesNoScreen(OS, OS.getCurrentScreen().getPosition(), returnScreen, prompt));
 	}
 
+	public void requestTextInput(Screen returnScreen, String prompt) {
+		OS.setScreen(new InputTextScreen(OS, OS.getCurrentScreen().getPosition(), returnScreen, prompt));
+	}
+
 	public boolean getUserChoice() {
 		boolean choice = decisions.get(0);
 		decisions.remove(0);

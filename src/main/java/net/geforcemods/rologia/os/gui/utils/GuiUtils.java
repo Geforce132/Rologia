@@ -90,10 +90,12 @@ public class GuiUtils {
 	}
 
 	public static String formatString(RologiaOS OS, String text) {
+		if(!OS.isAppOpen()) return text;
+
 		String[] keywords = StringUtils.substringsBetween(text, "$$", "$$");
 		
 		if(keywords != null) {
-			for(int i = 0; i < keywords.length; i++) {						
+			for(int i = 0; i < keywords.length; i++) {			
 				text = text.replace("$$" + keywords[i] + "$$", OS.getCurrentApp().replaceKeywords(keywords[i]).toString());
 			}
 		}

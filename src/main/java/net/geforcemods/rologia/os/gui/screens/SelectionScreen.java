@@ -1,5 +1,7 @@
 package net.geforcemods.rologia.os.gui.screens;
 
+import java.util.ArrayList;
+
 import net.geforcemods.rologia.os.RologiaOS;
 import net.geforcemods.rologia.os.gui.components.ScreenComponent;
 import net.geforcemods.rologia.os.gui.components.images.ScreenImage;
@@ -9,6 +11,10 @@ import net.geforcemods.rologia.os.misc.Position;
 
 public class SelectionScreen extends Screen {
 
+	public static final String NAME = "App selection";
+
+	private ArrayList<String> appsDisplayed = new ArrayList<String>();
+
 	public SelectionScreen(RologiaOS os, Position pos) {
 		super(os, pos);
 	}
@@ -16,14 +22,25 @@ public class SelectionScreen extends Screen {
 	@Override
 	public void initializeScreen() {
 		for(int i = 0; i < getOS().getApps().size(); i++) {
-			ScreenComponent text = new ScreenText(getOS(), getOS().getApps().get(i).getAppName(), GuiUtils.toHex(getOS().getTheme().SELECTION_TEXT));
+			String appName = getOS().getApps().get(i).getAppName();
+
+			if(appsDisplayed.contains(appName)) continue;
+
+			ScreenComponent text = new ScreenText(getOS(), appName, GuiUtils.toHex(getOS().getTheme().SELECTION_TEXT));
 			text.centerPosition(0, -35 + (20 * i));
 			addComponent(text);
+
+			appsDisplayed.add(appName);
 		}
 	}
 
 	@Override
 	public void onComponentClicked(ScreenComponent component, Position mousePos, int mouseButtonClicked) {}
+
+	@Override
+	public String getScreenName() {
+		return NAME;
+	}
 
 	@Override
 	public ScreenImage getBackgroundImage() {

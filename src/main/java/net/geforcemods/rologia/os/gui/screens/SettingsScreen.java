@@ -10,6 +10,8 @@ import net.geforcemods.rologia.os.misc.Position;
 
 public class SettingsScreen extends Screen {
 
+	public static final String NAME = "Settings";
+
 	private ScreenButton lightButton = new ScreenButton(getOS(), "Light");
 	private ScreenButton darkButton = new ScreenButton(getOS(), "Dark");
 	private ScreenText themeText = new ScreenText(getOS(), "Theme:", GuiUtils.toHex(getOS().getTheme().SETTINGS_TEXT));
@@ -49,6 +51,11 @@ public class SettingsScreen extends Screen {
 			darkButton.setEnabled(false);
 			lightButton.setEnabled(true);
 		}
+	}
+
+	@Override
+	public String getScreenName() {
+		return NAME;
 	}
 
 	@Override

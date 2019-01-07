@@ -10,8 +10,11 @@ import java.util.logging.Logger;
 
 import net.geforcemods.rologia.Rologia;
 import net.geforcemods.rologia.os.apps.App;
+import net.geforcemods.rologia.os.gui.screens.AppScreen;
 import net.geforcemods.rologia.os.gui.screens.HomeScreen;
 import net.geforcemods.rologia.os.gui.screens.Screen;
+import net.geforcemods.rologia.os.gui.screens.SelectionScreen;
+import net.geforcemods.rologia.os.gui.screens.SettingsScreen;
 import net.geforcemods.rologia.os.gui.screens.input.InputManager;
 import net.geforcemods.rologia.os.gui.utils.Theme;
 import net.geforcemods.rologia.os.misc.Position;
@@ -55,6 +58,8 @@ public class RologiaOS {
 	 */
 	private Screen currentScreen;
 	private Screen homeScreen;
+
+	private HashMap<String, Screen> activeScreens = new HashMap<String, Screen>();
 
 	/**
 	 * Used when another Screen/App requests a Screen change
@@ -105,9 +110,8 @@ public class RologiaOS {
 		user = player;
 
 		if(currentScreen == null) {
-			homeScreen = new HomeScreen(this, new Position(screenXPos, screenYPos));
+			loadSystemScreens(screenXPos, screenYPos);
 			//homeScreen = new InputTextScreen(this, new Position(screenXPos, screenYPos), "This is a test ohai there o hai testing testing");
-			setScreen(homeScreen);
 			//setScreen(new InputYesNoScreen(this, new Position(screenXPos, screenYPos), "This is a test ohai there o hai testing testing"));
 			//setScreen(new InputTextScreen(this, new Position(screenXPos, screenYPos), "enter a number or smh even longer wowowow test"));
 			//currentScreen.addStartupComponents();
@@ -117,14 +121,12 @@ public class RologiaOS {
 			addNotification(new Notification(currentScreen, null, "t1", "body 1"));
 			addNotification(new Notification(currentScreen, null, "t2", "body 2"));
 			addNotification(new Notification(currentScreen, null, "t3", "body 3"));
-			//notifications.add(new Notification(currentScreen, null, "t4", "body 4", 3));
-			//notifications.add(new Notification(currentScreen, null, "t5", "body 5", 4));
 		}
 		else {
 			Position p = new Position(screenXPos, screenYPos);
-			if(!currentScreen.getPosition().matches(p)) {
-				currentScreen.setPosition(p);
-			}
+			
+			for(Screen screen : activeScreens.values())
+				screen.setPosition(p);
 		}
 		
 		tasks.add(new TaskUpdateTime(this));
@@ -138,12 +140,15 @@ public class RologiaOS {
 			currentScreen = screenToSwitchTo;
 			currentScreen.addStartupComponents();
 			currentScreen.initializeScreen();
+
+			if(currentScreen instanceof AppScreen)
+				currentScreen.addComponents(((AppScreen) currentScreen).getApp());
+
+			activeScreens.put(currentScreen.getScreenName(), currentScreen);
 			screenToSwitchTo = null;
 		}
 
-		if(currentScreen != null)
-		{
-
+		if(currentScreen != null) {
 			checkScrollBar();
 			currentScreen.updateScreen();
 
@@ -198,6 +203,17 @@ public class RologiaOS {
 		currentTheme = themes.get("light");
 	}
 
+	/**
+	 * Loads the home, app selection, and system screens when the watch GUI is first opened.
+	 */
+	private void loadSystemScreens(int screenXPos, int screenYPos) {
+		activeScreens.put(HomeScreen.NAME, new HomeScreen(this, new Position(screenXPos, screenYPos)));
+		activeScreens.put(SelectionScreen.NAME, new SelectionScreen(this, new Position(screenXPos, screenYPos)));
+		activeScreens.put(SettingsScreen.NAME, new SettingsScreen(this, new Position(screenXPos, screenYPos)));
+
+		setScreen(activeScreens.get(HomeScreen.NAME));
+	}
+
 	public void checkScrollBar() {
 		if(currentScreen.getScreenHeight() > Screen.WATCH_SCREEN_Y_SIZE)
 			currentScreen.getScrollBar().setVisibility(true);
@@ -217,7 +233,20 @@ public class RologiaOS {
 	 */
 	public void setScreen(Screen newScreen) {
 		screenToSwitchTo = newScreen;
-		clearApp();
+
+		if(!(newScreen instanceof AppScreen))
+			clearApp();
+	}
+
+	/**
+	 * Sets screenToSwitchTo to the new Screen. This is used instead of directly
+	 * updating currentScreen to prevent ConcurrentModificationExceptions due to
+	 * components currently being rendered/updated
+	 * 
+	 * @param screenName The Screen to change to
+	 */
+	public void setScreen(String screenName) {
+		setScreen(activeScreens.get(screenName));
 	}
 
 	public void setApp(String appID) {
@@ -228,7 +257,7 @@ public class RologiaOS {
 			}
 
 			currentApp = getApp(appID);
-			currentScreen.addComponents(currentApp);
+			setScreen(new AppScreen(this, currentScreen.getPosition(), currentApp));
 		}
 	}
 

@@ -57,6 +57,8 @@ public abstract class Screen extends Gui {
 
 	public abstract void onComponentClicked(ScreenComponent component, Position mousePos, int mouseButtonClicked);
 
+	public abstract String getScreenName();
+
 	public void addStartupComponents() {
 		// Status bar
 		if(statusBar == null) {

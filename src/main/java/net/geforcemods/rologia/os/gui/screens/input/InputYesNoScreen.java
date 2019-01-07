@@ -10,7 +10,9 @@ import net.geforcemods.rologia.os.gui.utils.GuiUtils;
 import net.geforcemods.rologia.os.misc.Position;
 
 public class InputYesNoScreen extends Screen {
-	
+
+	public static final String NAME = "input_decision";
+
 	private ScreenText prompt = new ScreenText(getOS(), null, GuiUtils.toHex(getOS().getTheme().INPUT_YES_NO_PROMPT));
 	private ScreenButton yesButton = new ScreenButton(getOS(), "Yes");
 	private ScreenButton noButton = new ScreenButton(getOS(), "No");
@@ -44,12 +46,17 @@ public class InputYesNoScreen extends Screen {
 	public void onComponentClicked(ScreenComponent component, Position mousePos, int mouseButtonClicked) {
 		if(component == yesButton) {
 			getOS().getInputManager().addChoice(true);
-			getOS().setScreen(screenToReturnTo);
+			getOS().setScreen(screenToReturnTo.getScreenName());
 		}
 		else if(component == noButton) {
 			getOS().getInputManager().addChoice(false);
-			getOS().setScreen(screenToReturnTo);
+			getOS().setScreen(screenToReturnTo.getScreenName());
 		}
+	}
+
+	@Override
+	public String getScreenName() {
+		return NAME + "_" + screenToReturnTo.getScreenName();
 	}
 
 	@Override

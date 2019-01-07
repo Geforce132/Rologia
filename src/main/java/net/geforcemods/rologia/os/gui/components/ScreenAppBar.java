@@ -1,6 +1,7 @@
 package net.geforcemods.rologia.os.gui.components;
 
 import net.geforcemods.rologia.os.RologiaOS;
+import net.geforcemods.rologia.os.gui.screens.HomeScreen;
 import net.geforcemods.rologia.os.gui.screens.Screen;
 import net.geforcemods.rologia.os.gui.screens.SelectionScreen;
 import net.geforcemods.rologia.os.gui.screens.SettingsScreen;
@@ -61,24 +62,23 @@ public class ScreenAppBar extends ScreenComponent {
 	}
 	
 	public void switchScreen(RologiaOS os, int index) {
-		if(index == 0) {
-			os.setScreen(os.getHomeScreen());
-		}
+		if(index == 0)
+			os.setScreen(HomeScreen.NAME);
 		else if(index == 1)
-			os.setScreen(new SelectionScreen(getOS(), getOS().getCurrentScreen().getPosition()));
+			os.setScreen(SelectionScreen.NAME);
 		else if(index >= 2 && index < (2 + os.getApps().size()))
 			os.setApp(os.getApps().get(index - 2));
 		else if(index == (2 + os.getApps().size()))
-			os.setScreen(new SettingsScreen(getOS(), getOS().getCurrentScreen().getPosition()));
+			os.setScreen(SettingsScreen.NAME);
 	}
 
 	public String getIconName(int button) {
 		if(button == 0)
-			return "Home";
+			return HomeScreen.NAME;
 		else if(button == 1)
-			return "App selection";
+			return SelectionScreen.NAME;
 		else if(button == getOS().getApps().size() + 2)
-			return "Settings";
+			return SettingsScreen.NAME;
 		else if(button > 1 && button < getOS().getApps().size() + 2)
 			return getOS().getApps().get(button - 2).getAppName();
 		else
@@ -90,7 +90,7 @@ public class ScreenAppBar extends ScreenComponent {
 		  Icon 1: "app selection" screen
 		  Icons 2 - n: open apps
 		  Icon n + 1: "settings" screen */
-		if(getOS().getCurrentScreen() == getOS().getHomeScreen() && !getOS().isAppOpen())
+		if(getOS().getCurrentScreen() instanceof HomeScreen && !getOS().isAppOpen())
 			return 0;
 		if(getOS().getCurrentScreen() instanceof SelectionScreen)
 			return 1;

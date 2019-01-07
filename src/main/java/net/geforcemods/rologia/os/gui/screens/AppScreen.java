@@ -10,20 +10,30 @@ import net.geforcemods.rologia.os.misc.Position;
  * A blank Screen that Apps can overlay on. Not used yet, however.
  */
 public class AppScreen extends Screen {
-	
+
 	private App app;
 
 	public AppScreen(RologiaOS OS, Position pos, App app) {
 		super(OS, pos);
+		this.app = app;
 	}
 
 	@Override
 	public void initializeScreen() {
-		getOS().setApp(app);
+		
 	}
 
 	@Override
 	public void onComponentClicked(ScreenComponent component, Position mousePos, int mouseButtonClicked) {}
+
+	public App getApp() {
+		return app;
+	}
+
+	@Override
+	public String getScreenName() {
+		return app.getAppName();
+	}
 
 	@Override
 	public ScreenImage getBackgroundImage() {

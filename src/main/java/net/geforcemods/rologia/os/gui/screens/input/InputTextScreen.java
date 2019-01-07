@@ -12,12 +12,17 @@ import net.geforcemods.rologia.os.misc.Position;
 
 public class InputTextScreen extends Screen {
 	
+	public static final String NAME = "input_text";
+
 	private ScreenText prompt = new ScreenText(getOS(), null, GuiUtils.toHex(getOS().getTheme().INPUT_TEXT_PROMPT));
 	private ScreenTextField textField = new ScreenTextField(getOS(), 50, 12);
 	private ScreenButton doneButton = new ScreenButton(getOS(), "Done");
 
-	public InputTextScreen(RologiaOS os, Position pos, String promptText) {
+	private Screen screenToReturnTo;
+
+	public InputTextScreen(RologiaOS os, Position pos, Screen returnScreen, String promptText) {
 		super(os, pos);
+		screenToReturnTo = returnScreen;
 		prompt.setText(promptText);
 	}
 
@@ -37,7 +42,13 @@ public class InputTextScreen extends Screen {
 	public void onComponentClicked(ScreenComponent component, Position mousePos, int mouseButtonClicked) {		
 		if(component == doneButton) {
 			getOS().getInputManager().addResponse(textField.getText());
+			getOS().setScreen(screenToReturnTo.getScreenName());
 		}
+	}
+
+	@Override
+	public String getScreenName() {
+		return NAME + "_" + screenToReturnTo.getScreenName();
 	}
 
 	@Override

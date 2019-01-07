@@ -7,6 +7,8 @@ import net.geforcemods.rologia.os.misc.Position;
 
 public class HomeScreen extends Screen {
 
+	public static final String NAME = "Home";
+
 	public HomeScreen(RologiaOS OS, Position pos) {
 		super(OS, pos);
 	}
@@ -17,6 +19,11 @@ public class HomeScreen extends Screen {
 	@Override
 	public void onComponentClicked(ScreenComponent component, Position mousePos, int mouseButtonClicked) {
 
+	}
+
+	@Override
+	public String getScreenName() {
+		return NAME;
 	}
 
 	@Override
