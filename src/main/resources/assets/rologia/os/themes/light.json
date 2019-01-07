@@ -48,6 +48,12 @@
       "blue": 3,
       "alpha": 1
     },
+    "SELECTION_TEXT": {
+      "red": 0,
+      "green": 217,
+      "blue": 3,
+      "alpha": 1
+    },
     "TEXT_FIELD_LINE": {
       "red": 255,
       "green": 0,

@@ -1,7 +1,5 @@
 package net.geforcemods.rologia.os.gui.screens;
 
-import org.lwjgl.opengl.GL11;
-
 import net.geforcemods.rologia.os.RologiaOS;
 import net.geforcemods.rologia.os.gui.components.ScreenButton;
 import net.geforcemods.rologia.os.gui.components.ScreenComponent;
@@ -9,7 +7,6 @@ import net.geforcemods.rologia.os.gui.components.images.ScreenImage;
 import net.geforcemods.rologia.os.gui.components.text.ScreenText;
 import net.geforcemods.rologia.os.gui.utils.GuiUtils;
 import net.geforcemods.rologia.os.misc.Position;
-import net.minecraft.client.renderer.GlStateManager;
 
 public class SettingsScreen extends Screen {
 

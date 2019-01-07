@@ -2,6 +2,7 @@ package net.geforcemods.rologia.os.gui.components;
 
 import net.geforcemods.rologia.os.RologiaOS;
 import net.geforcemods.rologia.os.gui.screens.Screen;
+import net.geforcemods.rologia.os.gui.screens.SelectionScreen;
 import net.geforcemods.rologia.os.gui.screens.SettingsScreen;
 import net.geforcemods.rologia.os.gui.utils.GuiUtils;
 import net.geforcemods.rologia.os.misc.Position;
@@ -64,8 +65,7 @@ public class ScreenAppBar extends ScreenComponent {
 			os.setScreen(os.getHomeScreen());
 		}
 		else if(index == 1)
-			// selection
-			return;
+			os.setScreen(new SelectionScreen(getOS(), getOS().getCurrentScreen().getPosition()));
 		else if(index >= 2 && index < (2 + os.getApps().size()))
 			os.setApp(os.getApps().get(index - 2));
 		else if(index == (2 + os.getApps().size()))
@@ -76,7 +76,7 @@ public class ScreenAppBar extends ScreenComponent {
 		if(button == 0)
 			return "Home";
 		else if(button == 1)
-			return "Selection";
+			return "App selection";
 		else if(button == getOS().getApps().size() + 2)
 			return "Settings";
 		else if(button > 1 && button < getOS().getApps().size() + 2)
@@ -92,9 +92,8 @@ public class ScreenAppBar extends ScreenComponent {
 		  Icon n + 1: "settings" screen */
 		if(getOS().getCurrentScreen() == getOS().getHomeScreen() && !getOS().isAppOpen())
 			return 0;
-		//else if(index == 1)
-			// selection
-			//return 1;
+		if(getOS().getCurrentScreen() instanceof SelectionScreen)
+			return 1;
 		else if(getOS().isAppOpen()) {
 			for(int i = 0; i < getOS().getApps().size(); i++) {
 				if(getOS().getApps().get(i) == getOS().getCurrentApp()) {

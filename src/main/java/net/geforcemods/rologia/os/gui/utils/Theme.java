@@ -22,6 +22,8 @@ public class Theme {
 	
 	public Color SETTINGS_TEXT;
 
+	public Color SELECTION_TEXT;
+
 	public Color TEXT_FIELD_LINE;
 	public Color TEXT_FIELD_TEXT;
 

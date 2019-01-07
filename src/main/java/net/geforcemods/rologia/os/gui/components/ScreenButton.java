@@ -21,14 +21,14 @@ public class ScreenButton extends ScreenComponent {
 
 	@Override
 	public void drawComponent() {
-		GuiUtils.drawHollowRect(position, getWidth(), getHeight(), getTheme().BUTTON_OUTLINE);
-
 		if(this.isMouseHoveringOver(getScreen().getMousePosition()) || !enabled) {
 			GuiUtils.drawFilledRect(getPosition(), getWidth(), getHeight(), getTheme().BUTTON_INTERIOR_HOVERING);
 		}
 		else {
 			GuiUtils.drawFilledRect(getPosition(), getWidth(), getHeight(), getTheme().BUTTON_INTERIOR, 0.5F);
 		}
+
+		GuiUtils.drawHollowRect(getPosition(), getWidth(), getHeight(), getTheme().BUTTON_OUTLINE);
 
 		drawString(getFontRenderer(), text, getPosition().getX() + 2, getPosition().getY() + 2, GuiUtils.toHex(getTheme().BUTTON_TEXT));
 	}

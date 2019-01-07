@@ -19,6 +19,7 @@ public class GuiUtils {
 	public static final char BACKSPACE = '';
 	
 	public static void drawHollowRect(Position startPos, int width, int height, Color color) {
+		GlStateManager.pushMatrix();
 		GlStateManager.enableBlend();
 		GlStateManager.disableTexture2D();
         
@@ -40,6 +41,7 @@ public class GuiUtils {
 
 		GlStateManager.enableTexture2D();
 		GlStateManager.disableBlend();
+		GlStateManager.popMatrix();
 	}
 	
 	public static void drawFilledRect(Position startPos, int width, int height, Color color) {
@@ -50,10 +52,10 @@ public class GuiUtils {
 		GlStateManager.enableBlend();
 		GlStateManager.disableTexture2D();
 
+		GlStateManager.color(color.getRed(), color.getGreen(), color.getBlue(), transparency);
 		GlStateManager.glPolygonMode(GL11.GL_FRONT, GL11.GL_FILL);
 		GlStateManager.glBegin(GL11.GL_QUADS);
 
-		GlStateManager.color(color.getRed(), color.getGreen(), color.getBlue(), transparency);
 		GlStateManager.glVertex3f(startPos.getX(), startPos.getY(), 0);
 		GlStateManager.glVertex3f(startPos.getX(), startPos.getY() + height, 0);
 		GlStateManager.glVertex3f(startPos.getX() + width, startPos.getY() + height, 0);
