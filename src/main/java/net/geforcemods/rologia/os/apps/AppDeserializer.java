@@ -7,6 +7,8 @@ import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 
+import net.geforcemods.rologia.os.apps.im.AppIM;
+
 public class AppDeserializer implements JsonDeserializer<App> {
 	
 	@Override

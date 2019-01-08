@@ -2,6 +2,7 @@ package net.geforcemods.rologia.os.apps.events;
 
 public enum AppEventType {
 	
-	PLAYER_STEP;
+	PLAYER_STEP,
+	RECEIVE_MESSAGES;
 
 }

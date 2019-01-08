@@ -4,8 +4,6 @@ import java.util.ArrayList;
 
 import org.lwjgl.opengl.GL11;
 
-import com.google.gson.JsonObject;
-
 import net.geforcemods.rologia.os.RologiaOS;
 import net.geforcemods.rologia.os.apps.events.AppEvent;
 import net.geforcemods.rologia.os.apps.events.AppEventType;
@@ -20,7 +18,7 @@ public abstract class App {
 	private String app_name;
 	private String app_version;
 	private String app_icon = "";
-	private String app_background_image = "";
+	public String app_background_image = "";
 
 	private transient ScreenImage appIcon = null;	
 	private transient ScreenImage appBackgroundImage = null;
@@ -38,11 +36,7 @@ public abstract class App {
 	public abstract void updateApp();
 	
 	public abstract void drawApp(Screen currentScreen);
-	
-	public abstract void onEventPosted(AppEvent event);
-	
-	public abstract void loadInfoFromJson(JsonObject json);
-	
+
 	public abstract Object replaceKeywords(String keyword);
 	
 	public abstract AppEventType[] subscribeToEvents();
@@ -55,6 +49,8 @@ public abstract class App {
 		}
 	}
 	
+	public void onEventPosted(AppEvent event) {}
+
 	public String getAppID() {
 		return app_id;
 	}

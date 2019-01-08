@@ -14,7 +14,7 @@ public class AppScreen extends Screen {
 	private App app;
 
 	public AppScreen(RologiaOS OS, Position pos, App app) {
-		super(OS, pos);
+		super(OS, pos, app);
 		this.app = app;
 	}
 
@@ -37,7 +37,7 @@ public class AppScreen extends Screen {
 
 	@Override
 	public ScreenImage getBackgroundImage() {
-		return new ScreenImage(getOS(), "rologia:textures/gui/watch/boot_screen_dark.png", WATCH_SCREEN_X_SIZE, WATCH_SCREEN_Y_SIZE);
+		return new ScreenImage(getOS(), app.app_background_image, WATCH_SCREEN_X_SIZE, WATCH_SCREEN_Y_SIZE);
 	}
 
 }

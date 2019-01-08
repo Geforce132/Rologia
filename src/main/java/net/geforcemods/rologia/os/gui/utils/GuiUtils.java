@@ -115,5 +115,4 @@ public class GuiUtils {
 		return longestWidth;
 	}
 
-
 }

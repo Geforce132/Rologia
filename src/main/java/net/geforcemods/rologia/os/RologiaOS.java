@@ -13,6 +13,8 @@ import java.util.logging.Logger;
 import net.geforcemods.rologia.Rologia;
 import net.geforcemods.rologia.os.apps.App;
 import net.geforcemods.rologia.os.apps.AppInfo;
+import net.geforcemods.rologia.os.apps.AppStepCounter;
+import net.geforcemods.rologia.os.apps.im.AppIM;
 import net.geforcemods.rologia.os.gui.screens.AppScreen;
 import net.geforcemods.rologia.os.gui.screens.HomeScreen;
 import net.geforcemods.rologia.os.gui.screens.Screen;
@@ -184,8 +186,8 @@ public class RologiaOS {
 		currentScreen.drawComponents();
 
 		if(isAppOpen()) {
-			currentApp.drawComponents(currentScreen);
 			currentApp.drawApp(currentScreen);
+			currentApp.drawComponents(currentScreen);
 		}
 
 		// Edited last because this should always be drawn over everything
@@ -198,7 +200,7 @@ public class RologiaOS {
 	 */
 	private void loadApps() throws IOException {		
 		//ResourceLoader.loadApps(this);
-		String[] appsToLoad = new String[] {"net.geforcemods.rologia.os.apps.AppStepCounter", "net.geforcemods.rologia.os.apps.AppIM"};
+		String[] appsToLoad = new String[] {AppStepCounter.class.getName(), AppIM.class.getName()};
 
 		for(String appPath : appsToLoad) {
 			try {

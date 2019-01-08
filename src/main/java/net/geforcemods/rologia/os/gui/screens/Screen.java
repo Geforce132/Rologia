@@ -53,6 +53,18 @@ public abstract class Screen extends Gui {
 		backgroundImage.setPosition(pos);
 	}
 
+	public Screen(RologiaOS os, Position pos, App app) {
+		OS = os;
+
+		screenPos = pos;
+		backgroundImage = app.getAppBackgroundImage();
+
+		if(backgroundImage == null)
+			RologiaOS.LOGGER.log(Level.WARNING, getClass().getSimpleName() + " has no background image!");
+
+		backgroundImage.setPosition(pos);
+	}
+
 	public abstract void initializeScreen();
 
 	public abstract void onComponentClicked(ScreenComponent component, Position mousePos, int mouseButtonClicked);
@@ -84,14 +96,8 @@ public abstract class Screen extends Gui {
 	public void drawBackgroundImage() {
 		GlStateManager.pushMatrix();
 
-		if(OS.isAppOpen()) {
-			OS.getCurrentApp().getAppBackgroundImage().performPrerenderGLFixes();
-			OS.getCurrentApp().getAppBackgroundImage().drawComponent();
-		}
-		else {
-			backgroundImage.performPrerenderGLFixes();
-			backgroundImage.drawComponent();
-		}
+		backgroundImage.performPrerenderGLFixes();
+		backgroundImage.drawComponent();
 
 		GlStateManager.pushMatrix();
 		GuiUtils.drawFilledRect(getPosition(), WATCH_SCREEN_X_SIZE, WATCH_SCREEN_Y_SIZE, getOS().getTheme().BACKGROUND_OVERLAY, 0.6F);
@@ -242,6 +248,10 @@ public abstract class Screen extends Gui {
 
 		screenPos = pos;
 		backgroundImage.setPositionAndOrigin(pos);
+
+		//TODO getImage from all apps
+		//if(OS.isAppOpen())
+			//OS.getCurrentApp().getAppBackgroundImage().setPositionAndOrigin(pos);
 
 		for (int i = 0; i < components.size(); i++) {
 			components.get(i).setPositionAndOrigin(screenPos.shiftX(componentOffsets[i][0]).shiftY(componentOffsets[i][1]));

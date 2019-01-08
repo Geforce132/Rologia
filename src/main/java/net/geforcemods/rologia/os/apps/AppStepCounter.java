@@ -3,8 +3,6 @@ package net.geforcemods.rologia.os.apps;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 
-import com.google.gson.JsonObject;
-
 import net.geforcemods.rologia.os.RologiaOS;
 import net.geforcemods.rologia.os.apps.events.AppEvent;
 import net.geforcemods.rologia.os.apps.events.AppEventType;
@@ -21,7 +19,6 @@ public class AppStepCounter extends App {
 
 	@Override
 	public void initializeApp() {
-
 	}
 
 	@Override
@@ -38,8 +35,6 @@ public class AppStepCounter extends App {
 	}
 	
 	@Override
-	public void loadInfoFromJson(JsonObject json) {}
-	
 	public Object replaceKeywords(String keyword) {
 		if(keyword.matches("step_count"))
 			return getOS().getUserStats().getStepCount();
