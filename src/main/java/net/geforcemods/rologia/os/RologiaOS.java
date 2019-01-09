@@ -22,6 +22,7 @@ import net.geforcemods.rologia.os.gui.screens.SelectionScreen;
 import net.geforcemods.rologia.os.gui.screens.SettingsScreen;
 import net.geforcemods.rologia.os.gui.screens.input.InputManager;
 import net.geforcemods.rologia.os.gui.utils.Theme;
+import net.geforcemods.rologia.os.imc.IMCManager;
 import net.geforcemods.rologia.os.misc.Position;
 import net.geforcemods.rologia.os.notifications.Notification;
 import net.geforcemods.rologia.os.resources.ResourceLoader;
@@ -81,6 +82,7 @@ public class RologiaOS {
 	private ArrayList<Notification> notifications = new ArrayList<Notification>();
 
 	private InputManager inputManager = new InputManager(this);
+	private IMCManager imcManager = new IMCManager(this);
 
 	private HashMap<String, Theme> themes = new HashMap<String, Theme>();
 	private Theme currentTheme;
@@ -406,6 +408,10 @@ public class RologiaOS {
 
 	public InputManager getInputManager() {
 		return inputManager;
+	}
+
+	public IMCManager getIMCManager() {
+		return imcManager;
 	}
 
 	public Theme getTheme() {

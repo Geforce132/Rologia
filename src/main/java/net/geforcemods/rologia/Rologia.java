@@ -6,6 +6,7 @@ import net.geforcemods.rologia.events.RologiaEventHandler;
 import net.geforcemods.rologia.gui.GuiHandler;
 import net.geforcemods.rologia.item.ItemRologia;
 import net.geforcemods.rologia.network.ServerProxy;
+import net.geforcemods.rologia.network.packets.PacketCSendRologiaMessage;
 import net.geforcemods.rologia.os.apps.App;
 import net.geforcemods.rologia.os.apps.events.AppEvent;
 import net.geforcemods.rologia.os.resources.ResourceLoader;
@@ -22,6 +23,7 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
+import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.registries.GameData;
 
 @Mod(modid=Rologia.MOD_ID, name=Rologia.MOD_NAME,version=Rologia.VERSION)
@@ -56,6 +58,7 @@ public class Rologia {
 
 		ResourceLoader.MC_DIR = event.getModConfigurationDirectory().getParentFile();
 		network = NetworkRegistry.INSTANCE.newSimpleChannel(MOD_ID);
+		network.registerMessage(PacketCSendRologiaMessage.Handler.class, PacketCSendRologiaMessage.class, 1, Side.CLIENT);
 		
 		smartwatch = new ItemRologia().setCreativeTab(CreativeTabs.REDSTONE).setMaxStackSize(1).setRegistryName("smart_watch").setTranslationKey("rologia:smart_watch");
 		GameData.register_impl(smartwatch);
