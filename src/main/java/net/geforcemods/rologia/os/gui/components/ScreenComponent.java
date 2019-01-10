@@ -19,6 +19,7 @@ public abstract class ScreenComponent extends Gui {
 	protected Position defaultPos = new Position(Screen.WATCH_SCREEN_X_SIZE, Screen.WATCH_SCREEN_Y_SIZE);
 	
 	private boolean visible = true;
+	private boolean enabled = true;
 
 	protected float rotation;
 	protected float scale;
@@ -156,6 +157,14 @@ public abstract class ScreenComponent extends Gui {
 
 	public void setVisibility(boolean visibility) {
 		visible = visibility;
+	}
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean isEnabled) {
+		enabled = isEnabled;
 	}
 
 	public void setRotation(float newRotation) {

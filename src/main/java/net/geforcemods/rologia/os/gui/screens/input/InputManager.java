@@ -26,6 +26,8 @@ public class InputManager {
 			if(OS.isScreenBeingSwapped()) return;
 
 			ScreenComponent component = screen.getComponents().get(i);
+			
+			if(!component.isEnabled()) continue;
 
 			if(component.isVisible() && component.isMouseHoveringOver(screen.getMousePosition())) {				
 				if(component.mouseClick(screen.getMousePosition(), mouseButtonClicked)) {

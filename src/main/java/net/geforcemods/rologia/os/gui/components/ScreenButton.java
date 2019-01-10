@@ -7,7 +7,6 @@ import net.geforcemods.rologia.os.misc.Position;
 public class ScreenButton extends ScreenComponent {
 	
 	private String text;
-	private boolean enabled = true;
 	
 	public ScreenButton(RologiaOS OS, String string) {
 		super(OS);
@@ -21,7 +20,7 @@ public class ScreenButton extends ScreenComponent {
 
 	@Override
 	public void drawComponent() {
-		if(this.isMouseHoveringOver(getScreen().getMousePosition()) || !enabled) {
+		if(this.isMouseHoveringOver(getScreen().getMousePosition()) || !isEnabled()) {
 			GuiUtils.drawFilledRect(getPosition(), getWidth(), getHeight(), getTheme().BUTTON_INTERIOR_HOVERING);
 		}
 		else {
@@ -35,14 +34,6 @@ public class ScreenButton extends ScreenComponent {
 
 	public String getText() {
 		return text;
-	}
-
-	public boolean isEnabled() {
-		return enabled;
-	}
-
-	public void setEnabled(boolean isEnabled) {
-		enabled = isEnabled;
 	}
 
 	@Override

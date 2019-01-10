@@ -10,6 +10,7 @@ import net.geforcemods.rologia.os.apps.events.AppEventType;
 import net.geforcemods.rologia.os.gui.components.ScreenComponent;
 import net.geforcemods.rologia.os.gui.components.images.ScreenImage;
 import net.geforcemods.rologia.os.gui.screens.Screen;
+import net.geforcemods.rologia.os.misc.Position;
 import net.minecraft.util.ResourceLocation;
 
 public abstract class App {
@@ -48,7 +49,9 @@ public abstract class App {
 			GL11.glPopMatrix();
 		}
 	}
-	
+
+	public void onComponentClicked(ScreenComponent component, Position mousePos, int mouseButtonClicked) {}
+
 	public void onEventPosted(AppEvent event) {}
 
 	public String getAppID() {
@@ -128,5 +131,5 @@ public abstract class App {
 			getComponents().get(i).setOS(os);
 		}
 	}
-	
+
 }

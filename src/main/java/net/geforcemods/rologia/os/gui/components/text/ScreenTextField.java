@@ -1,9 +1,10 @@
-package net.geforcemods.rologia.os.gui.components;
+package net.geforcemods.rologia.os.gui.components.text;
 
 import org.apache.commons.lang3.StringUtils;
 import org.lwjgl.opengl.GL11;
 
 import net.geforcemods.rologia.os.RologiaOS;
+import net.geforcemods.rologia.os.gui.components.ScreenComponent;
 import net.geforcemods.rologia.os.gui.utils.GuiUtils;
 import net.geforcemods.rologia.os.misc.Position;
 import net.minecraft.client.renderer.GlStateManager;
@@ -66,6 +67,14 @@ public class ScreenTextField extends ScreenComponent {
 
 	public String getText() {
 		return text;
+	}
+
+	public void setText(String newText) {
+		text = newText;
+	}
+
+	public void clearText() {
+		text = "";
 	}
 
 	@Override

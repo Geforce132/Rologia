@@ -6,13 +6,11 @@ import net.geforcemods.rologia.os.gui.components.ScreenToggleButton;
 import net.geforcemods.rologia.os.gui.components.images.ScreenImage;
 import net.geforcemods.rologia.os.gui.components.text.ScreenText;
 import net.geforcemods.rologia.os.gui.utils.GuiUtils;
-import net.geforcemods.rologia.os.imc.IMCManager;
 import net.geforcemods.rologia.os.misc.Position;
 
 public class SettingsScreen extends Screen {
 
 	public static final String NAME = "Settings";
-
 
 	private ScreenText themeText = new ScreenText(getOS(), "Theme:", GuiUtils.toHex(getOS().getTheme().SETTINGS_TEXT));
 

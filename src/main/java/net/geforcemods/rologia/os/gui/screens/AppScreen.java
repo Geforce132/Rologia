@@ -24,7 +24,9 @@ public class AppScreen extends Screen {
 	}
 
 	@Override
-	public void onComponentClicked(ScreenComponent component, Position mousePos, int mouseButtonClicked) {}
+	public void onComponentClicked(ScreenComponent component, Position mousePos, int mouseButtonClicked) {
+		app.onComponentClicked(component, mousePos, mouseButtonClicked);
+	}
 
 	public App getApp() {
 		return app;
