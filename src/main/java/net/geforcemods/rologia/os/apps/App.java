@@ -54,6 +54,13 @@ public abstract class App {
 
 	public void onEventPosted(AppEvent event) {}
 
+	public boolean isSubscribedTo(AppEventType eventType) {
+		for(AppEventType type : subscribeToEvents())
+			return type == eventType;
+
+		return false;
+	}
+
 	public String getAppID() {
 		return app_id;
 	}

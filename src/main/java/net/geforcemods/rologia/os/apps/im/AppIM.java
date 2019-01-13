@@ -5,15 +5,17 @@ import java.util.ArrayList;
 import net.geforcemods.rologia.os.RologiaOS;
 import net.geforcemods.rologia.os.apps.App;
 import net.geforcemods.rologia.os.apps.AppInfo;
+import net.geforcemods.rologia.os.apps.events.AppEvent;
+import net.geforcemods.rologia.os.apps.events.AppEventReceiveMessage;
 import net.geforcemods.rologia.os.apps.events.AppEventType;
 import net.geforcemods.rologia.os.gui.components.ScreenButton;
 import net.geforcemods.rologia.os.gui.components.ScreenComponent;
-import net.geforcemods.rologia.os.gui.components.text.ScreenText;
 import net.geforcemods.rologia.os.gui.components.text.ScreenTextField;
 import net.geforcemods.rologia.os.gui.screens.Screen;
 import net.geforcemods.rologia.os.gui.utils.GuiUtils;
 import net.geforcemods.rologia.os.imc.IMCManager;
 import net.geforcemods.rologia.os.misc.Position;
+import net.geforcemods.rologia.os.sounds.Sounds;
 
 @AppInfo(id=AppIM.ID, name = AppIM.NAME, version = AppIM.VERSION)
 public class AppIM extends App {
@@ -22,7 +24,6 @@ public class AppIM extends App {
 	public static final String NAME = "IM Chat";
 	public static final String VERSION = "1.0.0";
 
-	private ScreenText text = new ScreenText(getOS(), "this is a test", 44444);
 	private ScreenTextField textField = new ScreenTextField(getOS(), 40, 10);
 	private ScreenButton sendButton = new ScreenButton(getOS(), "Send");
 
@@ -34,16 +35,14 @@ public class AppIM extends App {
 	
 	@Override
 	public void initializeApp() {
-		text.centerPosition();
 		textField.centerPosition(-15, 55);
 		sendButton.centerPosition(25, 55);
-		addComponent(text);
 		addComponent(textField);
 		addComponent(sendButton);
 
 		if(tabs.size() == 0) {
 			//tabs.add(new IMTab(new Position(10, 10), "+"));
-			//tabs.add(new IMTab(new Position(10, 30), "Geforce"));
+			tabs.add(new IMTab(getOS().getCurrentScreen().getPosition(), "Geforce"));
 		}
 	}
 
@@ -70,6 +69,22 @@ public class AppIM extends App {
 		if(component == sendButton) {
 			getOS().getIMCManager().sendRologiaMessage(IMCManager.IM, textField.getText());
 			textField.clearText();
+		}
+	}
+
+	@Override
+	public void onEventPosted(AppEvent type) {
+		String sender = ((AppEventReceiveMessage) type).sender;
+		String message = ((AppEventReceiveMessage) type).message;
+
+		addMessageToTab(sender, message);
+		getOS().getUser().playSound(Sounds.BEEP_2.event, 1.0F, 1.0F);
+	}
+
+	private void addMessageToTab(String sender, String message) {
+		for(IMTab tab : tabs) {
+			if(tab.destinationPlayerName.matches(sender))
+				tab.addMessage("<" + sender + "> " + message);
 		}
 	}
 

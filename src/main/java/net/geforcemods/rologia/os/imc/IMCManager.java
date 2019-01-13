@@ -3,8 +3,10 @@ package net.geforcemods.rologia.os.imc;
 import org.apache.commons.lang3.StringUtils;
 
 import net.geforcemods.rologia.Rologia;
+import net.geforcemods.rologia.events.RologiaEventHandler;
 import net.geforcemods.rologia.network.packets.PacketSSendRologiaMessage;
 import net.geforcemods.rologia.os.RologiaOS;
+import net.geforcemods.rologia.os.apps.events.AppEventReceiveMessage;
 
 public class IMCManager {
 	
@@ -19,20 +21,17 @@ public class IMCManager {
 		os = OS;
 	}
 
-	public void handleRologiaMessage(String text) {
+	public void handleRologiaMessage(String sender, String text) {
 		String type = StringUtils.substringBefore(text, SEPARATOR);
 		String message = StringUtils.substringAfter(text, SEPARATOR);
 
-		if(type.matches(IMC)) {
-			System.out.println("received IMC message |" + message);
-		}
-		else if(type.matches(IM)) {
-			System.out.println("received IM message |" + message);
-		}
+		System.out.printf("received %s message from %s: %s\n", type, sender, message);
+
+		RologiaEventHandler.postRologiaEvent(new AppEventReceiveMessage(sender, type, message));
 	}
 	
 	public void sendRologiaMessage(String type, String message) {
-		Rologia.network.sendToServer(new PacketSSendRologiaMessage(type + SEPARATOR + message));
+		Rologia.network.sendToServer(new PacketSSendRologiaMessage(os.getUser().getName(), type + SEPARATOR + message));
 	}
 	
 }

@@ -167,6 +167,10 @@ public abstract class ScreenComponent extends Gui {
 		enabled = isEnabled;
 	}
 
+	public boolean isFocused() {
+		return getScreen().hasFocusedComponent() && getScreen().getFocusedComponent() == this;
+	}
+
 	public void setRotation(float newRotation) {
 		rotation = newRotation;
 	}

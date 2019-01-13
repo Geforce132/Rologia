@@ -38,6 +38,14 @@ public class ScreenTextField extends ScreenComponent {
 		GlStateManager.glVertex3f(getPosition().getX() + width, getPosition().getY() + height, 0);
 		GlStateManager.glEnd();
 		
+		if(isFocused()) {
+			GlStateManager.glBegin(GL11.GL_LINES);
+			GlStateManager.color(225, 0, 0);
+			GlStateManager.glVertex3f(getPosition().shiftX(getScreen().getFontRenderer().getStringWidth(text)).getX(), getPosition().getY(), 0);
+			GlStateManager.glVertex3f(getPosition().shiftX(getScreen().getFontRenderer().getStringWidth(text)).getX(), getPosition().getY() + (height - 1), 0);
+			GlStateManager.glEnd();
+		}
+
 		GlStateManager.enableTexture2D();
 		GlStateManager.disableBlend();
 		this.drawString(getFontRenderer(), text, getPosition().getX(), getPosition().getY(), GuiUtils.toHex(getTheme().TEXT_FIELD_TEXT));
@@ -45,7 +53,6 @@ public class ScreenTextField extends ScreenComponent {
 
 	@Override
 	public boolean mouseClick(Position mousePos, int mouseButtonClicked) {
-		System.out.println("clicked");
 		return true;
 	}
 	

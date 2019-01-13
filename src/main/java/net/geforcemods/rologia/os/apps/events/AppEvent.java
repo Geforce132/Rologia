@@ -1,22 +1,17 @@
 package net.geforcemods.rologia.os.apps.events;
 
 import net.geforcemods.rologia.os.RologiaOS;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 
 public abstract class AppEvent {
-	
-	public final EntityPlayer player;
-	
-	public AppEvent(EntityPlayer entityPlayer) {
-		player = entityPlayer;
-	}
 	
 	public RologiaOS getOS() {
 		return RologiaOS.getInstance();
 	}
 	
 	public EntityPlayer getPlayer() {
-		return player;
+		return Minecraft.getMinecraft().player;
 	}
 	
 	public abstract AppEventType getEventType();

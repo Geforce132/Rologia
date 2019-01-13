@@ -11,23 +11,27 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class PacketCSendRologiaMessage implements IMessage {
 
+	private String sender;
 	private String message;
 
 	public PacketCSendRologiaMessage() {
 
 	}
 
-	public PacketCSendRologiaMessage(String message) {
+	public PacketCSendRologiaMessage(String sender, String message) {
+		this.sender = sender;
 		this.message = message;
 	}
 
 	@Override
 	public void fromBytes(ByteBuf buf) {
+		sender = ByteBufUtils.readUTF8String(buf);
 		message = ByteBufUtils.readUTF8String(buf);
 	}
 
 	@Override
 	public void toBytes(ByteBuf buf) {
+		ByteBufUtils.writeUTF8String(buf, sender);
 		ByteBufUtils.writeUTF8String(buf, message);
 	}
 
@@ -36,7 +40,7 @@ public class PacketCSendRologiaMessage implements IMessage {
 		@Override
 		@SideOnly(Side.CLIENT)
 		public IMessage onMessage(PacketCSendRologiaMessage packet, MessageContext ctx) {
-			Rologia.serverProxy.getRologiaInstance().getIMCManager().handleRologiaMessage(packet.message);
+			Rologia.serverProxy.getRologiaInstance().getIMCManager().handleRologiaMessage(packet.sender, packet.message);
 			return null;
 		}
 

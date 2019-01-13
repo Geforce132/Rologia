@@ -2,6 +2,8 @@ package net.geforcemods.rologia.events;
 
 import net.geforcemods.rologia.Rologia;
 import net.geforcemods.rologia.os.RologiaOS;
+import net.geforcemods.rologia.os.apps.App;
+import net.geforcemods.rologia.os.apps.events.AppEvent;
 import net.geforcemods.rologia.os.apps.events.AppEventPlayerStep;
 import net.geforcemods.rologia.os.stats.UserStats;
 import net.minecraft.client.Minecraft;
@@ -23,7 +25,14 @@ public class RologiaEventHandler {
 			RologiaOS os = RologiaOS.getInstance();
 			UserStats stats = os.getUserStats();
 			
-			Rologia.instance.postRologiaEvent(new AppEventPlayerStep(Minecraft.getMinecraft().player, stats.getStepCount(), stats.increaseStepCount(1)));
+			RologiaEventHandler.postRologiaEvent(new AppEventPlayerStep(stats.getStepCount(), stats.increaseStepCount(1)));
+		}
+	}
+
+	public static void postRologiaEvent(AppEvent event) {
+		for(App app : Rologia.instance.serverProxy.getRologiaInstance().getApps()) {
+			if(app.isSubscribedTo(event.getEventType()))
+				app.onEventPosted(event);
 		}
 	}
 	

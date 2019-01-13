@@ -8,8 +8,6 @@ import net.geforcemods.rologia.item.ItemRologia;
 import net.geforcemods.rologia.network.ServerProxy;
 import net.geforcemods.rologia.network.packets.PacketCSendRologiaMessage;
 import net.geforcemods.rologia.network.packets.PacketSSendRologiaMessage;
-import net.geforcemods.rologia.os.apps.App;
-import net.geforcemods.rologia.os.apps.events.AppEvent;
 import net.geforcemods.rologia.os.resources.ResourceLoader;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -76,11 +74,6 @@ public class Rologia {
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
 		MinecraftForge.EVENT_BUS.register(eventHandler);
-	}
-
-	public void postRologiaEvent(AppEvent event) {
-		for(App app : serverProxy.getRologiaInstance().getApps()) 
-			app.onEventPosted(event);
 	}
 
 }

@@ -9,23 +9,27 @@ import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
 public class PacketSSendRologiaMessage implements IMessage {
 
+	private String sender;
 	private String message;
 
 	public PacketSSendRologiaMessage() {
 
 	}
 
-	public PacketSSendRologiaMessage(String message) {
+	public PacketSSendRologiaMessage(String sender, String message) {
+		this.sender = sender;
 		this.message = message;
 	}
 
 	@Override
 	public void fromBytes(ByteBuf buf) {
+		sender = ByteBufUtils.readUTF8String(buf);
 		message = ByteBufUtils.readUTF8String(buf);
 	}
 
 	@Override
 	public void toBytes(ByteBuf buf) {
+		ByteBufUtils.writeUTF8String(buf, sender);
 		ByteBufUtils.writeUTF8String(buf, message);
 	}
 
@@ -33,7 +37,7 @@ public class PacketSSendRologiaMessage implements IMessage {
 
 		@Override
 		public IMessage onMessage(PacketSSendRologiaMessage packet, MessageContext ctx) {
-			Rologia.network.sendToAll(new PacketCSendRologiaMessage(packet.message));
+			Rologia.network.sendToAll(new PacketCSendRologiaMessage(packet.sender, packet.message));
 			return null;
 		}
 
