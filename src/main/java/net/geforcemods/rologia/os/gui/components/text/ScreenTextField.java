@@ -15,6 +15,8 @@ public class ScreenTextField extends ScreenComponent {
 	private int width;
 	private int height;
 	
+	private float textScale = 1.0F;
+
 	public ScreenTextField(RologiaOS OS, int w, int h) {
 		super(OS);
 		width = w;
@@ -41,14 +43,19 @@ public class ScreenTextField extends ScreenComponent {
 		if(isFocused()) {
 			GlStateManager.glBegin(GL11.GL_LINES);
 			GlStateManager.color(225, 0, 0);
-			GlStateManager.glVertex3f(getPosition().shiftX(getScreen().getFontRenderer().getStringWidth(text)).getX(), getPosition().getY(), 0);
-			GlStateManager.glVertex3f(getPosition().shiftX(getScreen().getFontRenderer().getStringWidth(text)).getX(), getPosition().getY() + (height - 1), 0);
+			GlStateManager.glVertex3f(getPosition().shiftX((int) (getScreen().getFontRenderer().getStringWidth(text) * textScale) + 1).getX(), getPosition().getY(), 0);
+			GlStateManager.glVertex3f(getPosition().shiftX((int) (getScreen().getFontRenderer().getStringWidth(text) * textScale) + 1).getX(), (int) (getPosition().getY() + (height - 1) * textScale), 0);
 			GlStateManager.glEnd();
 		}
 
 		GlStateManager.enableTexture2D();
 		GlStateManager.disableBlend();
-		this.drawString(getFontRenderer(), text, getPosition().getX(), getPosition().getY(), GuiUtils.toHex(getTheme().TEXT_FIELD_TEXT));
+
+		GlStateManager.translate(getPosition().getX(), getPosition().getY(), 0);
+		GlStateManager.scale(textScale, textScale, 0);
+		GlStateManager.translate(-getPosition().getX(), -getPosition().getY(), 0);
+
+		drawString(getFontRenderer(), text, getPosition().getX(), getPosition().getY(), GuiUtils.toHex(getTheme().TEXT_FIELD_TEXT));
 	}
 
 	@Override
@@ -82,6 +89,10 @@ public class ScreenTextField extends ScreenComponent {
 
 	public void clearText() {
 		text = "";
+	}
+
+	public void setTextScale(float scale) {
+		textScale = scale;
 	}
 
 	@Override

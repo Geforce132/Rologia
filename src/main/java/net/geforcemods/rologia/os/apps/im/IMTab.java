@@ -11,17 +11,17 @@ import net.minecraft.client.renderer.GlStateManager;
 public class IMTab {
 	
 	private Position position;
-	public String destinationPlayerName;
-	private ArrayList<String> messages = new ArrayList<String>();
+	public String sender;
+	private ArrayList<IMMessage> messages = new ArrayList<IMMessage>();
 	
 	public IMTab(Position location, String name) {
 		position = location;
-		destinationPlayerName = name;
+		sender = name;
 	}
 	
 	public void drawTab(Screen currentScreen) {
-		GuiUtils.drawHollowRect(position, currentScreen.getFontRenderer().getStringWidth(destinationPlayerName) + 1, 10, Colors.RED.color);
-		currentScreen.getFontRenderer().drawString(destinationPlayerName, position.getX() + 1, position.getY() + 1, Colors.GREEN.hexValue);
+		GuiUtils.drawHollowRect(position, currentScreen.getFontRenderer().getStringWidth(sender) + 1, 10, Colors.RED.color);
+		currentScreen.getFontRenderer().drawString(sender, position.getX() + 1, position.getY() + 1, Colors.GREEN.hexValue);
 
 		for(int i = 0; i < messages.size(); i++)
 			drawMessage(currentScreen, i);
@@ -29,21 +29,30 @@ public class IMTab {
 
 	private void drawMessage(Screen screen, int index) {
 		int x = position.getX();
-		int y = position.shiftY(20).getY() + (index * 7);
+		int y = position.shiftY(20 + getPreviousMessageHeights(index)).getY() + (index * 2);
 
 		GlStateManager.pushMatrix();
 
 		GlStateManager.translate(x, y, 0);
-		GlStateManager.scale(.6F, .6F, 0);
+		GlStateManager.scale(AppIM.TEXT_SCALE, AppIM.TEXT_SCALE, 0);
 		GlStateManager.translate(-x, -y, 0);
 
-		screen.getFontRenderer().drawString(messages.get(index), x, y, Colors.GREEN.hexValue);
+		screen.getFontRenderer().drawSplitString(messages.get(index).getMessageWithSenderPrefix(), x, y, (int) (Screen.WATCH_SCREEN_X_SIZE / AppIM.TEXT_SCALE), Colors.DARK_GREEN.hexValue);
 
 		GlStateManager.popMatrix();
 	}
 
+	private int getPreviousMessageHeights(int index) {
+		int height = 0;
+
+		for(int i = 0; i < index; i++)
+			height += messages.get(i).getMessageHeight(true);
+
+		return height;
+	}
+
 	public void addMessage(String message) {
-		messages.add(message);
+		messages.add(new IMMessage(this, message));
 	}
 
 }

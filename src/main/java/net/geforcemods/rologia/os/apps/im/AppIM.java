@@ -12,6 +12,7 @@ import net.geforcemods.rologia.os.gui.components.ScreenButton;
 import net.geforcemods.rologia.os.gui.components.ScreenComponent;
 import net.geforcemods.rologia.os.gui.components.text.ScreenTextField;
 import net.geforcemods.rologia.os.gui.screens.Screen;
+import net.geforcemods.rologia.os.gui.utils.Colors;
 import net.geforcemods.rologia.os.gui.utils.GuiUtils;
 import net.geforcemods.rologia.os.imc.IMCManager;
 import net.geforcemods.rologia.os.misc.Position;
@@ -23,6 +24,8 @@ public class AppIM extends App {
 	public static final String ID = "im";
 	public static final String NAME = "IM Chat";
 	public static final String VERSION = "1.0.0";
+
+	public static final float TEXT_SCALE = .6F;
 
 	private ScreenTextField textField = new ScreenTextField(getOS(), 40, 10);
 	private ScreenButton sendButton = new ScreenButton(getOS(), "Send");
@@ -36,13 +39,14 @@ public class AppIM extends App {
 	@Override
 	public void initializeApp() {
 		textField.centerPosition(-15, 55);
+		textField.setTextScale(TEXT_SCALE);
 		sendButton.centerPosition(25, 55);
 		addComponent(textField);
 		addComponent(sendButton);
 
 		if(tabs.size() == 0) {
 			//tabs.add(new IMTab(new Position(10, 10), "+"));
-			tabs.add(new IMTab(getOS().getCurrentScreen().getPosition(), "Geforce"));
+			//tabs.add(new IMTab(getOS().getCurrentScreen().getPosition(), "Geforce"));
 		}
 	}
 
@@ -58,7 +62,7 @@ public class AppIM extends App {
 
 	@Override
 	public void drawApp(Screen currentScreen) {
-		GuiUtils.drawFilledRect(currentScreen.getPosition(), Screen.WATCH_SCREEN_X_SIZE, Screen.WATCH_SCREEN_Y_SIZE, getOS().getTheme().IM_BACKGROUND);
+		GuiUtils.drawFilledRect(currentScreen.getPosition(), Screen.WATCH_SCREEN_X_SIZE, Screen.WATCH_SCREEN_Y_SIZE, Colors.GRAY.color);
 
 		for(IMTab tab : tabs)
 			tab.drawTab(currentScreen);
@@ -82,9 +86,19 @@ public class AppIM extends App {
 	}
 
 	private void addMessageToTab(String sender, String message) {
+		boolean addedMessage = false;
+
 		for(IMTab tab : tabs) {
-			if(tab.destinationPlayerName.matches(sender))
-				tab.addMessage("<" + sender + "> " + message);
+			if(tab.sender.matches(sender)) {
+				tab.addMessage(message);
+				addedMessage = true;
+			}
+		}
+
+		if(!addedMessage) {
+			IMTab tab = new IMTab(getOS().getCurrentScreen().getPosition(), sender);
+			tab.addMessage(message);
+			tabs.add(tab);
 		}
 	}
 
