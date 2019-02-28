@@ -40,7 +40,7 @@ public class PlayerUtils {
 			{
 				EntityPlayer tempPlayer = (EntityPlayer) iterator.next();
 				
-				if(tempPlayer.getName().matches(par1))
+				if(tempPlayer.getName().equals(par1))
 					return tempPlayer;
 			}
 
@@ -55,7 +55,7 @@ public class PlayerUtils {
 			{
 				EntityPlayer tempPlayer = (EntityPlayer) iterator.next();
 
-				if(tempPlayer.getName().matches(par1))
+				if(tempPlayer.getName().equals(par1))
 					return tempPlayer;
 			}
 
@@ -80,7 +80,7 @@ public class PlayerUtils {
 			{
 				EntityPlayer player = Minecraft.getMinecraft().world.playerEntities.get(i);
 
-				if(player != null && player.getName().matches(par1))
+				if(player != null && player.getName().equals(par1))
 					return true;
 			}
 

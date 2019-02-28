@@ -1,37 +1,33 @@
 package net.geforcemods.rologia.os.imc;
 
-import org.apache.commons.lang3.StringUtils;
+import java.util.logging.Level;
 
 import net.geforcemods.rologia.Rologia;
-import net.geforcemods.rologia.events.RologiaEventHandler;
 import net.geforcemods.rologia.network.packets.PacketSSendRologiaMessage;
 import net.geforcemods.rologia.os.RologiaOS;
-import net.geforcemods.rologia.os.apps.events.AppEventReceiveMessage;
 
 public class IMCManager {
 	
 	public static final String IMC = "imc";
 	public static final String IM = "im";
 	
-	private static final String SEPARATOR = "$";
+	public static final String SEPARATOR = "$";
 
-	private RologiaOS os;
-	
-	public IMCManager(RologiaOS OS) {
-		os = OS;
-	}
-
-	public void handleRologiaMessage(String sender, String text) {
-		String type = StringUtils.substringBefore(text, SEPARATOR);
-		String message = StringUtils.substringAfter(text, SEPARATOR);
-
-		System.out.printf("received %s message from %s: %s\n", type, sender, message);
-
-		RologiaEventHandler.postRologiaEvent(new AppEventReceiveMessage(sender, type, message));
+	public static void sendMessage(String destinationPlayerName, String key, String body) {
+		Rologia.network.sendToServer(new PacketSSendRologiaMessage(destinationPlayerName, key, body));
 	}
 	
-	public void sendRologiaMessage(String type, String message) {
-		Rologia.network.sendToServer(new PacketSSendRologiaMessage(os.getUser().getName(), type + SEPARATOR + message));
+	@SuppressWarnings("static-access")
+	public void registerMessageHandler(String classPath) {
+		try {
+			Class<?> handlerClass = Class.forName(classPath);
+			IRologiaMessageHandler handler = (IRologiaMessageHandler) handlerClass.newInstance();
+			Rologia.instance.serverProxy.registerMessageHandler(handler);
+			RologiaOS.LOGGER.log(Level.INFO, "Registering " + classPath + "...");
+		}
+	    catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
+			RologiaOS.LOGGER.log(Level.WARNING, "Registration of " + classPath + " failed!");
+			e.printStackTrace();
+		}
 	}
-	
 }

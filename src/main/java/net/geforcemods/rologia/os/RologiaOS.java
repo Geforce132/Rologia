@@ -82,7 +82,7 @@ public class RologiaOS {
 	private ArrayList<Notification> notifications = new ArrayList<Notification>();
 
 	private InputManager inputManager = new InputManager(this);
-	private IMCManager imcManager = new IMCManager(this);
+	private IMCManager imcManager = new IMCManager();
 
 	private HashMap<String, Theme> themes = new HashMap<String, Theme>();
 	private Theme currentTheme;

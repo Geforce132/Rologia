@@ -43,11 +43,6 @@ public class AppIM extends App {
 		sendButton.centerPosition(25, 55);
 		addComponent(textField);
 		addComponent(sendButton);
-
-		if(tabs.size() == 0) {
-			//tabs.add(new IMTab(new Position(10, 10), "+"));
-			//tabs.add(new IMTab(getOS().getCurrentScreen().getPosition(), "Geforce"));
-		}
 	}
 
 	@Override
@@ -71,7 +66,7 @@ public class AppIM extends App {
 	@Override
 	public void onComponentClicked(ScreenComponent component, Position mousePos, int mouseButtonClicked) {
 		if(component == sendButton) {
-			getOS().getIMCManager().sendRologiaMessage(IMCManager.IM, textField.getText());
+			IMCManager.sendMessage(getOS().getUser().getName(), IMCManager.IM, textField.getText());
 			textField.clearText();
 		}
 	}
@@ -96,7 +91,7 @@ public class AppIM extends App {
 		}
 
 		if(!addedMessage) {
-			IMTab tab = new IMTab(getOS().getCurrentScreen().getPosition(), sender);
+			IMTab tab = new IMTab(getOS().getCurrentScreen().getPosition().shiftY(getOS().getCurrentScreen().getStatusBar().getHeight()), sender);
 			tab.addMessage(message);
 			tabs.add(tab);
 		}

@@ -8,6 +8,7 @@ import net.geforcemods.rologia.item.ItemRologia;
 import net.geforcemods.rologia.network.ServerProxy;
 import net.geforcemods.rologia.network.packets.PacketCSendRologiaMessage;
 import net.geforcemods.rologia.network.packets.PacketSSendRologiaMessage;
+import net.geforcemods.rologia.os.imc.IMCManager;
 import net.geforcemods.rologia.os.resources.ResourceLoader;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -18,6 +19,9 @@ import net.minecraftforge.fml.common.Mod.Instance;
 import net.minecraftforge.fml.common.ModMetadata;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLInterModComms;
+import net.minecraftforge.fml.common.event.FMLInterModComms.IMCEvent;
+import net.minecraftforge.fml.common.event.FMLInterModComms.IMCMessage;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
@@ -41,6 +45,7 @@ public class Rologia {
 	public static SimpleNetworkWrapper network;
 	public static RologiaEventHandler eventHandler = new RologiaEventHandler();
 	private GuiHandler guiHandler = new GuiHandler();
+	private IMCManager imcManager = new IMCManager();
 
 	public static Item smartwatch;
 	
@@ -69,11 +74,20 @@ public class Rologia {
 		NetworkRegistry.INSTANCE.registerGuiHandler(this, guiHandler);
 
 		serverProxy.setupProxy();
+		FMLInterModComms.sendMessage("rologia", "register", "net.geforcemods.rologia.MessageHandler");
 	}
 	
 	@EventHandler
 	public void postInit(FMLPostInitializationEvent event) {
 		MinecraftForge.EVENT_BUS.register(eventHandler);
+	}
+
+	@EventHandler
+	public void processIMCMessages(IMCEvent event) {
+		for(IMCMessage message : event.getMessages()) {
+			if(message.key.equals("register") && message.isStringMessage())
+				imcManager.registerMessageHandler(message.getStringValue());
+		}
 	}
 
 }

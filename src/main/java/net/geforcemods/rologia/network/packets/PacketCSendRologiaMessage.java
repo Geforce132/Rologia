@@ -2,6 +2,7 @@ package net.geforcemods.rologia.network.packets;
 
 import io.netty.buffer.ByteBuf;
 import net.geforcemods.rologia.Rologia;
+import net.geforcemods.rologia.os.imc.IRologiaMessageHandler;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -11,28 +12,28 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class PacketCSendRologiaMessage implements IMessage {
 
-	private String sender;
-	private String message;
+	private String key;
+	private String body;
 
 	public PacketCSendRologiaMessage() {
 
 	}
 
-	public PacketCSendRologiaMessage(String sender, String message) {
-		this.sender = sender;
-		this.message = message;
+	public PacketCSendRologiaMessage(String key, String body) {
+		this.key = key;
+		this.body = body;
 	}
 
 	@Override
 	public void fromBytes(ByteBuf buf) {
-		sender = ByteBufUtils.readUTF8String(buf);
-		message = ByteBufUtils.readUTF8String(buf);
+		key = ByteBufUtils.readUTF8String(buf);
+		body = ByteBufUtils.readUTF8String(buf);
 	}
 
 	@Override
 	public void toBytes(ByteBuf buf) {
-		ByteBufUtils.writeUTF8String(buf, sender);
-		ByteBufUtils.writeUTF8String(buf, message);
+		ByteBufUtils.writeUTF8String(buf, key);
+		ByteBufUtils.writeUTF8String(buf, body);
 	}
 
 	public static class Handler implements IMessageHandler<PacketCSendRologiaMessage, IMessage> {
@@ -40,7 +41,9 @@ public class PacketCSendRologiaMessage implements IMessage {
 		@Override
 		@SideOnly(Side.CLIENT)
 		public IMessage onMessage(PacketCSendRologiaMessage packet, MessageContext ctx) {
-			Rologia.serverProxy.getRologiaInstance().getIMCManager().handleRologiaMessage(packet.sender, packet.message);
+			for(IRologiaMessageHandler handler : Rologia.instance.serverProxy.getHandlers())
+				handler.handleMessage(packet.key, packet.body);
+
 			return null;
 		}
 
