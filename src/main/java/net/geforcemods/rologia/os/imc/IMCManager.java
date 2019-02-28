@@ -5,6 +5,8 @@ import java.util.logging.Level;
 import net.geforcemods.rologia.Rologia;
 import net.geforcemods.rologia.network.packets.PacketSSendRologiaMessage;
 import net.geforcemods.rologia.os.RologiaOS;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.relauncher.Side;
 
 public class IMCManager {
 	
@@ -22,8 +24,11 @@ public class IMCManager {
 		try {
 			Class<?> handlerClass = Class.forName(classPath);
 			IRologiaMessageHandler handler = (IRologiaMessageHandler) handlerClass.newInstance();
-			Rologia.instance.serverProxy.registerMessageHandler(handler);
-			RologiaOS.LOGGER.log(Level.INFO, "Registering " + classPath + "...");
+
+			if(FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT) {
+				Rologia.instance.serverProxy.registerMessageHandler(handler);
+				RologiaOS.LOGGER.log(Level.INFO, "Registering " + classPath + "...");
+			}
 		}
 	    catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
 			RologiaOS.LOGGER.log(Level.WARNING, "Registration of " + classPath + " failed!");

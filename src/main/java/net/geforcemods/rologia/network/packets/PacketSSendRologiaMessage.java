@@ -46,7 +46,7 @@ public class PacketSSendRologiaMessage implements IMessage {
 		public IMessage onMessage(PacketSSendRologiaMessage packet, MessageContext ctx) {
 			if(PlayerUtils.isPlayerOnline(packet.destinationPlayer)) {
 				for(IRologiaMessageHandler handler : Rologia.instance.serverProxy.getHandlers())
-					handler.handleMessage(packet.key, packet.body);
+					handler.handleMessage(null, ctx.getServerHandler().player.world, ctx.getServerHandler().player, packet.key, packet.body);
 
 				Rologia.network.sendTo(new PacketCSendRologiaMessage(packet.key, packet.body), (EntityPlayerMP) PlayerUtils.getPlayerFromName(packet.destinationPlayer));
 			}

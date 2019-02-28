@@ -13,6 +13,7 @@ public class ServerProxy {
 
 	public void setupProxy() {}
 
+	@SideOnly(Side.CLIENT)
 	public RologiaOS getRologiaInstance() {
 		return null;
 	}

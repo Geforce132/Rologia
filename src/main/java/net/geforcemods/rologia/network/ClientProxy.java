@@ -35,6 +35,8 @@ public class ClientProxy extends ServerProxy {
 		return messageHandlers;
 	}
 
+	@Override
+	@SideOnly(Side.CLIENT)
 	public void setRologiaInstance(RologiaOS rologia) {
 		instance = rologia;
 	}

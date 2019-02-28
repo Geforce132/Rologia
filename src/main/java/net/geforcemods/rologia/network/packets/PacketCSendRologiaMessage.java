@@ -3,6 +3,7 @@ package net.geforcemods.rologia.network.packets;
 import io.netty.buffer.ByteBuf;
 import net.geforcemods.rologia.Rologia;
 import net.geforcemods.rologia.os.imc.IRologiaMessageHandler;
+import net.minecraft.client.Minecraft;
 import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
@@ -42,7 +43,7 @@ public class PacketCSendRologiaMessage implements IMessage {
 		@SideOnly(Side.CLIENT)
 		public IMessage onMessage(PacketCSendRologiaMessage packet, MessageContext ctx) {
 			for(IRologiaMessageHandler handler : Rologia.instance.serverProxy.getHandlers())
-				handler.handleMessage(packet.key, packet.body);
+				handler.handleMessage(Rologia.instance.serverProxy.getRologiaInstance(), Minecraft.getMinecraft().world, Minecraft.getMinecraft().player, packet.key, packet.body);
 
 			return null;
 		}
