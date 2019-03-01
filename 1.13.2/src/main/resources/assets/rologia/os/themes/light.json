@@ -1,0 +1,117 @@
+{
+    "THEME_NAME": "light",
+    "BACKGROUND_OVERLAY": {
+      "red": 0,
+      "green": 0,
+      "blue": 0,
+      "alpha": 1
+    },
+    "DEBUG_TEXT": {
+      "red": 0,
+      "green": 217,
+      "blue": 3,
+      "alpha": 1
+    },
+    "DEBUG_TEXT_HOVERING": {
+      "red": 8,
+      "green": 122,
+      "blue": 35,
+      "alpha": 1
+    },
+    "BUTTON_OUTLINE": {
+      "red": 0,
+      "green": 0,
+      "blue": 255,
+      "alpha": 1
+    },
+    "BUTTON_INTERIOR": {
+      "red": 0,
+      "green": 0,
+      "blue": 255,
+      "alpha": 1
+    },
+    "BUTTON_INTERIOR_HOVERING": {
+      "red": 0,
+      "green": 0,
+      "blue": 160,
+      "alpha": 255
+    },
+    "BUTTON_TEXT": {
+      "red": 0,
+      "green": 217,
+      "blue": 3,
+      "alpha": 1
+    },
+    "SETTINGS_TEXT": {
+      "red": 0,
+      "green": 217,
+      "blue": 3,
+      "alpha": 1
+    },
+    "SELECTION_TEXT": {
+      "red": 0,
+      "green": 217,
+      "blue": 3,
+      "alpha": 1
+    },
+    "TEXT_FIELD_LINE": {
+      "red": 255,
+      "green": 0,
+      "blue": 0,
+      "alpha": 1
+    },
+    "TEXT_FIELD_TEXT": {
+      "red": 0,
+      "green": 217,
+      "blue": 3,
+      "alpha": 1
+    },
+    "APP_BAR_HOVERING_TEXT": {
+      "red": 245,
+      "green": 245,
+      "blue": 245,
+      "alpha": 1
+    },
+    "STATUS_BAR": {
+      "red": 0,
+      "green": 0,
+      "blue": 0,
+      "alpha": 1
+    },
+    "STATUS_BAR_CLOCK": {
+      "red": 15,
+      "green": 150,
+      "blue": 190,
+      "alpha": 1
+    },
+    "INPUT_TEXT_PROMPT": {
+      "red": 0,
+      "green": 217,
+      "blue": 3,
+      "alpha": 1
+    },
+    "INPUT_YES_NO_PROMPT": {
+      "red": 0,
+      "green": 217,
+      "blue": 3,
+      "alpha": 1
+    },
+    "NOTIFICATION_TITLE": {
+      "red": 8,
+      "green": 122,
+      "blue": 35,
+      "alpha": 1
+    },
+    "NOTIFICATION_BODY": {
+      "red": 0,
+      "green": 217,
+      "blue": 3,
+      "alpha": 1
+    },
+    "IM_BACKGROUND": {
+      "red": 255,
+      "green": 255,
+      "blue": 255,
+      "alpha": 1
+    }
+}
