@@ -23,15 +23,10 @@ import net.geforcemods.rologia.os.gui.components.ComponentDeserializer;
 import net.geforcemods.rologia.os.gui.components.ScreenComponent;
 import net.geforcemods.rologia.os.gui.utils.Theme;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.IResource;
+import net.minecraft.resources.IResource;
 import net.minecraft.util.ResourceLocation;
 
 public class ResourceLoader {
-	
-	/**
-	 * Minecraft's root folder. MC_DIR gets set during {@link Rologia}.preInit()
-	 */
-	public static File MC_DIR;
 	
 	public static final String TEXTURE_FOLDER_PATH = Rologia.MOD_ID + ":textures/gui/watch/";
 	public static final String APPS_FOLDER_PATH = Rologia.MOD_ID + ":os/apps/";
@@ -80,16 +75,7 @@ public class ResourceLoader {
 		}
 	}
 	*/
-	
-	public static File getRologiaFolder() {
-		File folder = new File(MC_DIR, "rologia/");
-		
-		if(!folder.exists())
-			folder.mkdir();
-		
-		return folder;
-	}
-	
+
 	public static void loadApps(RologiaOS os) throws IOException {
 		JsonObject json = loadJsonObject(APPS_FOLDER_PATH + "apps.json");
 
@@ -98,7 +84,7 @@ public class ResourceLoader {
 			appsToLoad.add(json.get("apps").getAsJsonArray().get(i).getAsString());
 
 		for(String appToLoad : appsToLoad) {
-			IResource appJson = Minecraft.getMinecraft().getResourceManager().getResource(new ResourceLocation(APPS_FOLDER_PATH + appToLoad));
+			IResource appJson = Minecraft.getInstance().getResourceManager().getResource(new ResourceLocation(APPS_FOLDER_PATH + appToLoad));
 			InputStream in = appJson.getInputStream();
 			BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 
@@ -122,7 +108,7 @@ public class ResourceLoader {
 			themesToLoad.add(themes.get("themes").getAsJsonArray().get(i).getAsString());
 
 		for(String themeToLoad : themesToLoad) {
-			IResource appJson = Minecraft.getMinecraft().getResourceManager().getResource(new ResourceLocation(OS_FOLDER_PATH + "themes/" + themeToLoad));
+			IResource appJson = Minecraft.getInstance().getResourceManager().getResource(new ResourceLocation(OS_FOLDER_PATH + "themes/" + themeToLoad));
 			InputStream in = appJson.getInputStream();
 			BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 
@@ -143,7 +129,7 @@ public class ResourceLoader {
 	}
 
 	public static JsonObject loadJsonObject(String filename) throws IOException {
-		IResource themesJson = Minecraft.getMinecraft().getResourceManager().getResource(new ResourceLocation(filename));
+		IResource themesJson = Minecraft.getInstance().getResourceManager().getResource(new ResourceLocation(filename));
 		JsonElement je = new Gson().fromJson(new BufferedReader(new InputStreamReader(themesJson.getInputStream())), JsonElement.class);
 		return je.getAsJsonObject();
 	}

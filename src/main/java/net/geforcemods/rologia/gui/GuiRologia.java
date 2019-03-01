@@ -1,9 +1,6 @@
 package net.geforcemods.rologia.gui;
 
-import java.io.IOException;
 import java.util.logging.Level;
-
-import org.lwjgl.input.Keyboard;
 
 import net.geforcemods.rologia.item.ItemRologia;
 import net.geforcemods.rologia.os.RologiaOS;
@@ -13,10 +10,11 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fml.client.config.GuiButtonExt;
 
-@SideOnly(Side.CLIENT)
+@OnlyIn(Dist.CLIENT)
 public class GuiRologia extends GuiScreen {
 	
 	private static final ResourceLocation SCREEN_EDGE_TEXTURE = new ResourceLocation(ResourceLoader.TEXTURE_FOLDER_PATH + "watch_screen_background.png");
@@ -37,25 +35,59 @@ public class GuiRologia extends GuiScreen {
 	@Override
 	public void initGui() {
 		super.initGui();
-		Keyboard.enableRepeatEvents(true);
+		mc.keyboardListener.enableRepeatEvents(true);
 		rologia.openSmartwatchGUI(player, (width - Screen.WATCH_SCREEN_X_SIZE) / 2, (height - Screen.WATCH_SCREEN_Y_SIZE) / 2);
 
 		if(RologiaOS.debugMode) {
-			debugButtons[0] = new GuiButton(0, this.width - 90, 10, 20, 20, "off");
-			debugButtons[1] = new GuiIconButton(1, this.width - 65, 10, 20, 20, 0, 0, 1, 1, DEBUG_ICONS);
-			debugButtons[2] = new GuiIconButton(2, this.width - 40, 10, 20, 20, 20, 0, 1, 1, DEBUG_ICONS);
+			debugButtons[0] = new GuiButtonExt(0, this.width - 90, 10, 20, 20, "off") {
+				
+				@Override
+				public void onClick(double mouseX, double mouseY) {
+					this.enabled = false;
+
+					for(int i = 0; i < debugButtons.length; i++) {
+						if(debugButtons[i].id != this.id)
+							debugButtons[i].enabled = true;
+					}
+				}
+			};
+			debugButtons[1] = new GuiIconButton(1, this.width - 65, 10, 20, 20, 0, 0, 1, 1, DEBUG_ICONS) {
+				
+				@Override
+				public void onClick(double mouseX, double mouseY) {
+					this.enabled = false;
+
+					for(int i = 0; i < debugButtons.length; i++) {
+						if(debugButtons[i].id != this.id)
+							debugButtons[i].enabled = true;
+					}
+				}
+			};
+
+			debugButtons[2] = new GuiIconButton(2, this.width - 40, 10, 20, 20, 20, 0, 1, 1, DEBUG_ICONS) {
+				
+				@Override
+				public void onClick(double mouseX, double mouseY) {
+					this.enabled = false;
+
+					for(int i = 0; i < debugButtons.length; i++) {
+						if(debugButtons[i].id != this.id)
+							debugButtons[i].enabled = true;
+					}
+				}
+			};
 
 			for(int i = 0; i < debugButtons.length; i++)
-				buttonList.add(debugButtons[i]);
+				buttons.add(debugButtons[i]);
 
 			debugButtons[0].enabled = false;
 		}
 	}
 	
 	@Override
-	public void updateScreen() {
+	public void tick() {
 		try {
-		rologia.update();
+			rologia.update();
 		}
 		catch(Exception e) {
 			RologiaOS.LOGGER.log(Level.WARNING, "A problem has occured while updating a Screen!", e);
@@ -63,8 +95,8 @@ public class GuiRologia extends GuiScreen {
 	}
 	
 	@Override
-	public void drawScreen(int mouseX, int mouseY, float partialTicks) {
-		super.drawScreen(mouseX, mouseY, partialTicks);
+	public void render(int mouseX, int mouseY, float partialTicks) {
+		super.render(mouseX, mouseY, partialTicks);
 		mc.getTextureManager().bindTexture(SCREEN_EDGE_TEXTURE);
 		int startX = (width / 2) - (Screen.WATCH_BACKGROUND_X_SIZE / 2);
 		int startY = (height / 2) - (Screen.WATCH_BACKGROUND_Y_SIZE / 2);
@@ -84,27 +116,19 @@ public class GuiRologia extends GuiScreen {
 				rologia.getCurrentScreen().drawComponentInfo(width - 150, height);
 		}
 	}
-	
-	@Override
-	protected void actionPerformed(GuiButton clickedButton) {
-		clickedButton.enabled = false;
-
-		for(int i = 0; i < debugButtons.length; i++) {
-			if(debugButtons[i].id != clickedButton.id)
-				debugButtons[i].enabled = true;
-		}
-	}
 
 	@Override
-	public void mouseClicked(int mouseX, int mouseY, int buttonClicked) throws IOException {
-		super.mouseClicked(mouseX, mouseY, buttonClicked);
+	public boolean mouseClicked(double mouseX, double mouseY, int buttonClicked) {
 		rologia.getInputManager().handleMouseClick(mouseX, mouseY, buttonClicked);
+		
+		return super.mouseClicked(mouseX, mouseY, buttonClicked);
 	}
 	
 	@Override
-	protected void keyTyped(char character, int keyCode) throws IOException {
-		super.keyTyped(character, keyCode);
+	public boolean charTyped(char character, int keyCode) {
 		rologia.getInputManager().handleKeyTyped(character, keyCode);
+		
+		return super.charTyped(character, keyCode);
 	}
 	
 	@Override
@@ -114,7 +138,7 @@ public class GuiRologia extends GuiScreen {
 		if(rologia.getCurrentScreen() != null)
 			rologia.getCurrentScreen().screenClosed();
 
-		Keyboard.enableRepeatEvents(false);
+		mc.keyboardListener.enableRepeatEvents(false);
 	}
 
 	@Override

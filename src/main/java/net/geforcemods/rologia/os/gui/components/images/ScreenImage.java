@@ -1,12 +1,11 @@
 package net.geforcemods.rologia.os.gui.components.images;
 
-import java.awt.image.BufferedImage;
-
 import net.geforcemods.rologia.os.RologiaOS;
 import net.geforcemods.rologia.os.gui.components.ScreenComponent;
 import net.geforcemods.rologia.os.misc.Position;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.DynamicTexture;
+import net.minecraft.client.renderer.texture.NativeImage;
 import net.minecraft.util.ResourceLocation;
 
 public class ScreenImage extends ScreenComponent {
@@ -29,16 +28,16 @@ public class ScreenImage extends ScreenComponent {
 		imageHeight = height;
 	}
 
-	public ScreenImage(RologiaOS os, BufferedImage image) {
+	public ScreenImage(RologiaOS os, NativeImage image) {
 		super(os);
-		location = Minecraft.getMinecraft().getTextureManager().getDynamicTextureLocation(image.toString(), new DynamicTexture(image));
+		location = Minecraft.getInstance().getTextureManager().getDynamicTextureLocation(image.toString(), new DynamicTexture(image));
 		imageWidth = image.getWidth();
 		imageHeight = image.getHeight();
 	}
 	
-	public ScreenImage(RologiaOS os, BufferedImage image, Position pos) {
+	public ScreenImage(RologiaOS os, NativeImage image, Position pos) {
 		super(os, pos);
-		location = Minecraft.getMinecraft().getTextureManager().getDynamicTextureLocation(image.toString(), new DynamicTexture(image));
+		location = Minecraft.getInstance().getTextureManager().getDynamicTextureLocation(image.toString(), new DynamicTexture(image));
 		imageWidth = image.getWidth();
 		imageHeight = image.getHeight();
 	}

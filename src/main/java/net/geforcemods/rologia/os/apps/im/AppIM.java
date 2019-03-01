@@ -66,7 +66,7 @@ public class AppIM extends App {
 	@Override
 	public void onComponentClicked(ScreenComponent component, Position mousePos, int mouseButtonClicked) {
 		if(component == sendButton) {
-			IMCManager.sendMessage(getOS().getUser().getName(), IMCManager.IM, textField.getText());
+			IMCManager.sendMessage(getOS().getUser().getName().getFormattedText(), IMCManager.IM, textField.getText());
 			textField.clearText();
 		}
 	}

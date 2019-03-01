@@ -35,8 +35,8 @@ public class Notification {
 			if(slotNumber <= 2) {
 				// Render texture
 				GlStateManager.pushMatrix();
-				GlStateManager.color(1, 1, 1, 1);
-				Minecraft.getMinecraft().getTextureManager().bindTexture(NOTIFICATION_BOX);
+				GlStateManager.color4f(1, 1, 1, 1);
+				Minecraft.getInstance().getTextureManager().bindTexture(NOTIFICATION_BOX);
 
 				if(isMouseHoveringOverXButton(screen))
 					screen.drawTexturedModalRect(position.getX(), position.shiftY(7).getY(), 86, 0, 85, 25);
@@ -44,24 +44,24 @@ public class Notification {
 					screen.drawTexturedModalRect(position.getX(), position.shiftY(7).getY(), 0, 0, 85, 25);
 
 				// Draw title string
-				GlStateManager.translate(position.getX(), 10 + position.getY(), 0);
-				GlStateManager.scale(0.9F, 0.9F, 0);
-				GlStateManager.translate(-position.getX(), -(10 + position.getY()), 0);
-				screen.drawString(Minecraft.getMinecraft().fontRenderer, notificationTitle, position.shiftX(22).getX(), 10 + position.getY(), GuiUtils.toHex(screen.getOS().getTheme().NOTIFICATION_TITLE));
+				GlStateManager.translated(position.getX(), 10 + position.getY(), 0);
+				GlStateManager.scalef(0.9F, 0.9F, 0);
+				GlStateManager.translated(-position.getX(), -(10 + position.getY()), 0);
+				screen.drawString(Minecraft.getInstance().fontRenderer, notificationTitle, position.shiftX(22).getX(), 10 + position.getY(), GuiUtils.toHex(screen.getOS().getTheme().NOTIFICATION_TITLE));
 
 				// Draw body string
-				GlStateManager.translate(position.getX(), 22 + position.getY(), 0);
-				GlStateManager.scale(0.75F, 0.75F, 0);
-				GlStateManager.translate(-position.getX(), -(22 + position.getY()), 0);
-				screen.drawString(Minecraft.getMinecraft().fontRenderer, notificationBody, position.shiftX(31).getX(), 22 + position.getY(), GuiUtils.toHex(screen.getOS().getTheme().NOTIFICATION_BODY));
+				GlStateManager.translated(position.getX(), 22 + position.getY(), 0);
+				GlStateManager.scalef(0.75F, 0.75F, 0);
+				GlStateManager.translated(-position.getX(), -(22 + position.getY()), 0);
+				screen.drawString(Minecraft.getInstance().fontRenderer, notificationBody, position.shiftX(31).getX(), 22 + position.getY(), GuiUtils.toHex(screen.getOS().getTheme().NOTIFICATION_BODY));
 				GlStateManager.popMatrix();
 
 				// Render icon
 				GlStateManager.pushMatrix();
-				Minecraft.getMinecraft().getTextureManager().bindTexture(NOTIFICATION_ICONS_DARK);
-				GlStateManager.translate(position.getX(), position.getY(), 0);
-				GlStateManager.scale(0.415F, 0.415F, 0);
-				GlStateManager.translate(-position.getX(), -position.getY(), 0);
+				Minecraft.getInstance().getTextureManager().bindTexture(NOTIFICATION_ICONS_DARK);
+				GlStateManager.translated(position.getX(), position.getY(), 0);
+				GlStateManager.scalef(0.415F, 0.415F, 0);
+				GlStateManager.translated(-position.getX(), -position.getY(), 0);
 				screen.drawTexturedModalRect((position.getX() + 4), position.getY() + (7) + 22, -1, 0, 40, 33);
 				GlStateManager.popMatrix();
 
@@ -70,12 +70,12 @@ public class Notification {
 		else {
 			// If the status bar hasn't been clicked
 			GlStateManager.pushMatrix();
-			Minecraft.getMinecraft().getTextureManager().bindTexture(NOTIFICATION_ICONS_LIGHT);
+			Minecraft.getInstance().getTextureManager().bindTexture(NOTIFICATION_ICONS_LIGHT);
 		
-			GlStateManager.color(1, 1, 1, 1);
-			GlStateManager.translate(position.getX(), position.getY(), 0);
-			GlStateManager.scale(0.2F, 0.2F, 0);
-			GlStateManager.translate(-position.getX(), -position.getY(), 0);
+			GlStateManager.color4f(1, 1, 1, 1);
+			GlStateManager.translated(position.getX(), position.getY(), 0);
+			GlStateManager.scalef(0.2F, 0.2F, 0);
+			GlStateManager.translated(-position.getX(), -position.getY(), 0);
 			screen.drawTexturedModalRect(position.getX(), position.getY(), -1, 0, 38, 33);
 			GlStateManager.popMatrix();
 		}

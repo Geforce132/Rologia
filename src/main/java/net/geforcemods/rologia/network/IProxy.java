@@ -7,24 +7,20 @@ import net.geforcemods.rologia.os.imc.IRologiaMessageHandler;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class ServerProxy implements IProxy {
-
-	public void setupProxy() {}
-
-	@OnlyIn(Dist.CLIENT)
-	public RologiaOS getRologiaInstance() {
-		return null;
-	}
+public interface IProxy {
+	
+	public void setupProxy();
 
 	@OnlyIn(Dist.CLIENT)
-	public void registerMessageHandler(IRologiaMessageHandler handler) {}
+	public RologiaOS getRologiaInstance();
 
 	@OnlyIn(Dist.CLIENT)
-	public void setRologiaInstance(RologiaOS rologia) {}
+	public void registerMessageHandler(IRologiaMessageHandler handler);
 
 	@OnlyIn(Dist.CLIENT)
-	public ArrayList<IRologiaMessageHandler> getHandlers() {
-		return null;
-	}
+	public void setRologiaInstance(RologiaOS rologia);
+
+	@OnlyIn(Dist.CLIENT)
+	public ArrayList<IRologiaMessageHandler> getHandlers();
 
 }

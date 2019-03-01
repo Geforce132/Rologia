@@ -34,26 +34,26 @@ public class ScreenTextField extends ScreenComponent {
 		GlStateManager.enableBlend();
 		GlStateManager.disableTexture2D();
         
-		GlStateManager.glBegin(GL11.GL_LINES);
-		GlStateManager.color(255, 0, 0);
-		GlStateManager.glVertex3f(getPosition().getX(), getPosition().getY() + height, 0);
-		GlStateManager.glVertex3f(getPosition().getX() + width, getPosition().getY() + height, 0);
-		GlStateManager.glEnd();
+		GL11.glBegin(GL11.GL_LINES);
+		GlStateManager.color3f(255, 0, 0);
+		GL11.glVertex3f(getPosition().getX(), getPosition().getY() + height, 0);
+		GL11.glVertex3f(getPosition().getX() + width, getPosition().getY() + height, 0);
+		GL11.glEnd();
 		
 		if(isFocused()) {
-			GlStateManager.glBegin(GL11.GL_LINES);
-			GlStateManager.color(225, 0, 0);
-			GlStateManager.glVertex3f(getPosition().shiftX((int) (getScreen().getFontRenderer().getStringWidth(text) * textScale) + 1).getX(), getPosition().getY(), 0);
-			GlStateManager.glVertex3f(getPosition().shiftX((int) (getScreen().getFontRenderer().getStringWidth(text) * textScale) + 1).getX(), (int) (getPosition().getY() + (height - 1) * textScale), 0);
-			GlStateManager.glEnd();
+			GL11.glBegin(GL11.GL_LINES);
+			GlStateManager.color3f(225, 0, 0);
+			GL11.glVertex3f(getPosition().shiftX((int) (getScreen().getFontRenderer().getStringWidth(text) * textScale) + 1).getX(), getPosition().getY(), 0);
+			GL11.glVertex3f(getPosition().shiftX((int) (getScreen().getFontRenderer().getStringWidth(text) * textScale) + 1).getX(), (int) (getPosition().getY() + (height - 1) * textScale), 0);
+			GL11.glEnd();
 		}
 
 		GlStateManager.enableTexture2D();
 		GlStateManager.disableBlend();
 
-		GlStateManager.translate(getPosition().getX(), getPosition().getY(), 0);
-		GlStateManager.scale(textScale, textScale, 0);
-		GlStateManager.translate(-getPosition().getX(), -getPosition().getY(), 0);
+		GlStateManager.translated(getPosition().getX(), getPosition().getY(), 0);
+		GlStateManager.scalef(textScale, textScale, 0);
+		GlStateManager.translated(-getPosition().getX(), -getPosition().getY(), 0);
 
 		drawString(getFontRenderer(), text, getPosition().getX(), getPosition().getY(), GuiUtils.toHex(getTheme().TEXT_FIELD_TEXT));
 	}

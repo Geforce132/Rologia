@@ -8,7 +8,7 @@ import net.geforcemods.rologia.os.apps.events.AppEvent;
 import net.geforcemods.rologia.os.apps.events.AppEventType;
 import net.geforcemods.rologia.os.gui.screens.Screen;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.loading.FMLLoader;
 
 @AppInfo(id="step_counter", name = "Step Counter", version = "1.0.0")
 public class AppStepCounter extends App {
@@ -31,7 +31,7 @@ public class AppStepCounter extends App {
 	
 	@Override
 	public void onEventPosted(AppEvent event) {
-		System.out.println(getDistanceInMiles(event.getPlayer()) + " | " + FMLCommonHandler.instance().getSide());
+		System.out.println(getDistanceInMiles(event.getPlayer()) + " | " + FMLLoader.getDist());
 	}
 	
 	@Override

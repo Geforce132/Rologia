@@ -1,21 +1,25 @@
 package net.geforcemods.rologia.item;
 
-import net.geforcemods.rologia.Rologia;
+import net.geforcemods.rologia.gui.BaseInteractionObject;
 import net.geforcemods.rologia.gui.GuiHandler;
 import net.geforcemods.rologia.os.RologiaOS;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.network.NetworkHooks;
 
 public class ItemRologia extends Item {
 	
-	@Override
-	public boolean isFull3D(){
-		return true;
+	public static final String NAME = "smart_watch";
+
+	public ItemRologia() {
+		super(new Item.Properties().group(ItemGroup.REDSTONE).maxStackSize(1));
 	}
 
 	@Override
@@ -30,7 +34,7 @@ public class ItemRologia extends Item {
 		if(world.isRemote)
 			return ActionResult.newResult(EnumActionResult.PASS, itemStackIn);
 		else{
-			player.openGui(Rologia.instance, GuiHandler.BOOT_SCREEN_ID, world, (int)player.posX, (int)player.posY, (int)player.posZ);
+			NetworkHooks.openGui((EntityPlayerMP) player, new BaseInteractionObject(GuiHandler.WATCH_SCREEN), null);
 			return ActionResult.newResult(EnumActionResult.PASS, itemStackIn);
 		}
 	}

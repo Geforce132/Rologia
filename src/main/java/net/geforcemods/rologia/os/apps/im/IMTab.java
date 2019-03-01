@@ -33,9 +33,9 @@ public class IMTab {
 
 		GlStateManager.pushMatrix();
 
-		GlStateManager.translate(x, y, 0);
-		GlStateManager.scale(AppIM.TEXT_SCALE, AppIM.TEXT_SCALE, 0);
-		GlStateManager.translate(-x, -y, 0);
+		GlStateManager.translated(x, y, 0);
+		GlStateManager.scalef(AppIM.TEXT_SCALE, AppIM.TEXT_SCALE, 0);
+		GlStateManager.translated(-x, -y, 0);
 
 		screen.getFontRenderer().drawSplitString(messages.get(index).getMessageWithSenderPrefix(), x, y, (int) (Screen.WATCH_SCREEN_X_SIZE / AppIM.TEXT_SCALE), Colors.DARK_GREEN.hexValue);
 

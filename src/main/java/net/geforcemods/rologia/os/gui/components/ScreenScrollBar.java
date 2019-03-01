@@ -18,13 +18,13 @@ public class ScreenScrollBar extends ScreenComponent {
 		GlStateManager.enableBlend();
         GlStateManager.disableTexture2D();
         
-        GlStateManager.glBegin(GL11.GL_QUADS);
-        GlStateManager.color(0, 255, 0, 1);
-        GlStateManager.glVertex3f((float)getPosition().getX(), (float)getPosition().getY() + getHeight(), 0.0F);
-        GlStateManager.glVertex3f((float)getPosition().getX() + getWidth(), (float)getPosition().getY() + getHeight(), 0.0F);
-        GlStateManager.glVertex3f((float)getPosition().getX() + getWidth(), (float)getPosition().getY(), 0.0F);
-        GlStateManager.glVertex3f((float)getPosition().getX(), (float)getPosition().getY(), 0.0F);
-        GlStateManager.glEnd();
+        GL11.glBegin(GL11.GL_QUADS);
+        GlStateManager.color4f(0, 255, 0, 1);
+        GL11.glVertex3f((float)getPosition().getX(), (float)getPosition().getY() + getHeight(), 0.0F);
+        GL11.glVertex3f((float)getPosition().getX() + getWidth(), (float)getPosition().getY() + getHeight(), 0.0F);
+        GL11.glVertex3f((float)getPosition().getX() + getWidth(), (float)getPosition().getY(), 0.0F);
+        GL11.glVertex3f((float)getPosition().getX(), (float)getPosition().getY(), 0.0F);
+        GL11.glEnd();
         
 		GlStateManager.disableBlend();
         GlStateManager.enableTexture2D();

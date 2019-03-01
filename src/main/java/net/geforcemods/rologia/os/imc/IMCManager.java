@@ -3,10 +3,10 @@ package net.geforcemods.rologia.os.imc;
 import java.util.logging.Level;
 
 import net.geforcemods.rologia.Rologia;
-import net.geforcemods.rologia.network.packets.PacketSSendRologiaMessage;
+import net.geforcemods.rologia.network.packets.SSendRologiaMessage;
 import net.geforcemods.rologia.os.RologiaOS;
-import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.fml.loading.FMLLoader;
 
 public class IMCManager {
 	
@@ -16,7 +16,7 @@ public class IMCManager {
 	public static final String SEPARATOR = "$";
 
 	public static void sendMessage(String destinationPlayerName, String key, String body) {
-		Rologia.network.sendToServer(new PacketSSendRologiaMessage(destinationPlayerName, key, body));
+		Rologia.channel.sendToServer(new SSendRologiaMessage(destinationPlayerName, key, body));
 	}
 	
 	@SuppressWarnings("static-access")
@@ -25,7 +25,7 @@ public class IMCManager {
 			Class<?> handlerClass = Class.forName(classPath);
 			IRologiaMessageHandler handler = (IRologiaMessageHandler) handlerClass.newInstance();
 
-			if(FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT) {
+			if(FMLLoader.getDist() == Dist.CLIENT) {
 				Rologia.instance.serverProxy.registerMessageHandler(handler);
 				RologiaOS.LOGGER.log(Level.INFO, "Registering " + classPath + "...");
 			}

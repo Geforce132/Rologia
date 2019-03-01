@@ -1,17 +1,16 @@
 package net.geforcemods.rologia.os.gui.components.images;
 
-import java.awt.image.BufferedImage;
-
 import net.geforcemods.rologia.os.RologiaOS;
 import net.geforcemods.rologia.os.misc.Position;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.texture.NativeImage;
 import net.minecraft.util.ResourceLocation;
 
 public class ScreenRotatingImage extends ScreenImage {
 	
 	private float rotation = 0F;
 
-	public ScreenRotatingImage(RologiaOS os, BufferedImage image, float rotationValue) {
+	public ScreenRotatingImage(RologiaOS os, NativeImage image, float rotationValue) {
 		super(os, image);
 		setRotation(rotationValue);
 	}
@@ -26,7 +25,7 @@ public class ScreenRotatingImage extends ScreenImage {
 		setRotation(rotationValue);
 	}
 
-	public ScreenRotatingImage(RologiaOS os, BufferedImage image, Position pos, float rotationValue) {
+	public ScreenRotatingImage(RologiaOS os, NativeImage image, Position pos, float rotationValue) {
 		super(os, image, pos);
 		setRotation(rotationValue);
 	}
@@ -43,11 +42,11 @@ public class ScreenRotatingImage extends ScreenImage {
 	
 	@Override
 	public void performPrerenderGLFixes() {
-		GlStateManager.translate(getWidth() / 2 + getScreen().getCenteredPositionForComponent(this).getX(), getHeight() / 2 + getScreen().getCenteredPositionForComponent(this).getY(), 0);
-		GlStateManager.rotate(rotation += getRotation(), 0, 0, 1);
-		GlStateManager.translate(-getWidth() / 2 - getScreen().getCenteredPositionForComponent(this).getX(), -getHeight() / 2 - getScreen().getCenteredPositionForComponent(this).getY(), 0);
+		GlStateManager.translated(getWidth() / 2 + getScreen().getCenteredPositionForComponent(this).getX(), getHeight() / 2 + getScreen().getCenteredPositionForComponent(this).getY(), 0);
+		GlStateManager.rotatef(rotation += getRotation(), 0, 0, 1);
+		GlStateManager.translated(-getWidth() / 2 - getScreen().getCenteredPositionForComponent(this).getX(), -getHeight() / 2 - getScreen().getCenteredPositionForComponent(this).getY(), 0);
 		
-		GlStateManager.scale(getScale(), getScale(), 1F);
+		GlStateManager.scalef(getScale(), getScale(), 1F);
 		if(getScale() != 1.0F)
 		{
 			Position pos = getScreen().getCenteredPositionForComponent(this).scalePos(getScale());

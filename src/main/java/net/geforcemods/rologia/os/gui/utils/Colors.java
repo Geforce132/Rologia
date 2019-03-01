@@ -1,7 +1,5 @@
 package net.geforcemods.rologia.os.gui.utils;
 
-import org.lwjgl.util.Color;
-
 /**
  * Simple enum which lists common colors. Allows access to their 
  * {@link Color} instance and hex value.
@@ -9,7 +7,7 @@ import org.lwjgl.util.Color;
  * @author Geforce
  */
 public enum Colors {
-	
+
 	BLACK("black", 0, 0, 0, 1),
 	GRAY("gray", 120, 120, 120, 1),
 	DARK_GRAY("dark_gray", 60, 60, 60, 1),
@@ -30,11 +28,70 @@ public enum Colors {
 	public final String name;
 	public final Color color;
 	public final int hexValue;
-	
+
 	private Colors(String colorName, int R, int G, int B, int A) {
 		name = colorName;
 		color = new Color(R, G, B, A);
 		hexValue = GuiUtils.toHex(color);
 	}
 
+	public static class Color {
+
+		private byte red, green, blue, alpha;
+
+		public Color() {
+			this(0, 0, 0, 255);
+		}
+
+		public Color(int r, int g, int b) {
+			this(r, g, b, 255);
+		}
+
+		public Color(int r, int g, int b, int a) {
+			set(r, g, b, a);
+		}
+
+		public void set(int r, int g, int b, int a) {
+			red = (byte) r;
+			green = (byte) g;
+			blue = (byte) b;
+			alpha = (byte) a;
+		}
+
+		public void set(int r, int g, int b) {
+			set(r, g, b, 255);
+		}
+
+		public int getRed() {
+			return red & 0xFF;
+		}
+
+		public int getGreen() {
+			return green & 0xFF;
+		}
+
+		public int getBlue() {
+			return blue & 0xFF;
+		}
+
+		public int getAlpha() {
+			return alpha & 0xFF;
+		}
+
+		public void setRed(int red) {
+			this.red = (byte) red;
+		}
+
+		public void setGreen(int green) {
+			this.green = (byte) green;
+		}
+
+		public void setBlue(int blue) {
+			this.blue = (byte) blue;
+		}
+
+		public void setAlpha(int alpha) {
+			this.alpha = (byte) alpha;
+		}
+	}
 }

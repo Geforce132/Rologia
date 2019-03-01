@@ -4,14 +4,11 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.command.ICommandSender;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
-import net.minecraft.util.text.TextComponentString;
-import net.minecraft.util.text.TextFormatting;
-import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.fml.loading.FMLLoader;
+import net.minecraftforge.fml.server.ServerLifecycleHooks;
 
 public class PlayerUtils {
 
@@ -31,9 +28,9 @@ public class PlayerUtils {
 	 * Args: playerName.
 	 */
 	public static EntityPlayer getPlayerFromName(String par1) {
-		if(FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT)
+		if(FMLLoader.getDist() == Dist.CLIENT)
 		{
-			List<?> players = Minecraft.getMinecraft().world.playerEntities;
+			List<?> players = Minecraft.getInstance().world.playerEntities;
 			Iterator<?> iterator = players.iterator();
 
 			while(iterator.hasNext())
@@ -48,7 +45,7 @@ public class PlayerUtils {
 		}
 		else
 		{
-			List<?> players = FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().getPlayers();
+			List<?> players = ServerLifecycleHooks.getCurrentServer().getPlayerList().getPlayers();
 			Iterator<?> iterator = players.iterator();
 
 			while(iterator.hasNext())
@@ -74,11 +71,11 @@ public class PlayerUtils {
 	 */
 	public static boolean isPlayerOnline(String par1) {
 
-		if(FMLCommonHandler.instance().getEffectiveSide() == Side.CLIENT)
+		if(FMLLoader.getDist() == Dist.CLIENT)
 		{
-			for(int i = 0; i < Minecraft.getMinecraft().world.playerEntities.size(); i++)
+			for(int i = 0; i < Minecraft.getInstance().world.playerEntities.size(); i++)
 			{
-				EntityPlayer player = Minecraft.getMinecraft().world.playerEntities.get(i);
+				EntityPlayer player = Minecraft.getInstance().world.playerEntities.get(i);
 
 				if(player != null && player.getName().equals(par1))
 					return true;
@@ -87,24 +84,7 @@ public class PlayerUtils {
 			return false;
 		}
 		else
-			return (FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().getPlayerByUsername(par1) != null);
-	}
-
-	public static void sendMessageToPlayer(EntityPlayer player, String prefix, String text, TextFormatting color) {
-		player.sendMessage(new TextComponentString("[" + color + prefix + TextFormatting.WHITE + "] " + text));
-	}
-
-	public static void sendMessageToPlayer(ICommandSender sender, String prefix, String text, TextFormatting color) {
-		sender.sendMessage(new TextComponentString("[" + color + prefix + TextFormatting.WHITE + "] " + text));
-	}
-
-	/**
-	 * Sends the given {@link ICommandSender} a chat message, followed by a link prefixed with a colon. <p>
-	 *
-	 * Args: sender, prefix, text, link, color.
-	 */
-	public static void sendMessageEndingWithLink(ICommandSender sender, String prefix, String text, String link, TextFormatting color) {
-		sender.sendMessage(new TextComponentString("[" + color + prefix + TextFormatting.WHITE + "] " + text + ": ").appendSibling(ForgeHooks.newChatWithLinks(link)));
+			return (ServerLifecycleHooks.getCurrentServer().getPlayerList().getPlayerByUsername(par1) != null);
 	}
 
 	/**
@@ -117,6 +97,22 @@ public class PlayerUtils {
 			return true;
 
 		return (!player.inventory.getCurrentItem().isEmpty() && player.inventory.getCurrentItem().getItem() == item);
+	}
+	
+	/**
+	 * Returns true if the player is holding the given item.
+	 *
+	 * Args: player, item.
+	 */
+	public static Item getHeldItem(EntityPlayer player, Item item) {
+		if(!isHoldingItem(player, item)) return null;
+		
+		if(player.getHeldItemMainhand() != null && player.getHeldItemMainhand().getItem() == item)
+			return player.getHeldItemMainhand().getItem();
+		if(player.getHeldItemOffhand() != null && player.getHeldItemOffhand().getItem() == item)
+			return player.getHeldItemOffhand().getItem();
+		
+		return null;
 	}
 	
 }

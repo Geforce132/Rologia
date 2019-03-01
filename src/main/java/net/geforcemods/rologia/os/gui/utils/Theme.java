@@ -1,6 +1,6 @@
 package net.geforcemods.rologia.os.gui.utils;
 
-import org.lwjgl.util.Color;
+import net.geforcemods.rologia.os.gui.utils.Colors.Color;
 
 /**
  * This class contains the colors used by every component in GUIs. It starts off

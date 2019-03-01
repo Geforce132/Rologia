@@ -23,11 +23,11 @@ public class ScreenStatusBar extends ScreenComponent {
 	public void drawComponent() {
 		GlStateManager.pushMatrix();
 
-		GlStateManager.color(1, 1, 1, 1);
+		GlStateManager.color4f(1, 1, 1, 1);
 		GuiUtils.drawFilledRect(getPosition(), getWidth(), getHeight(), getTheme().STATUS_BAR, 0.5F);
 
         float scaleOfText = 0.85F;
-		GlStateManager.scale(scaleOfText, scaleOfText, 1F);
+		GlStateManager.scalef(scaleOfText, scaleOfText, 1F);
         drawString(getFontRenderer(), getScreen().getOS().getTime(TimeConstants.HM), (int) ((getPosition().getX() + 50) / scaleOfText), (int) ((getPosition().getY() + 1) / scaleOfText), GuiUtils.toHex(getTheme().STATUS_BAR_CLOCK));
         GlStateManager.popMatrix();
         
@@ -39,12 +39,12 @@ public class ScreenStatusBar extends ScreenComponent {
 		for(int i = 0; i < getOS().getNotifications().size(); i++) {
 			if(i > 3 && !isExpanded()) {
 				GlStateManager.pushMatrix();
-				Minecraft.getMinecraft().getTextureManager().bindTexture(Notification.NOTIFICATION_ICONS_LIGHT);
+				Minecraft.getInstance().getTextureManager().bindTexture(Notification.NOTIFICATION_ICONS_LIGHT);
 
-				GlStateManager.color(1, 1, 1, 1);
-				GlStateManager.translate(getPosition().shiftX(40).getX(), getPosition().getY(), 0);
-				GlStateManager.scale(0.2F, 0.2F, 0);
-				GlStateManager.translate(-getPosition().shiftX(40).getX(), -getPosition().getY(), 0);
+				GlStateManager.color4f(1, 1, 1, 1);
+				GlStateManager.translated(getPosition().shiftX(40).getX(), getPosition().getY(), 0);
+				GlStateManager.scalef(0.2F, 0.2F, 0);
+				GlStateManager.translated(-getPosition().shiftX(40).getX(), -getPosition().getY(), 0);
 				drawTexturedModalRect(getPosition().shiftX(40).getX(), getPosition().getY(), 38, 0, 37, 33);
 				GlStateManager.popMatrix();
 

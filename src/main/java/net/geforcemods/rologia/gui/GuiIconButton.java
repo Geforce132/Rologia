@@ -4,10 +4,10 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
-@SideOnly(Side.CLIENT)
+@OnlyIn(Dist.CLIENT)
 public class GuiIconButton extends GuiButton {
 	
     private final ResourceLocation iconLocation;
@@ -29,18 +29,18 @@ public class GuiIconButton extends GuiButton {
         iconLocation = resource;
     }
 
-    public void drawButton(Minecraft mc, int mouseX, int mouseY, float partialTicks) {
-    	super.drawButton(mc, mouseX, mouseY, partialTicks);
+    public void render(int mouseX, int mouseY, float partialTicks) {
+    	super.render(mouseX, mouseY, partialTicks);
 
     	GlStateManager.pushMatrix();
-    	GlStateManager.color(1, 1, 1, 1);
-    	mc.getTextureManager().bindTexture(iconLocation);
-    	GlStateManager.disableDepth();
+    	GlStateManager.color4f(1, 1, 1, 1);
+    	Minecraft.getInstance().getTextureManager().bindTexture(iconLocation);
+    	GlStateManager.disableDepthTest();
     	int i = xTextureOffset;
     	int j = yTextureOffset;
 
     	this.drawTexturedModalRect((this.x + 1) + xTextureShift, (this.y + 1) + yTextureShift, i, j, this.width, this.height);
-    	GlStateManager.enableDepth();
+    	GlStateManager.enableDepthTest();
     	GlStateManager.popMatrix();
     }
 }

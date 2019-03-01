@@ -22,7 +22,7 @@ public class IMMessage {
 	}
 	
 	public int getMessageHeight(boolean checkWithSenderPrefix) {
-		return (int) (Minecraft.getMinecraft().fontRenderer.getWordWrappedHeight(checkWithSenderPrefix ? ("<" + sender + "> " + message) : message, (int) (Screen.WATCH_SCREEN_X_SIZE / AppIM.TEXT_SCALE)) * AppIM.TEXT_SCALE);
+		return (int) (Minecraft.getInstance().fontRenderer.getWordWrappedHeight(checkWithSenderPrefix ? ("<" + sender + "> " + message) : message, (int) (Screen.WATCH_SCREEN_X_SIZE / AppIM.TEXT_SCALE)) * AppIM.TEXT_SCALE);
 	}
 
 }

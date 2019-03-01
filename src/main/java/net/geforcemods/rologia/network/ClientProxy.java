@@ -4,39 +4,41 @@ import java.util.ArrayList;
 
 import net.geforcemods.rologia.os.RologiaOS;
 import net.geforcemods.rologia.os.imc.IRologiaMessageHandler;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
-public class ClientProxy extends ServerProxy {
+public class ClientProxy implements IProxy {
+
+	public ArrayList<IRologiaMessageHandler> messageHandlers = new ArrayList<IRologiaMessageHandler>();
 
 	public RologiaOS instance;
 
 	@Override
-	@SideOnly(Side.CLIENT)
+	@OnlyIn(Dist.CLIENT)
 	public void setupProxy() {
 
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
+	@OnlyIn(Dist.CLIENT)
 	public RologiaOS getRologiaInstance() {
 		return instance;
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
+	@OnlyIn(Dist.CLIENT)
 	public void registerMessageHandler(IRologiaMessageHandler handler) {
 		messageHandlers.add(handler);
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
+	@OnlyIn(Dist.CLIENT)
 	public ArrayList<IRologiaMessageHandler> getHandlers() {
 		return messageHandlers;
 	}
 
 	@Override
-	@SideOnly(Side.CLIENT)
+	@OnlyIn(Dist.CLIENT)
 	public void setRologiaInstance(RologiaOS rologia) {
 		instance = rologia;
 	}

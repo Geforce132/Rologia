@@ -17,7 +17,7 @@ public class InputManager {
 		OS = os;
 	}
 
-	public void handleMouseClick(int mouseX, int mouseY, int mouseButtonClicked) {
+	public void handleMouseClick(double mouseX, double mouseY, int mouseButtonClicked) {
 		boolean clickedOnComponent = false;
 		Screen screen = OS.getCurrentScreen();
 

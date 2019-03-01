@@ -30,7 +30,7 @@ import net.geforcemods.rologia.os.stats.UserStats;
 import net.geforcemods.rologia.os.tasks.Task;
 import net.geforcemods.rologia.os.tasks.TaskUpdateTime;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.loading.FMLLoader;
 
 /**
  * RologiaOS, or rOS, is the main Rologia "operating system" class which handles all of 
@@ -338,7 +338,7 @@ public class RologiaOS {
 	public static void removeInstance() {
 		if(Rologia.instance.serverProxy.getRologiaInstance() != null) {
 			Rologia.instance.serverProxy.setRologiaInstance(null);
-			System.out.println("removing " + FMLCommonHandler.instance().getSide());
+			System.out.println("removing " + FMLLoader.getDist());
 		}
 	}
 	

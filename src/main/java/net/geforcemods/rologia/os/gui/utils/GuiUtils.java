@@ -2,9 +2,9 @@ package net.geforcemods.rologia.os.gui.utils;
 
 import org.apache.commons.lang3.StringUtils;
 import org.lwjgl.opengl.GL11;
-import org.lwjgl.util.Color;
 
 import net.geforcemods.rologia.os.RologiaOS;
+import net.geforcemods.rologia.os.gui.utils.Colors.Color;
 import net.geforcemods.rologia.os.misc.Position;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -23,21 +23,21 @@ public class GuiUtils {
 		GlStateManager.enableBlend();
 		GlStateManager.disableTexture2D();
         
-		GlStateManager.glBegin(GL11.GL_LINES);
-		GlStateManager.color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
-		GlStateManager.glVertex3f(startPos.getX(), startPos.getY(), 0);
-		GlStateManager.glVertex3f(startPos.getX() + width, startPos.getY(), 0);
+		GL11.glBegin(GL11.GL_LINES);
+		GlStateManager.color4f(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
+		GL11.glVertex3f(startPos.getX(), startPos.getY(), 0);
+		GL11.glVertex3f(startPos.getX() + width, startPos.getY(), 0);
 		
-		GlStateManager.glVertex3f(startPos.getX() + width, startPos.getY(), 0);
-		GlStateManager.glVertex3f(startPos.getX() + width, startPos.getY() + height, 0);
+		GL11.glVertex3f(startPos.getX() + width, startPos.getY(), 0);
+		GL11.glVertex3f(startPos.getX() + width, startPos.getY() + height, 0);
 		
-		GlStateManager.glVertex3f(startPos.getX() + width, startPos.getY() + height, 0);
-		GlStateManager.glVertex3f(startPos.getX(), startPos.getY() + height, 0);
+		GL11.glVertex3f(startPos.getX() + width, startPos.getY() + height, 0);
+		GL11.glVertex3f(startPos.getX(), startPos.getY() + height, 0);
 		
-		GlStateManager.glVertex3f(startPos.getX(), startPos.getY(), 0);
-		GlStateManager.glVertex3f(startPos.getX(), startPos.getY() + height, 0);
+		GL11.glVertex3f(startPos.getX(), startPos.getY(), 0);
+		GL11.glVertex3f(startPos.getX(), startPos.getY() + height, 0);
 
-		GlStateManager.glEnd();
+		GL11.glEnd();
 
 		GlStateManager.enableTexture2D();
 		GlStateManager.disableBlend();
@@ -52,16 +52,16 @@ public class GuiUtils {
 		GlStateManager.enableBlend();
 		GlStateManager.disableTexture2D();
 
-		GlStateManager.color(color.getRed(), color.getGreen(), color.getBlue(), transparency);
-		GlStateManager.glPolygonMode(GL11.GL_FRONT, GL11.GL_FILL);
-		GlStateManager.glBegin(GL11.GL_QUADS);
+		GlStateManager.color4f(color.getRed(), color.getGreen(), color.getBlue(), transparency);
+		GlStateManager.polygonMode(GL11.GL_FRONT, GL11.GL_FILL);
+		GL11.glBegin(GL11.GL_QUADS);
 
-		GlStateManager.glVertex3f(startPos.getX(), startPos.getY(), 0);
-		GlStateManager.glVertex3f(startPos.getX(), startPos.getY() + height, 0);
-		GlStateManager.glVertex3f(startPos.getX() + width, startPos.getY() + height, 0);
-		GlStateManager.glVertex3f(startPos.getX() + width, startPos.getY(), 0);
+		GL11.glVertex3f(startPos.getX(), startPos.getY(), 0);
+		GL11.glVertex3f(startPos.getX(), startPos.getY() + height, 0);
+		GL11.glVertex3f(startPos.getX() + width, startPos.getY() + height, 0);
+		GL11.glVertex3f(startPos.getX() + width, startPos.getY(), 0);
 
-		GlStateManager.glEnd();
+		GL11.glEnd();
 		GlStateManager.enableTexture2D();
 		GlStateManager.disableBlend();
 	}
@@ -72,8 +72,8 @@ public class GuiUtils {
 		RenderHelper.disableStandardItemLighting();
 		RenderHelper.enableGUIStandardItemLighting();
 		
-		Minecraft.getMinecraft().getRenderItem().renderItemIntoGUI(new ItemStack(item), startPos.getX(), startPos.getY());
-		Minecraft.getMinecraft().getRenderItem().renderItemOverlayIntoGUI(Minecraft.getMinecraft().fontRenderer, new ItemStack(item), startPos.getX(), startPos.getY(), "");
+		Minecraft.getInstance().getItemRenderer().renderItemIntoGUI(new ItemStack(item), startPos.getX(), startPos.getY());
+		Minecraft.getInstance().getItemRenderer().renderItemOverlayIntoGUI(Minecraft.getInstance().fontRenderer, new ItemStack(item), startPos.getX(), startPos.getY(), "");
 
 		GlStateManager.disableBlend();
 		RenderHelper.disableStandardItemLighting();

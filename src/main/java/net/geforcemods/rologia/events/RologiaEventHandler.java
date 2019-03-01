@@ -8,20 +8,20 @@ import net.geforcemods.rologia.os.apps.events.AppEventPlayerStep;
 import net.geforcemods.rologia.os.stats.UserStats;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.entity.PlaySoundAtEntityEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class RologiaEventHandler {
 
 	@SubscribeEvent
-	@SideOnly(Side.CLIENT)
+	@OnlyIn(Dist.CLIENT)
 	public void onSoundPlayed(PlaySoundAtEntityEvent event) {
 		if(event.getEntity() == null) return;
 
-		EntityPlayer player = Minecraft.getMinecraft().player;
-		if(event.getEntity() == player && event.getSound().getSoundName().getPath().endsWith(".step")) {
+		EntityPlayer player = Minecraft.getInstance().player;
+		if(event.getEntity() == player && event.getSound().getName().getPath().endsWith(".step")) {
 			RologiaOS os = RologiaOS.getInstance();
 			UserStats stats = os.getUserStats();
 			

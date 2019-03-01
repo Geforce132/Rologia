@@ -1,38 +1,27 @@
 package net.geforcemods.rologia.gui;
 
 import net.geforcemods.rologia.Rologia;
-import net.geforcemods.rologia.containers.ContainerEmpty;
 import net.geforcemods.rologia.item.ItemRologia;
 import net.geforcemods.rologia.utils.PlayerUtils;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.common.network.IGuiHandler;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.network.FMLPlayMessages.OpenContainer;
 
-public class GuiHandler implements IGuiHandler {
+public class GuiHandler {
 	
-	public static final int BOOT_SCREEN_ID = 0;
+	public static final ResourceLocation WATCH_SCREEN = new ResourceLocation(Rologia.MOD_ID, "watch_screen");
 
-	@Override
-	public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
-		switch(ID)
-		{
-		case BOOT_SCREEN_ID:
-			return new ContainerEmpty();
-		}
-		
-		return null;
-	}
+	public static GuiScreen getClientGuiElement(OpenContainer message) {
+		EntityPlayerSP player = Minecraft.getInstance().player;
 
-	@Override
-	public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
-		switch(ID)
-		{
-		case BOOT_SCREEN_ID:
-			if(!PlayerUtils.isHoldingItem(player, Rologia.smartwatch)) return null;
-			
-			return new GuiRologia(player, (ItemRologia) player.inventory.getCurrentItem().getItem());
+		if(message.getId().equals(WATCH_SCREEN)) {
+			if(PlayerUtils.isHoldingItem(player, Rologia.smartwatch)) {
+				return new GuiRologia(player, (ItemRologia) player.inventory.getCurrentItem().getItem());
+			}
 		}
-		
+
 		return null;
 	}
 

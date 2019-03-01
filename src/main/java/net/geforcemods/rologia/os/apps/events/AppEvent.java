@@ -11,7 +11,7 @@ public abstract class AppEvent {
 	}
 	
 	public EntityPlayer getPlayer() {
-		return Minecraft.getMinecraft().player;
+		return Minecraft.getInstance().player;
 	}
 	
 	public abstract AppEventType getEventType();

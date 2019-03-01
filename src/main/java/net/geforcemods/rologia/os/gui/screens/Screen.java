@@ -299,11 +299,11 @@ public abstract class Screen extends Gui {
 	}
 
 	public TextureManager getTextureManager() {
-		return Minecraft.getMinecraft().getTextureManager();
+		return Minecraft.getInstance().getTextureManager();
 	}
 
 	public FontRenderer getFontRenderer() {
-		return Minecraft.getMinecraft().fontRenderer;
+		return Minecraft.getInstance().fontRenderer;
 	}
 
 }

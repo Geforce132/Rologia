@@ -96,7 +96,7 @@ public abstract class ScreenComponent extends Gui {
 	 */
 	public void bindTexture(ResourceLocation texture) {
 		GlStateManager.popMatrix();
-		GlStateManager.color(1, 1, 1, 1);
+		GlStateManager.color4f(1, 1, 1, 1);
 		getTextureManager().bindTexture(texture);
 		GlStateManager.pushMatrix();
 	}
@@ -220,11 +220,11 @@ public abstract class ScreenComponent extends Gui {
 	}
 
 	public TextureManager getTextureManager() {
-		return Minecraft.getMinecraft().getTextureManager();
+		return Minecraft.getInstance().getTextureManager();
 	}
 	
 	public FontRenderer getFontRenderer() {
-		return Minecraft.getMinecraft().fontRenderer;
+		return Minecraft.getInstance().fontRenderer;
 	}
 
 }
