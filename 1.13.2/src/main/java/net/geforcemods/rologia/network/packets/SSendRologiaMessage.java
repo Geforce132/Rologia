@@ -6,6 +6,7 @@ import net.geforcemods.rologia.Rologia;
 import net.geforcemods.rologia.os.imc.IRologiaMessageHandler;
 import net.geforcemods.rologia.utils.PlayerUtils;
 import net.minecraft.network.PacketBuffer;
+import net.minecraftforge.fml.network.NetworkDirection;
 import net.minecraftforge.fml.network.NetworkEvent;
 
 public class SSendRologiaMessage {
@@ -54,7 +55,7 @@ public class SSendRologiaMessage {
 			for(IRologiaMessageHandler handler : Rologia.instance.serverProxy.getHandlers())
 				handler.handleMessage(null, ctx.get().getSender().world, ctx.get().getSender(), packet.key, packet.body);
 
-			//Rologia.channel.sendTo(new CSendRologiaMessage(packet.key, packet.body), (EntityPlayerMP) PlayerUtils.getPlayerFromName(packet.destinationPlayer));
+			Rologia.channel.sendTo(new CSendRologiaMessage(packet.key, packet.body), ctx.get().getSender().connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
 		}
 		
 		ctx.get().setPacketHandled(true);

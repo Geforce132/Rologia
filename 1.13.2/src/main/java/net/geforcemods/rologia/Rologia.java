@@ -53,6 +53,8 @@ public class Rologia {
 	public Rologia() {
 		instance = this;
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::onFMLCommonSetup);
+		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::init);
+		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::processIMCMessages);
 		FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(Item.class, this::registerItems);
 		MinecraftForge.EVENT_BUS.register(new RologiaEventHandler());
 		ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.GUIFACTORY, () -> GuiHandler::getClientGuiElement);
@@ -67,7 +69,6 @@ public class Rologia {
 	@SubscribeEvent
 	public void registerItems(Register<Item> event)
 	{
-		System.out.println("running");
 		smart_watch = new ItemRologia().setRegistryName(ItemRologia.NAME);
 		event.getRegistry().register(smart_watch);
 	}
@@ -75,7 +76,6 @@ public class Rologia {
 	@SubscribeEvent
 	public void init(InterModEnqueueEvent event) {
 		serverProxy.setupProxy();
-		
 		InterModComms.sendTo(MOD_ID, "register", () -> {return "net.geforcemods.rologia.MessageHandler";});
 	}
 
@@ -83,10 +83,7 @@ public class Rologia {
 	public void processIMCMessages(InterModProcessEvent event) {
 		event.getIMCStream().forEach(message -> {
 			if(message.getMethod().equalsIgnoreCase("register")) {
-				//TODO
-				System.out.println(message.getMessageSupplier().get());
-				//Supplier<Function<Void, Void>> supplier = message.getMessageSupplier().get();
-                //supplier.get().apply(null);
+				IMCManager.registerMessageHandler((String) message.getMessageSupplier().get());
 			}
 		});
 	}

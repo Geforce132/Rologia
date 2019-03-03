@@ -77,7 +77,7 @@ public class PlayerUtils {
 			{
 				EntityPlayer player = Minecraft.getInstance().world.playerEntities.get(i);
 
-				if(player != null && player.getName().equals(par1))
+				if(player != null && player.getName().getFormattedText().equals(par1))
 					return true;
 			}
 

@@ -25,8 +25,8 @@ public class CSendRologiaMessage {
 	}
 
 	public void fromBytes(PacketBuffer buf) {
-		key = buf.readString(Integer.MAX_VALUE);
-		body = buf.readString(Integer.MAX_VALUE);
+		key = buf.readString(Integer.MAX_VALUE / 4);
+		body = buf.readString(Integer.MAX_VALUE / 4);
 	}
 
 	public void toBytes(PacketBuffer buf) {

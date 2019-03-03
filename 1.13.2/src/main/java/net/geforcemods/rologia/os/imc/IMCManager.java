@@ -20,7 +20,7 @@ public class IMCManager {
 	}
 	
 	@SuppressWarnings("static-access")
-	public void registerMessageHandler(String classPath) {
+	public static void registerMessageHandler(String classPath) {
 		try {
 			Class<?> handlerClass = Class.forName(classPath);
 			IRologiaMessageHandler handler = (IRologiaMessageHandler) handlerClass.newInstance();
