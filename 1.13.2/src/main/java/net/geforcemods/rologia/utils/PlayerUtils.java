@@ -6,8 +6,8 @@ import java.util.List;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.fml.loading.FMLLoader;
+import net.minecraftforge.fml.LogicalSide;
+import net.minecraftforge.fml.common.thread.EffectiveSide;
 import net.minecraftforge.fml.server.ServerLifecycleHooks;
 
 public class PlayerUtils {
@@ -28,7 +28,7 @@ public class PlayerUtils {
 	 * Args: playerName.
 	 */
 	public static EntityPlayer getPlayerFromName(String par1) {
-		if(FMLLoader.getDist() == Dist.CLIENT)
+		if(EffectiveSide.get() == LogicalSide.CLIENT)
 		{
 			List<?> players = Minecraft.getInstance().world.playerEntities;
 			Iterator<?> iterator = players.iterator();
@@ -37,7 +37,7 @@ public class PlayerUtils {
 			{
 				EntityPlayer tempPlayer = (EntityPlayer) iterator.next();
 				
-				if(tempPlayer.getName().equals(par1))
+				if(tempPlayer.getName().getFormattedText().equals(par1))
 					return tempPlayer;
 			}
 
@@ -52,7 +52,7 @@ public class PlayerUtils {
 			{
 				EntityPlayer tempPlayer = (EntityPlayer) iterator.next();
 
-				if(tempPlayer.getName().equals(par1))
+				if(tempPlayer.getName().getFormattedText().equals(par1))
 					return tempPlayer;
 			}
 
@@ -71,7 +71,7 @@ public class PlayerUtils {
 	 */
 	public static boolean isPlayerOnline(String par1) {
 
-		if(FMLLoader.getDist() == Dist.CLIENT)
+		if(EffectiveSide.get() == LogicalSide.CLIENT)
 		{
 			for(int i = 0; i < Minecraft.getInstance().world.playerEntities.size(); i++)
 			{

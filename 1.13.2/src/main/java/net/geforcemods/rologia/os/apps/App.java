@@ -28,6 +28,8 @@ public abstract class App {
 
 	private transient RologiaOS os;
 	
+	public App() {}
+
 	public App(RologiaOS rologia) {
 		os = rologia;
 	}

@@ -15,11 +15,14 @@ import net.geforcemods.rologia.os.gui.screens.Screen;
 import net.geforcemods.rologia.os.gui.utils.Colors;
 import net.geforcemods.rologia.os.gui.utils.GuiUtils;
 import net.geforcemods.rologia.os.imc.IMCManager;
+import net.geforcemods.rologia.os.imc.RologiaMessage;
+import net.geforcemods.rologia.os.imc.IRologiaMessageHandler;
 import net.geforcemods.rologia.os.misc.Position;
 import net.geforcemods.rologia.os.sounds.Sounds;
+import net.minecraft.world.World;
 
 @AppInfo(id=AppIM.ID, name = AppIM.NAME, version = AppIM.VERSION)
-public class AppIM extends App {
+public class AppIM extends App implements IRologiaMessageHandler {
 	
 	public static final String ID = "im";
 	public static final String NAME = "IM Chat";
@@ -31,6 +34,8 @@ public class AppIM extends App {
 	private ScreenButton sendButton = new ScreenButton(getOS(), "Send");
 
 	private ArrayList<IMTab> tabs = new ArrayList<IMTab>();
+
+	public AppIM() {}
 
 	public AppIM(RologiaOS rologia) {
 		super(rologia);
@@ -66,9 +71,14 @@ public class AppIM extends App {
 	@Override
 	public void onComponentClicked(ScreenComponent component, Position mousePos, int mouseButtonClicked) {
 		if(component == sendButton) {
-			IMCManager.sendMessage(getOS().getUser().getName().getFormattedText(), IMCManager.IM, textField.getText());
+			IMCManager.sendMessage(getOS().getUser().getName().getFormattedText(), getOS().getUser().getName().getFormattedText(), IMCManager.IM, textField.getText());
 			textField.clearText();
 		}
+	}
+
+	@Override
+	public void handleMessage(RologiaOS os, World world, RologiaMessage message) {		
+		System.out.printf("Rologia message: %s %s %s %s %s\n", message.body, world.isRemote ? "CLIENT" : "SERVER", os, message.getSender(), message.getRecipient());
 	}
 
 	@Override

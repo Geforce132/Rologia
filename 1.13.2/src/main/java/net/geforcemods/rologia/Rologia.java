@@ -76,7 +76,7 @@ public class Rologia {
 	@SubscribeEvent
 	public void init(InterModEnqueueEvent event) {
 		serverProxy.setupProxy();
-		InterModComms.sendTo(MOD_ID, "register", () -> {return "net.geforcemods.rologia.MessageHandler";});
+		InterModComms.sendTo(MOD_ID, "register", () -> {return "net.geforcemods.rologia.os.apps.im.AppIM"; });
 	}
 
 	@SubscribeEvent
