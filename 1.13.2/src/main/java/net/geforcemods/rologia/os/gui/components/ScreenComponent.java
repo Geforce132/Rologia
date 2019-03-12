@@ -18,6 +18,8 @@ public abstract class ScreenComponent extends Gui {
 	protected Position position = new Position(Screen.WATCH_SCREEN_X_SIZE, Screen.WATCH_SCREEN_Y_SIZE);
 	protected Position defaultPos = new Position(Screen.WATCH_SCREEN_X_SIZE, Screen.WATCH_SCREEN_Y_SIZE);
 	
+	private Position offset = null;
+	
 	private boolean visible = true;
 	private boolean enabled = true;
 
@@ -27,7 +29,7 @@ public abstract class ScreenComponent extends Gui {
 	protected int colorValue;
 	
 	private String type;
-	
+
 	private transient RologiaOS os;
 
 	protected ScreenComponent(RologiaOS OS) {
@@ -67,7 +69,13 @@ public abstract class ScreenComponent extends Gui {
 		return false;
 	}
 
-	public void performPrerenderGLFixes() {		
+	public void performPrerenderGLFixes() {
+		// If this component has an automatically calculated position and if this component's current
+		// position doesn't match it, recenter it.
+		if(hasCenteredPosition() && !position.matches(new Position(position.getX() + offset.getX(), position.getY() + offset.getY()))) {
+			centerPosition(offset.getX(), offset.getY());
+		}
+
 		GL11.glTranslatef(position.getX(), position.getY(), 0);
 		GL11.glRotatef(getRotation(), 0, 0, 1);
 		GL11.glTranslatef(-position.getX(), -position.getY(), 0);
@@ -126,8 +134,14 @@ public abstract class ScreenComponent extends Gui {
 		return this;
 	}
 
-	public ScreenComponent centerPosition(int xOffset, int yOffset) {
-		Position pos = getScreen().getCenteredPositionForComponent(this).shiftX(xOffset).shiftY(yOffset - getScreen().getStatusBar().getHeight());
+	public ScreenComponent centerPosition(int xShift, int yShift) {
+		Position pos = getScreen().getCenteredPositionForComponent(this).shiftX(xShift).shiftY(yShift - getScreen().getStatusBar().getHeight());
+
+		if(offset == null)
+			offset = new Position(0, 0);
+
+		offset.setX(xShift);
+		offset.setY(yShift);
 
 		setPositionAndOrigin(pos);
 		return this;
@@ -205,6 +219,10 @@ public abstract class ScreenComponent extends Gui {
 	
 	public int getColor() {
 		return colorValue;
+	}
+
+	public boolean hasCenteredPosition() {
+		return offset != null;
 	}
 
 	public Theme getTheme() {

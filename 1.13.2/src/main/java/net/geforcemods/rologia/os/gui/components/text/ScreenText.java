@@ -32,7 +32,10 @@ public class ScreenText extends ScreenComponent {
 		return GuiUtils.formatString(getOS(), text);
 	}
 	
-	public void setText(String string) {
+	public void setText(String string, Object... parameters) {
+		for(Object object : parameters)
+			string = string.replaceFirst("%s", object.toString());
+
 		text = string;
 	}
 
