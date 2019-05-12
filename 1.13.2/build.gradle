@@ -18,7 +18,7 @@ archivesBaseName = 'rologia'
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8'
 
 minecraft {
-    mappings channel: 'snapshot', version: '20181007-1.13'
+    mappings channel: 'snapshot', version: '20190510-1.13.2'
 	
     runs {
         client = {
@@ -39,7 +39,7 @@ minecraft {
 repositories {}
 
 dependencies {
-    minecraft 'net.minecraftforge:forge:1.13.2-25.0.64'
+    minecraft 'net.minecraftforge:forge:1.13.2-25.0.193'
 }
 
 jar {

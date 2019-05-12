@@ -126,7 +126,7 @@ public class Utils {
 
 	@OnlyIn(Dist.CLIENT)
 	public static void playSound(SoundEvent sound) {
-		Minecraft.getInstance().getSoundHandler().play(SimpleSound.getMasterRecord(sound, 0.8F));
+		Minecraft.getInstance().getSoundHandler().play(SimpleSound.master(sound, 0.8F));
 	}
 
 }
