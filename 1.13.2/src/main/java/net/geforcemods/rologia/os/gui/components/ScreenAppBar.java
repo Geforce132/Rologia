@@ -8,6 +8,8 @@ import net.geforcemods.rologia.os.gui.screens.SettingsScreen;
 import net.geforcemods.rologia.os.gui.utils.GuiUtils;
 import net.geforcemods.rologia.os.misc.Position;
 import net.geforcemods.rologia.os.resources.ResourceLoader;
+import net.geforcemods.rologia.os.sounds.Sounds;
+import net.geforcemods.rologia.utils.Utils;
 import net.minecraft.util.ResourceLocation;
 
 public class ScreenAppBar extends ScreenComponent {
@@ -43,8 +45,10 @@ public class ScreenAppBar extends ScreenComponent {
 	public boolean mouseClick(Position mousePos, int mouseButtonClicked) {
 		int barClicked = getIconHoveringOver(mousePos);
 
-		if(getIconActive() != barClicked)
+		if(getIconActive() != barClicked) {
 			switchScreen(getScreen().getOS(), barClicked);
+			Utils.playSound(Sounds.BEEP_2.event);
+		}
 
 		return false;
 	}

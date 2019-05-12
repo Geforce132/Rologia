@@ -69,7 +69,7 @@ public class Rologia {
 	@SubscribeEvent
 	public void registerItems(Register<Item> event)
 	{
-		smart_watch = new ItemRologia().setRegistryName(ItemRologia.NAME);
+		smart_watch = new ItemRologia().setRegistryName(new ResourceLocation(Rologia.MOD_ID, ItemRologia.NAME));
 		event.getRegistry().register(smart_watch);
 	}
 	

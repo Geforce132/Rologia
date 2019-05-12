@@ -4,13 +4,17 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.audio.SimpleSound;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
+import net.minecraft.util.SoundEvent;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.thread.EffectiveSide;
 import net.minecraftforge.fml.server.ServerLifecycleHooks;
 
-public class PlayerUtils {
+public class Utils {
 
 	/**
 	 * Sets the given player's position and rotation. <p>
@@ -60,6 +64,11 @@ public class PlayerUtils {
 		}
 	}
 
+	/**
+	 * Returns the given player's unique UUID.
+	 * 
+	 * Args: the player to check
+	 */
 	public static String getPlayerUUID(EntityPlayer player) {
 		return player.getGameProfile().getId().toString();
 	}
@@ -114,5 +123,10 @@ public class PlayerUtils {
 		
 		return null;
 	}
-	
+
+	@OnlyIn(Dist.CLIENT)
+	public static void playSound(SoundEvent sound) {
+		Minecraft.getInstance().getSoundHandler().play(SimpleSound.getMasterRecord(sound, 0.8F));
+	}
+
 }

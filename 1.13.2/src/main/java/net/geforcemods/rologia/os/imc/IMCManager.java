@@ -6,7 +6,7 @@ import net.geforcemods.rologia.Rologia;
 import net.geforcemods.rologia.network.packets.CSendRologiaMessage;
 import net.geforcemods.rologia.network.packets.SSendRologiaMessage;
 import net.geforcemods.rologia.os.RologiaOS;
-import net.geforcemods.rologia.utils.PlayerUtils;
+import net.geforcemods.rologia.utils.Utils;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraftforge.api.distmarker.Dist;
@@ -23,9 +23,9 @@ public class IMCManager {
 	public static final String SEPARATOR = "$";
 
 	public static void sendMessage(String sendingPlayerName, String receivingPlayerName, String key, String body) {
-		if(!PlayerUtils.isPlayerOnline(receivingPlayerName)) return;
+		if(!Utils.isPlayerOnline(receivingPlayerName)) return;
 
-		EntityPlayer recipient = PlayerUtils.getPlayerFromName(receivingPlayerName);
+		EntityPlayer recipient = Utils.getPlayerFromName(receivingPlayerName);
 		LogicalSide side = EffectiveSide.get();
 		RologiaMessage message = new RologiaMessage(sendingPlayerName, receivingPlayerName, key, body);
 

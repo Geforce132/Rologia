@@ -3,6 +3,8 @@ package net.geforcemods.rologia.os.gui.components;
 import net.geforcemods.rologia.os.RologiaOS;
 import net.geforcemods.rologia.os.gui.utils.GuiUtils;
 import net.geforcemods.rologia.os.misc.Position;
+import net.geforcemods.rologia.os.sounds.Sounds;
+import net.geforcemods.rologia.utils.Utils;
 
 public class ScreenToggleButton extends ScreenComponent {
 	
@@ -45,6 +47,7 @@ public class ScreenToggleButton extends ScreenComponent {
 	
 	public void toggle() {
 		toggled = !toggled;
+		Utils.playSound(Sounds.BEEP_2.event);
 	}
 
 	public boolean isEnabled() {

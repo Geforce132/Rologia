@@ -1,6 +1,6 @@
 package net.geforcemods.rologia.os.imc;
 
-import net.geforcemods.rologia.utils.PlayerUtils;
+import net.geforcemods.rologia.utils.Utils;
 import net.minecraft.entity.player.EntityPlayer;
 
 public class RologiaMessage {
@@ -18,16 +18,16 @@ public class RologiaMessage {
 	}
 
 	public EntityPlayer getSender() {
-		if(PlayerUtils.isPlayerOnline(senderName)) {
-			return PlayerUtils.getPlayerFromName(recipientName);
+		if(Utils.isPlayerOnline(senderName)) {
+			return Utils.getPlayerFromName(recipientName);
 		}
 
 		return null;
 	}
 
 	public EntityPlayer getRecipient() {
-		if(PlayerUtils.isPlayerOnline(senderName)) {
-			return PlayerUtils.getPlayerFromName(recipientName);
+		if(Utils.isPlayerOnline(senderName)) {
+			return Utils.getPlayerFromName(recipientName);
 		}
 
 		return null;
