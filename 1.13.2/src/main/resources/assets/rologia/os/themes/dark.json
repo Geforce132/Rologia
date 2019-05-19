@@ -54,6 +54,12 @@
       "blue": 90,
       "alpha": 1
     },
+    "SELECTION_TEXT_HOVERING": {
+      "red": 8,
+      "green": 122,
+      "blue": 35,
+      "alpha": 1
+    },
     "TEXT_FIELD_LINE": {
       "red": 255,
       "green": 0,

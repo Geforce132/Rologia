@@ -5,11 +5,11 @@ import java.util.logging.Level;
 
 import net.geforcemods.rologia.os.RologiaOS;
 import net.geforcemods.rologia.os.apps.App;
-import net.geforcemods.rologia.os.gui.components.ScreenAppBar;
+import net.geforcemods.rologia.os.gui.components.AppBar;
 import net.geforcemods.rologia.os.gui.components.ScreenComponent;
-import net.geforcemods.rologia.os.gui.components.ScreenScrollBar;
-import net.geforcemods.rologia.os.gui.components.ScreenStatusBar;
-import net.geforcemods.rologia.os.gui.components.images.ScreenImage;
+import net.geforcemods.rologia.os.gui.components.ScrollBar;
+import net.geforcemods.rologia.os.gui.components.StatusBar;
+import net.geforcemods.rologia.os.gui.components.images.Image;
 import net.geforcemods.rologia.os.gui.utils.GuiUtils;
 import net.geforcemods.rologia.os.misc.Position;
 import net.minecraft.client.Minecraft;
@@ -34,10 +34,10 @@ public abstract class Screen extends Gui {
 
 	private ScreenComponent focusedComponent;
 
-	private ScreenStatusBar statusBar;
-	private ScreenScrollBar scrollBar;
-	private ScreenAppBar appBar;
-	private ScreenImage backgroundImage;
+	private StatusBar statusBar;
+	private ScrollBar scrollBar;
+	private AppBar appBar;
+	private Image backgroundImage;
 
 	private int screenHeight = 0;
 
@@ -74,19 +74,19 @@ public abstract class Screen extends Gui {
 	public void addStartupComponents() {
 		// Status bar
 		if(statusBar == null) {
-			statusBar = new ScreenStatusBar(OS, getPosition());
+			statusBar = new StatusBar(OS, getPosition());
 			addComponent(statusBar);
 		}
 
 		// Scroll bar
 		if(scrollBar == null) {
-			scrollBar = new ScreenScrollBar(OS, getPosition().shiftX(90));
+			scrollBar = new ScrollBar(OS, getPosition().shiftX(90));
 			addComponent(scrollBar);
 		}
 
 		// App selection bar
 		if(appBar == null) {
-			appBar = new ScreenAppBar(OS, getPosition());
+			appBar = new AppBar(OS, getPosition());
 			addComponent(appBar);
 		}
 	}
@@ -274,19 +274,19 @@ public abstract class Screen extends Gui {
 		return new Position(centeredX, centeredY);
 	}
 
-	public Screen setBackgroundImage(ScreenImage newImage) {
+	public Screen setBackgroundImage(Image newImage) {
 		newImage.setPosition(screenPos);
 		backgroundImage = newImage;
 		return this;
 	}
 
-	public abstract ScreenImage getBackgroundImage();
+	public abstract Image getBackgroundImage();
 
-	public ScreenStatusBar getStatusBar() {
+	public StatusBar getStatusBar() {
 		return statusBar;
 	}
 
-	public ScreenScrollBar getScrollBar() {
+	public ScrollBar getScrollBar() {
 		return scrollBar;
 	}
 

@@ -27,7 +27,8 @@ public abstract class ScreenComponent extends Gui {
 	protected float scale;
 	
 	protected int colorValue;
-	
+	protected int hoverColorValue;
+
 	private String type;
 
 	private transient RologiaOS os;
@@ -135,7 +136,7 @@ public abstract class ScreenComponent extends Gui {
 	}
 
 	public ScreenComponent centerPosition(int xShift, int yShift) {
-		Position pos = getScreen().getCenteredPositionForComponent(this).shiftX(xShift).shiftY(yShift - getScreen().getStatusBar().getHeight());
+		Position pos = getScreen().getCenteredPositionForComponent(this).shiftX(xShift).shiftY(yShift - StatusBar.DEFAULT_WIDTH);
 
 		if(offset == null)
 			offset = new Position(0, 0);
@@ -196,6 +197,10 @@ public abstract class ScreenComponent extends Gui {
 	public void setColor(int color) {
 		colorValue = color;
 	}
+	
+	public void setHoverColor(int hoverColor) {
+		hoverColorValue = hoverColor;
+	}
 
 	public Position getPosition() {
 		return position;
@@ -219,6 +224,10 @@ public abstract class ScreenComponent extends Gui {
 	
 	public int getColor() {
 		return colorValue;
+	}
+	
+	public int getHoverColor() {
+		return hoverColorValue;
 	}
 
 	public boolean hasCenteredPosition() {

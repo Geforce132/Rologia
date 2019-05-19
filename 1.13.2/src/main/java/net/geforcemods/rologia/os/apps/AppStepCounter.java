@@ -6,7 +6,7 @@ import java.text.DecimalFormat;
 import net.geforcemods.rologia.os.RologiaOS;
 import net.geforcemods.rologia.os.apps.events.AppEvent;
 import net.geforcemods.rologia.os.apps.events.AppEventType;
-import net.geforcemods.rologia.os.gui.components.text.ScreenText;
+import net.geforcemods.rologia.os.gui.components.text.Text;
 import net.geforcemods.rologia.os.gui.screens.Screen;
 import net.geforcemods.rologia.os.gui.utils.Colors;
 import net.minecraft.entity.player.EntityPlayer;
@@ -15,7 +15,7 @@ import net.minecraftforge.fml.loading.FMLLoader;
 @AppInfo(id="step_counter", name = "Step Counter", version = "1.0.0")
 public class AppStepCounter extends App {
 	
-	private ScreenText distance = new ScreenText(getOS(), "Distance travelled:", null, Colors.GREEN.hexValue);
+	private Text distance = new Text(getOS(), "Distance travelled:", null, Colors.GREEN.hexValue);
 
 	public AppStepCounter(RologiaOS rologia) {
 		super(rologia);

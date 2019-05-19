@@ -8,7 +8,7 @@ import net.geforcemods.rologia.os.RologiaOS;
 import net.geforcemods.rologia.os.apps.events.AppEvent;
 import net.geforcemods.rologia.os.apps.events.AppEventType;
 import net.geforcemods.rologia.os.gui.components.ScreenComponent;
-import net.geforcemods.rologia.os.gui.components.images.ScreenImage;
+import net.geforcemods.rologia.os.gui.components.images.Image;
 import net.geforcemods.rologia.os.gui.screens.Screen;
 import net.geforcemods.rologia.os.misc.Position;
 import net.minecraft.util.ResourceLocation;
@@ -21,8 +21,8 @@ public abstract class App {
 	private String app_icon = "";
 	public String app_background_image = "";
 
-	private transient ScreenImage appIcon = null;	
-	private transient ScreenImage appBackgroundImage = null;
+	private transient Image appIcon = null;	
+	private transient Image appBackgroundImage = null;
 	
 	private ArrayList<ScreenComponent> appComponents = new ArrayList<ScreenComponent>();
 
@@ -87,12 +87,12 @@ public abstract class App {
 		this.app_version = app_version;
 	}
 
-	public ScreenImage getAppIcon() {
+	public Image getAppIcon() {
 		if(app_icon != null && !app_icon.isEmpty())
 		{
 			if(appIcon == null)
 			{
-				appIcon = new ScreenImage(os, new ResourceLocation(app_icon), 64, 64);
+				appIcon = new Image(os, new ResourceLocation(app_icon), 64, 64);
 				return appIcon;
 			}
 		}
@@ -104,12 +104,12 @@ public abstract class App {
 		this.app_icon = app_icon;
 	}
 
-	public ScreenImage getAppBackgroundImage() {
+	public Image getAppBackgroundImage() {
 		if(app_background_image != null && !app_background_image.isEmpty())
 		{
 			if(appBackgroundImage == null)
 			{
-				appBackgroundImage = new ScreenImage(os, new ResourceLocation(app_background_image), os.getCurrentScreen().getPosition(), Screen.WATCH_SCREEN_X_SIZE, Screen.WATCH_SCREEN_Y_SIZE);
+				appBackgroundImage = new Image(os, new ResourceLocation(app_background_image), os.getCurrentScreen().getPosition(), Screen.WATCH_SCREEN_X_SIZE, Screen.WATCH_SCREEN_Y_SIZE);
 				return appBackgroundImage;
 			}
 		}
@@ -126,7 +126,8 @@ public abstract class App {
 	}
 
 	public void addComponent(ScreenComponent comp) {
-		appComponents.add(comp);
+		if(!appComponents.contains(comp))
+			appComponents.add(comp);
 	}
 
 	public RologiaOS getOS() {

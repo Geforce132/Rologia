@@ -12,12 +12,12 @@ import net.geforcemods.rologia.os.sounds.Sounds;
 import net.geforcemods.rologia.utils.Utils;
 import net.minecraft.util.ResourceLocation;
 
-public class ScreenAppBar extends ScreenComponent {
+public class AppBar extends ScreenComponent {
 	
 	public static ResourceLocation APP_ICONS = new ResourceLocation(ResourceLoader.TEXTURE_FOLDER_PATH + "app_icons.png");
 	public static final int ICON_X_SPACING = 7;
 	
-	public ScreenAppBar(RologiaOS OS, Position screenPos) {
+	public AppBar(RologiaOS OS, Position screenPos) {
 		super(OS);
 		setPositionAndOrigin(screenPos.shiftX((Screen.WATCH_SCREEN_X_SIZE / 2) - (getWidth() / 2)).shiftY(Screen.WATCH_SCREEN_Y_SIZE + 7));
 	}

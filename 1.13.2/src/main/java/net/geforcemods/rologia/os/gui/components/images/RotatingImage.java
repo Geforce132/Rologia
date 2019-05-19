@@ -6,36 +6,36 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.texture.NativeImage;
 import net.minecraft.util.ResourceLocation;
 
-public class ScreenRotatingImage extends ScreenImage {
+public class RotatingImage extends Image {
 	
 	private float rotation = 0F;
 
-	public ScreenRotatingImage(RologiaOS os, NativeImage image, float rotationValue) {
+	public RotatingImage(RologiaOS os, NativeImage image, float rotationValue) {
 		super(os, image);
 		setRotation(rotationValue);
 	}
 	
-	public ScreenRotatingImage(RologiaOS os, ResourceLocation imageLocation, int width, int height, float rotationValue) {
+	public RotatingImage(RologiaOS os, ResourceLocation imageLocation, int width, int height, float rotationValue) {
 		super(os, imageLocation, width, height);
 		setRotation(rotationValue);
 	}
 	
-	public ScreenRotatingImage(RologiaOS os, String imagePath, int width, int height, float rotationValue) {
+	public RotatingImage(RologiaOS os, String imagePath, int width, int height, float rotationValue) {
 		super(os, imagePath, width, height);
 		setRotation(rotationValue);
 	}
 
-	public ScreenRotatingImage(RologiaOS os, NativeImage image, Position pos, float rotationValue) {
+	public RotatingImage(RologiaOS os, NativeImage image, Position pos, float rotationValue) {
 		super(os, image, pos);
 		setRotation(rotationValue);
 	}
 	
-	public ScreenRotatingImage(RologiaOS os, ResourceLocation imageLocation, Position pos, int width, int height, float rotationValue) {
+	public RotatingImage(RologiaOS os, ResourceLocation imageLocation, Position pos, int width, int height, float rotationValue) {
 		super(os, imageLocation, pos, width, height);
 		setRotation(rotationValue);
 	}
 	
-	public ScreenRotatingImage(RologiaOS os, String imagePath, Position pos, int width, int height, float rotationValue) {
+	public RotatingImage(RologiaOS os, String imagePath, Position pos, int width, int height, float rotationValue) {
 		super(os, imagePath, pos, width, height);
 		setRotation(rotationValue);
 	}

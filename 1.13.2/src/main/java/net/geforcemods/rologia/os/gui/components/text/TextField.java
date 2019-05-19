@@ -9,7 +9,7 @@ import net.geforcemods.rologia.os.gui.utils.GuiUtils;
 import net.geforcemods.rologia.os.misc.Position;
 import net.minecraft.client.renderer.GlStateManager;
 
-public class ScreenTextField extends ScreenComponent {
+public class TextField extends ScreenComponent {
 	
 	private String text = "";
 	private int width;
@@ -17,13 +17,13 @@ public class ScreenTextField extends ScreenComponent {
 	
 	private float textScale = 1.0F;
 
-	public ScreenTextField(RologiaOS OS, int w, int h) {
+	public TextField(RologiaOS OS, int w, int h) {
 		super(OS);
 		width = w;
 		height = h;
 	}
 
-	public ScreenTextField(RologiaOS OS, Position pos, int w, int h) {
+	public TextField(RologiaOS OS, Position pos, int w, int h) {
 		super(OS, pos);
 		width = w;
 		height = h;

@@ -8,9 +8,9 @@ import net.geforcemods.rologia.os.apps.AppInfo;
 import net.geforcemods.rologia.os.apps.events.AppEvent;
 import net.geforcemods.rologia.os.apps.events.AppEventReceiveMessage;
 import net.geforcemods.rologia.os.apps.events.AppEventType;
-import net.geforcemods.rologia.os.gui.components.ScreenButton;
+import net.geforcemods.rologia.os.gui.components.Button;
 import net.geforcemods.rologia.os.gui.components.ScreenComponent;
-import net.geforcemods.rologia.os.gui.components.text.ScreenTextField;
+import net.geforcemods.rologia.os.gui.components.text.TextField;
 import net.geforcemods.rologia.os.gui.screens.Screen;
 import net.geforcemods.rologia.os.gui.utils.Colors;
 import net.geforcemods.rologia.os.gui.utils.GuiUtils;
@@ -30,8 +30,8 @@ public class AppIM extends App implements IRologiaMessageHandler {
 
 	public static final float TEXT_SCALE = .6F;
 
-	private ScreenTextField textField = new ScreenTextField(getOS(), 40, 10);
-	private ScreenButton sendButton = new ScreenButton(getOS(), "Send");
+	private TextField textField = new TextField(getOS(), 40, 10);
+	private Button sendButton = new Button(getOS(), "Send");
 
 	private ArrayList<IMTab> tabs = new ArrayList<IMTab>();
 
@@ -43,6 +43,7 @@ public class AppIM extends App implements IRologiaMessageHandler {
 	
 	@Override
 	public void initializeApp() {
+		System.out.println("init");
 		textField.centerPosition(-15, 55);
 		textField.setTextScale(TEXT_SCALE);
 		sendButton.centerPosition(25, 55);
@@ -53,7 +54,7 @@ public class AppIM extends App implements IRologiaMessageHandler {
 	@Override
 	public void updateApp() {
 		boolean hasMessage = !textField.getText().isEmpty();
-
+		
 		if(hasMessage && !sendButton.isEnabled())
 			sendButton.setEnabled(true);
 		else if(!hasMessage && sendButton.isEnabled())

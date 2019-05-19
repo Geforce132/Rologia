@@ -6,19 +6,19 @@ import net.geforcemods.rologia.os.misc.Position;
 import net.geforcemods.rologia.os.sounds.Sounds;
 import net.geforcemods.rologia.utils.Utils;
 
-public class ScreenToggleButton extends ScreenComponent {
+public class ToggleButton extends ScreenComponent {
 	
 	private String text1, text2;
 	private boolean toggled = false;
 	private boolean enabled = true;
 	
-	public ScreenToggleButton(RologiaOS OS, String string1, String string2) {
+	public ToggleButton(RologiaOS OS, String string1, String string2) {
 		super(OS);
 		text1 = string1;
 		text2 = string2;
 	}
 
-	public ScreenToggleButton(RologiaOS OS, Position pos, String string1, String string2) {
+	public ToggleButton(RologiaOS OS, Position pos, String string1, String string2) {
 		super(OS, pos);
 		text1 = string1;
 		text2 = string2;
