@@ -2,7 +2,7 @@ package net.geforcemods.rologia.os.gui.components.images;
 
 import net.geforcemods.rologia.os.RologiaOS;
 import net.geforcemods.rologia.os.gui.components.ScreenComponent;
-import net.geforcemods.rologia.os.gui.utils.GuiUtils;
+import net.geforcemods.rologia.os.gui.screens.Screen;
 import net.geforcemods.rologia.os.misc.Position;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.AbstractGui;
@@ -60,7 +60,7 @@ public class Image extends ScreenComponent {
 	
 	public void drawComponent() {
 		getTextureManager().bindTexture(location);
-		AbstractGui.blit(getPosition().getX(), getPosition().getY(), 0, 0, imageWidth, imageHeight, imageWidth, imageHeight, this.blitOffset);
+		AbstractGui.blit(getPosition().getX(), getPosition().getY(), 0, 0, imageWidth, imageHeight, Screen.WATCH_SCREEN_X_SIZE, Screen.WATCH_SCREEN_Y_SIZE); // TODO make sure this doesn't break anything
 	}
 	
 	@Override

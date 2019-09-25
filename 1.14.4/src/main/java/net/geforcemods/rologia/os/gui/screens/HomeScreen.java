@@ -28,7 +28,7 @@ public class HomeScreen extends Screen {
 
 	@Override
 	public Image getBackgroundImage() {
-		return new Image(getOS(), "rologia:textures/gui/watch/boot_screen_dark.png", WATCH_SCREEN_X_SIZE, WATCH_SCREEN_Y_SIZE);
+		return new Image(getOS(), "rologia:textures/gui/watch/boot_screen_light.png", WATCH_SCREEN_X_SIZE, WATCH_SCREEN_Y_SIZE);
 	}
 
 }
