@@ -39,10 +39,10 @@ public class Notification {
 				GlStateManager.color4f(1, 1, 1, 1);
 				Minecraft.getInstance().getTextureManager().bindTexture(NOTIFICATION_BOX);
 
-				if(isMouseHoveringOverXButton(screen))
-					screen.drawTexturedModalRect(position.getX(), position.shiftY(7).getY(), 86, 0, 85, 25);
-				else
-					screen.drawTexturedModalRect(position.getX(), position.shiftY(7).getY(), 0, 0, 85, 25);
+				//if(isMouseHoveringOverXButton(screen))
+					//GuiUtils.drawTexturedModalRect(position.getX(), position.shiftY(7).getY(), 86, 0, 85, 25);
+				//else
+					//GuiUtils.drawTexturedModalRect(position.getX(), position.shiftY(7).getY(), 0, 0, 85, 25);
 
 				// Draw title string
 				GlStateManager.translated(position.getX(), 10 + position.getY(), 0);
@@ -63,7 +63,7 @@ public class Notification {
 				GlStateManager.translated(position.getX(), position.getY(), 0);
 				GlStateManager.scalef(0.415F, 0.415F, 0);
 				GlStateManager.translated(-position.getX(), -position.getY(), 0);
-				screen.drawTexturedModalRect((position.getX() + 4), position.getY() + (7) + 22, -1, 0, 40, 33);
+				//screen.drawTexturedModalRect((position.getX() + 4), position.getY() + (7) + 22, -1, 0, 40, 33);
 				GlStateManager.popMatrix();
 
 			}
@@ -77,7 +77,7 @@ public class Notification {
 			GlStateManager.translated(position.getX(), position.getY(), 0);
 			GlStateManager.scalef(0.2F, 0.2F, 0);
 			GlStateManager.translated(-position.getX(), -position.getY(), 0);
-			screen.drawTexturedModalRect(position.getX(), position.getY(), -1, 0, 38, 33);
+			//screen.drawTexturedModalRect(position.getX(), position.getY(), -1, 0, 38, 33);
 			GlStateManager.popMatrix();
 		}
 	}

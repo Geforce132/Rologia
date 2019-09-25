@@ -2,8 +2,10 @@ package net.geforcemods.rologia.os.gui.components.images;
 
 import net.geforcemods.rologia.os.RologiaOS;
 import net.geforcemods.rologia.os.gui.components.ScreenComponent;
+import net.geforcemods.rologia.os.gui.utils.GuiUtils;
 import net.geforcemods.rologia.os.misc.Position;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.client.renderer.texture.NativeImage;
 import net.minecraft.util.ResourceLocation;
@@ -58,7 +60,7 @@ public class Image extends ScreenComponent {
 	
 	public void drawComponent() {
 		getTextureManager().bindTexture(location);
-		drawModalRectWithCustomSizedTexture(getPosition().getX(), getPosition().getY(), 0, 0, imageWidth, imageHeight, imageWidth, imageHeight);
+		AbstractGui.blit(getPosition().getX(), getPosition().getY(), 0, 0, imageWidth, imageHeight, imageWidth, imageHeight, this.blitOffset);
 	}
 	
 	@Override

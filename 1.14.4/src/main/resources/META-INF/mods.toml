@@ -1,5 +1,5 @@
 modLoader="javafml" #mandatory
-loaderVersion="[24,)" #mandatory
+loaderVersion="[28,)" #mandatory
 issueTrackerURL="http://github.com/Geforce132/Rologia/issues"
 displayURL="https://discord.gg/D8VfMnT"
 logoFile="logo.png"
@@ -17,13 +17,13 @@ Greek for 'watches', Rologia is a smartwatch mod which adds functional apps and 
 [[dependencies.rologia]]
     modId="forge"
     mandatory=true
-    versionRange="[25,)"
+    versionRange="[28,)"
     ordering="NONE"
     side="BOTH"
 
 [[dependencies.rologia]]
     modId="minecraft"
     mandatory=true
-    versionRange="[1.13.2]"
+    versionRange="[1.14.4]"
     ordering="NONE"
     side="BOTH"

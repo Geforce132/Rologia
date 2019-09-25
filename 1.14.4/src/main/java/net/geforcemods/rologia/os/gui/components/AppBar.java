@@ -33,12 +33,12 @@ public class AppBar extends ScreenComponent {
 
 		for(int i = 0; i < barSize; i++)
 			if(i == iconHovering || i == getIconActive())
-				getScreen().drawTexturedModalRect(getPosition().shiftX(i * ICON_X_SPACING).getX(), getPosition().getY(), 6, 0, 6, 6);
+				GuiUtils.drawTexturedModalRect(getPosition().shiftX(i * ICON_X_SPACING).getX(), getPosition().getY(), 6, 0, 6, 6, this.blitOffset);
 			else
-				getScreen().drawTexturedModalRect(getPosition().shiftX(i * ICON_X_SPACING).getX(), getPosition().getY(), 0, 0, 6, 6);
+				GuiUtils.drawTexturedModalRect(getPosition().shiftX(i * ICON_X_SPACING).getX(), getPosition().getY(), 0, 0, 6, 6, this.blitOffset);
 
 		if(iconHovering != -1)
-			drawString(getFontRenderer(), iconName, getPosition().shiftX((getWidth() / 2) - (getFontRenderer().getStringWidth(iconName) / 2)).getX(), getPosition().shiftY(10).getY(), GuiUtils.toHex(getOS().getTheme().APP_BAR_HOVERING_TEXT));
+			drawString(getFontRenderer(), iconName, getPosition().shiftX((getWidth() / 2) - (getFontRenderer().getStringWidth(iconName) / 2)).getX(), getPosition().shiftY(10).getY(), net.geforcemods.rologia.os.gui.utils.GuiUtils.toHex(getOS().getTheme().APP_BAR_HOVERING_TEXT));
 	}
 
 	@Override

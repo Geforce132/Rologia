@@ -1,21 +1,16 @@
 package net.geforcemods.rologia.item;
 
-import net.geforcemods.rologia.gui.BaseInteractionObject;
-import net.geforcemods.rologia.gui.GuiHandler;
+import net.geforcemods.rologia.gui.GuiRologia;
 import net.geforcemods.rologia.os.RologiaOS;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.ActionResultType;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumHand;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.network.NetworkHooks;
 
 public class ItemRologia extends Item {
 	
@@ -34,10 +29,14 @@ public class ItemRologia extends Item {
 			return ActionResult.newResult(ActionResultType.PASS, itemStackIn);
 		}
 
-		if(world.isRemote)
+		if(world.isRemote) {
+			//System.out.println(Rologia.channel);
+			//System.out.println(Rologia.cTypeSmartWatch.getRegistryName());
+			//Rologia.channel.sendToServer(new OpenGui(Rologia.cTypeSmartWatch.getRegistryName(), world.getDimension().getType().getId(), player.getPosition()));
+			Minecraft.getInstance().displayGuiScreen(new GuiRologia(player, (ItemRologia) player.getHeldItem(hand).getItem()));
 			return ActionResult.newResult(ActionResultType.PASS, itemStackIn);
+		}
 		else{
-			NetworkHooks.openGui((EntityPlayerMP) player, new BaseInteractionObject(GuiHandler.WATCH_SCREEN));
 			return ActionResult.newResult(ActionResultType.PASS, itemStackIn);
 		}
 	}

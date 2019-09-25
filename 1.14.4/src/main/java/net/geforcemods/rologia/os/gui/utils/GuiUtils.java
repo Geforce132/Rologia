@@ -120,4 +120,8 @@ public class GuiUtils {
 		return longestWidth;
 	}
 
+	public static void drawTexturedModalRect(int x, int y, int u, int v, int width, int height, int zlevel) {
+		net.minecraftforge.fml.client.config.GuiUtils.drawTexturedModalRect(x, y, u, v, width, height, zlevel);
+	}
+
 }

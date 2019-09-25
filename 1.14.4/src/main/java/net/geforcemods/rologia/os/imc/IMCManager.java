@@ -7,13 +7,13 @@ import net.geforcemods.rologia.network.packets.CSendRologiaMessage;
 import net.geforcemods.rologia.network.packets.SSendRologiaMessage;
 import net.geforcemods.rologia.os.RologiaOS;
 import net.geforcemods.rologia.utils.Utils;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.fml.LogicalSide;
 import net.minecraftforge.fml.common.thread.EffectiveSide;
 import net.minecraftforge.fml.loading.FMLLoader;
-import net.minecraftforge.fml.network.NetworkDirection;
+import net.minecraftforge.fml.network.PacketDistributor;
 
 public class IMCManager {
 	
@@ -36,7 +36,7 @@ public class IMCManager {
 				handler.handleMessage(Rologia.instance.serverProxy.getRologiaInstance(), recipient.world, message);
 		}
 		else {
-			Rologia.channel.sendTo(new CSendRologiaMessage(message), ((EntityPlayerMP) recipient).connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
+			Rologia.channel.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity)recipient), new CSendRologiaMessage(message));
 
 			for(IRologiaMessageHandler handler : Rologia.instance.serverProxy.getHandlers())
 				handler.handleMessage(null, recipient.world, message);

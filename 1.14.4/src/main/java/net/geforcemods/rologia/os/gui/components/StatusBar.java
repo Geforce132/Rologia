@@ -48,7 +48,7 @@ public class StatusBar extends ScreenComponent {
 				GlStateManager.translated(getPosition().shiftX(40).getX(), getPosition().getY(), 0);
 				GlStateManager.scalef(0.2F, 0.2F, 0);
 				GlStateManager.translated(-getPosition().shiftX(40).getX(), -getPosition().getY(), 0);
-				drawTexturedModalRect(getPosition().shiftX(40).getX(), getPosition().getY(), 38, 0, 37, 33);
+				GuiUtils.drawTexturedModalRect(getPosition().shiftX(40).getX(), getPosition().getY(), 38, 0, 37, 33, this.blitOffset);
 				GlStateManager.popMatrix();
 
 				break;
