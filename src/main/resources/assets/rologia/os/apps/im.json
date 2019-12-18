@@ -1,0 +1,22 @@
+{
+  "app_id": "im",
+  "app_name": "Instant Messaging",
+  "app_version": "1.0.0",
+  "app_icon": "",
+  "app_background_image": "rologia:textures/gui/watch/boot_screen_light.png",
+  "components": [{
+  	"type": "ScreenText",
+    "text": "S",
+    "position": {
+      "xPos": 0,
+      "yPos": 0
+    },
+    "defaultPos": {
+      "xPos": 0,
+      "yPos": 0
+    },
+    "visible": true,
+    "scale": 1.0,
+    "colorValue": 55555
+    }]
+}
