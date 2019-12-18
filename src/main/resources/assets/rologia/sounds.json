@@ -1,8 +1,4 @@
 {
-    "alarm": {"category": "block","sounds":["misc/alarm"]},
-    "cameraZoomIn": {"category": "block","sounds":["misc/cameraZoomIn"]},
-    "cameraSnap": {"category": "block","sounds":["misc/cameraSnap"]},
-    "taserFire": {"category": "player","sounds":["misc/taserFire"]},
-    "electrified": {"category": "block","sounds":["misc/electrified"]},
-    "lock": {"category": "block","sounds":["misc/lock"]}
+    "beep_1": {"category": "item","sounds":["rologia:beep_1"], "subtitle": "rologia.subtitle.beep"},
+    "beep_2": {"category": "item","sounds":["rologia:beep_2"], "subtitle": "rologia.subtitle.beep"}
 }
