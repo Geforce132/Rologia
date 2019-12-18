@@ -9,4 +9,16 @@
 /output
 
 #ForgeGradle
+/build
+/.gradle
+/1.10.2/.gradle
+/1.10.2/build
+/eclipse/assets
+/libs
+/bin/
+/run/*
+!/run/rologia
+/out/
 gradle.properties
+/eclipse/
+/.settings/
