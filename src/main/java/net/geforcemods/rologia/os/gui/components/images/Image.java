@@ -8,48 +8,48 @@ import net.minecraft.client.renderer.texture.DynamicTexture;
 import net.minecraft.client.renderer.texture.NativeImage;
 import net.minecraft.util.ResourceLocation;
 
-public class ScreenImage extends ScreenComponent {
+public class Image extends ScreenComponent {
 	
 	private ResourceLocation location;
 	private int imageWidth;
 	private int imageHeight;
 	
-	public ScreenImage(RologiaOS os, String imagePath, int width, int height) {
+	public Image(RologiaOS os, String imagePath, int width, int height) {
 		super(os);
 		location = new ResourceLocation(imagePath);
 		imageWidth = width;
 		imageHeight = height;
 	}
 	
-	public ScreenImage(RologiaOS os, ResourceLocation imageLocation, int width, int height) {
+	public Image(RologiaOS os, ResourceLocation imageLocation, int width, int height) {
 		super(os);
 		location = imageLocation;
 		imageWidth = width;
 		imageHeight = height;
 	}
 
-	public ScreenImage(RologiaOS os, NativeImage image) {
+	public Image(RologiaOS os, NativeImage image) {
 		super(os);
 		location = Minecraft.getInstance().getTextureManager().getDynamicTextureLocation(image.toString(), new DynamicTexture(image));
 		imageWidth = image.getWidth();
 		imageHeight = image.getHeight();
 	}
 	
-	public ScreenImage(RologiaOS os, NativeImage image, Position pos) {
+	public Image(RologiaOS os, NativeImage image, Position pos) {
 		super(os, pos);
 		location = Minecraft.getInstance().getTextureManager().getDynamicTextureLocation(image.toString(), new DynamicTexture(image));
 		imageWidth = image.getWidth();
 		imageHeight = image.getHeight();
 	}
 	
-	public ScreenImage(RologiaOS os, ResourceLocation imageLocation, Position pos, int width, int height) {
+	public Image(RologiaOS os, ResourceLocation imageLocation, Position pos, int width, int height) {
 		super(os, pos);
 		location = imageLocation;
 		imageWidth = width;
 		imageHeight = height;
 	}
 	
-	public ScreenImage(RologiaOS os, String imagePath, Position pos, int width, int height) {
+	public Image(RologiaOS os, String imagePath, Position pos, int width, int height) {
 		super(os, pos);
 		location = new ResourceLocation(imagePath);
 		imageWidth = width;

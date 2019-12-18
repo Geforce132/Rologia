@@ -295,6 +295,13 @@ public class RologiaOS {
 	public void setApp(App app) {
 		setApp(app.getAppID());
 	}
+	
+	public void setAppByName(String appName) {
+		for(App app : apps) {
+			if(app.getAppName().equals(appName))
+				setApp(app.getAppID());
+		}
+	}
 
 	public void clearApp() {
 		if(currentApp == null) return;
@@ -364,6 +371,15 @@ public class RologiaOS {
 				return app;
 		}
 
+		return null;
+	}
+	
+	public App getAppByName(String appName) {
+		for(App app : apps) {
+			if(app.getAppName().equals(appName))
+				return app;
+		}
+		
 		return null;
 	}
 

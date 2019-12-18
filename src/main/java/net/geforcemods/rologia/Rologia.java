@@ -19,6 +19,8 @@ import net.minecraftforge.fml.ExtensionPoint;
 import net.minecraftforge.fml.InterModComms;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
+import net.minecraftforge.fml.common.Mod.EventBusSubscriber.Bus;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
 import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
@@ -28,6 +30,7 @@ import net.minecraftforge.fml.network.simple.SimpleChannel;
 import net.minecraftforge.registries.ObjectHolder;
 
 @Mod(value=Rologia.MOD_ID)
+@EventBusSubscriber(bus=Bus.MOD)
 public class Rologia {
 	
 	public static final String MOD_ID = "rologia";
@@ -45,11 +48,14 @@ public class Rologia {
 	private IMCManager imcManager = new IMCManager();
 
 	@ObjectHolder(MOD_ID + ":"+ ItemRologia.NAME)
-	public static Item smartwatch;
+	public static Item smart_watch;
 	
 	public Rologia() {
 		instance = this;
 		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::onFMLCommonSetup);
+		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::init);
+		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::processIMCMessages);
+		FMLJavaModLoadingContext.get().getModEventBus().addGenericListener(Item.class, this::registerItems);
 		MinecraftForge.EVENT_BUS.register(new RologiaEventHandler());
 		ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.GUIFACTORY, () -> GuiHandler::getClientGuiElement);
 	}
@@ -61,26 +67,23 @@ public class Rologia {
 	}
 	
 	@SubscribeEvent
-	public static void registerItems(Register<Item> event)
+	public void registerItems(Register<Item> event)
 	{
-		event.getRegistry().register(new ItemRologia().setRegistryName(smartwatch.getRegistryName()));
+		smart_watch = new ItemRologia().setRegistryName(new ResourceLocation(Rologia.MOD_ID, ItemRologia.NAME));
+		event.getRegistry().register(smart_watch);
 	}
 	
 	@SubscribeEvent
 	public void init(InterModEnqueueEvent event) {
 		serverProxy.setupProxy();
-		
-		InterModComms.sendTo(MOD_ID, "register", () -> {return "net.geforcemods.rologia.MessageHandler";});
+		InterModComms.sendTo(MOD_ID, "register", () -> {return "net.geforcemods.rologia.os.apps.im.AppIM"; });
 	}
 
 	@SubscribeEvent
 	public void processIMCMessages(InterModProcessEvent event) {
 		event.getIMCStream().forEach(message -> {
 			if(message.getMethod().equalsIgnoreCase("register")) {
-				//TODO
-				System.out.println(message.getMessageSupplier().get());
-				//Supplier<Function<Void, Void>> supplier = message.getMessageSupplier().get();
-                //supplier.get().apply(null);
+				IMCManager.registerMessageHandler((String) message.getMessageSupplier().get());
 			}
 		});
 	}

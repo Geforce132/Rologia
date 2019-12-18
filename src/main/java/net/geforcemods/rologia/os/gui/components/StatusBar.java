@@ -9,13 +9,15 @@ import net.geforcemods.rologia.os.time.TimeConstants;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
 
-public class ScreenStatusBar extends ScreenComponent {
+public class StatusBar extends ScreenComponent {
+	
+	public static final int DEFAULT_WIDTH = 7;
 
-	public ScreenStatusBar(RologiaOS os) {
+	public StatusBar(RologiaOS os) {
 		super(os);
 	}
 	
-	public ScreenStatusBar(RologiaOS os, Position pos) {
+	public StatusBar(RologiaOS os, Position pos) {
 		super(os, pos);
 	}
 
@@ -64,7 +66,7 @@ public class ScreenStatusBar extends ScreenComponent {
 
 	@Override
 	public boolean mouseClick(Position mousePos, int mouseButtonClicked) {
-		if(mousePos.getY() >= getScreen().getPosition().getY() && mousePos.getY() <= getScreen().getPosition().getY() + 7 && getOS().hasNotifications())
+		if(mousePos.getY() >= getScreen().getPosition().getY() && mousePos.getY() <= getScreen().getPosition().getY() + DEFAULT_WIDTH && getOS().hasNotifications())
 			return true;
 
 		for(int i = 0; i < getOS().getNotifications().size(); i++) {
@@ -87,10 +89,10 @@ public class ScreenStatusBar extends ScreenComponent {
 	public int getWidth() {
 		return Screen.WATCH_SCREEN_X_SIZE;
 	}
-	
+
 	@Override
 	public int getHeight() {
-		return isExpanded() ? 7 + (getOS().getNotifications().size() * Notification.NOTIFICATION_HEIGHT) : 7;
+		return isExpanded() ? DEFAULT_WIDTH + (getOS().getNotifications().size() * Notification.NOTIFICATION_HEIGHT) : DEFAULT_WIDTH;
 	}
 
 }

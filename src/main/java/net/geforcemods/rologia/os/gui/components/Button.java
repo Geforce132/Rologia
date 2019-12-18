@@ -4,16 +4,16 @@ import net.geforcemods.rologia.os.RologiaOS;
 import net.geforcemods.rologia.os.gui.utils.GuiUtils;
 import net.geforcemods.rologia.os.misc.Position;
 
-public class ScreenButton extends ScreenComponent {
+public class Button extends ScreenComponent {
 	
 	private String text;
 	
-	public ScreenButton(RologiaOS OS, String string) {
+	public Button(RologiaOS OS, String string) {
 		super(OS);
 		text = string;
 	}
 
-	public ScreenButton(RologiaOS OS, Position pos, String string) {
+	public Button(RologiaOS OS, Position pos, String string) {
 		super(OS, pos);
 		text = string;
 	}

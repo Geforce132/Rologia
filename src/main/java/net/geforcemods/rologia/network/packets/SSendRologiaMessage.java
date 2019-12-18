@@ -3,14 +3,15 @@ package net.geforcemods.rologia.network.packets;
 import java.util.function.Supplier;
 
 import net.geforcemods.rologia.Rologia;
+import net.geforcemods.rologia.os.imc.RologiaMessage;
 import net.geforcemods.rologia.os.imc.IRologiaMessageHandler;
-import net.geforcemods.rologia.utils.PlayerUtils;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
 
 public class SSendRologiaMessage {
 
-	private String destinationPlayer;
+	private String sendingPlayer;
+	private String receivingPlayer;
 	private String key;
 	private String body;
 
@@ -18,20 +19,23 @@ public class SSendRologiaMessage {
 
 	}
 
-	public SSendRologiaMessage(String destination, String key, String body) {
-		this.destinationPlayer = destination;
-		this.key = key;
-		this.body = body;
+	public SSendRologiaMessage(RologiaMessage message) {
+		this.sendingPlayer = message.senderName;
+		this.receivingPlayer = message.recipientName;
+		this.key = message.key;
+		this.body = message.body;
 	}
 
 	public void fromBytes(PacketBuffer buf) {
-		destinationPlayer = buf.readString(Integer.MAX_VALUE);
-		key = buf.readString(Integer.MAX_VALUE);
-		body = buf.readString(Integer.MAX_VALUE);
+		sendingPlayer = buf.readString(Integer.MAX_VALUE / 4);
+		receivingPlayer = buf.readString(Integer.MAX_VALUE / 4);
+		key = buf.readString(Integer.MAX_VALUE / 4);
+		body = buf.readString(Integer.MAX_VALUE / 4);
 	}
 
 	public void toBytes(PacketBuffer buf) {
-		buf.writeString(destinationPlayer);
+		buf.writeString(sendingPlayer);
+		buf.writeString(receivingPlayer);
 		buf.writeString(key);
 		buf.writeString(body);
 	}
@@ -50,11 +54,9 @@ public class SSendRologiaMessage {
 	}
 
 	public static void onMessage(SSendRologiaMessage packet, Supplier<NetworkEvent.Context> ctx) {
-		if(PlayerUtils.isPlayerOnline(packet.destinationPlayer)) {
-			for(IRologiaMessageHandler handler : Rologia.instance.serverProxy.getHandlers())
-				handler.handleMessage(null, ctx.get().getSender().world, ctx.get().getSender(), packet.key, packet.body);
-
-			//Rologia.channel.sendTo(new CSendRologiaMessage(packet.key, packet.body), (EntityPlayerMP) PlayerUtils.getPlayerFromName(packet.destinationPlayer));
+		for(IRologiaMessageHandler handler : Rologia.instance.serverProxy.getHandlers()) {
+			RologiaMessage message = new RologiaMessage(packet.sendingPlayer, packet.receivingPlayer, packet.key, packet.body);
+			handler.handleMessage(null, ctx.get().getSender().world, message);
 		}
 		
 		ctx.get().setPacketHandled(true);

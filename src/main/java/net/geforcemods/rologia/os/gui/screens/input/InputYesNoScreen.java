@@ -1,10 +1,10 @@
 package net.geforcemods.rologia.os.gui.screens.input;
 
 import net.geforcemods.rologia.os.RologiaOS;
-import net.geforcemods.rologia.os.gui.components.ScreenButton;
+import net.geforcemods.rologia.os.gui.components.Button;
 import net.geforcemods.rologia.os.gui.components.ScreenComponent;
-import net.geforcemods.rologia.os.gui.components.images.ScreenImage;
-import net.geforcemods.rologia.os.gui.components.text.ScreenText;
+import net.geforcemods.rologia.os.gui.components.images.Image;
+import net.geforcemods.rologia.os.gui.components.text.Text;
 import net.geforcemods.rologia.os.gui.screens.Screen;
 import net.geforcemods.rologia.os.gui.utils.GuiUtils;
 import net.geforcemods.rologia.os.misc.Position;
@@ -13,9 +13,9 @@ public class InputYesNoScreen extends Screen {
 
 	public static final String NAME = "input_decision";
 
-	private ScreenText prompt = new ScreenText(getOS(), null, GuiUtils.toHex(getOS().getTheme().INPUT_YES_NO_PROMPT));
-	private ScreenButton yesButton = new ScreenButton(getOS(), "Yes");
-	private ScreenButton noButton = new ScreenButton(getOS(), "No");
+	private Text prompt = new Text(getOS(), null, GuiUtils.toHex(getOS().getTheme().INPUT_YES_NO_PROMPT));
+	private Button yesButton = new Button(getOS(), "Yes");
+	private Button noButton = new Button(getOS(), "No");
 
 	private Screen screenToReturnTo;
 
@@ -60,8 +60,8 @@ public class InputYesNoScreen extends Screen {
 	}
 
 	@Override
-	public ScreenImage getBackgroundImage() {
-		return new ScreenImage(getOS(), "rologia:textures/gui/watch/boot_screen_light.png", WATCH_SCREEN_X_SIZE, WATCH_SCREEN_Y_SIZE);	
+	public Image getBackgroundImage() {
+		return new Image(getOS(), "rologia:textures/gui/watch/boot_screen_light.png", WATCH_SCREEN_X_SIZE, WATCH_SCREEN_Y_SIZE);	
 	}
 
 }

@@ -4,13 +4,17 @@ import java.util.Iterator;
 import java.util.List;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.audio.SimpleSound;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
+import net.minecraft.util.SoundEvent;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.fml.loading.FMLLoader;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.fml.LogicalSide;
+import net.minecraftforge.fml.common.thread.EffectiveSide;
 import net.minecraftforge.fml.server.ServerLifecycleHooks;
 
-public class PlayerUtils {
+public class Utils {
 
 	/**
 	 * Sets the given player's position and rotation. <p>
@@ -28,7 +32,7 @@ public class PlayerUtils {
 	 * Args: playerName.
 	 */
 	public static EntityPlayer getPlayerFromName(String par1) {
-		if(FMLLoader.getDist() == Dist.CLIENT)
+		if(EffectiveSide.get() == LogicalSide.CLIENT)
 		{
 			List<?> players = Minecraft.getInstance().world.playerEntities;
 			Iterator<?> iterator = players.iterator();
@@ -37,7 +41,7 @@ public class PlayerUtils {
 			{
 				EntityPlayer tempPlayer = (EntityPlayer) iterator.next();
 				
-				if(tempPlayer.getName().equals(par1))
+				if(tempPlayer.getName().getFormattedText().equals(par1))
 					return tempPlayer;
 			}
 
@@ -52,7 +56,7 @@ public class PlayerUtils {
 			{
 				EntityPlayer tempPlayer = (EntityPlayer) iterator.next();
 
-				if(tempPlayer.getName().equals(par1))
+				if(tempPlayer.getName().getFormattedText().equals(par1))
 					return tempPlayer;
 			}
 
@@ -60,6 +64,11 @@ public class PlayerUtils {
 		}
 	}
 
+	/**
+	 * Returns the given player's unique UUID.
+	 * 
+	 * Args: the player to check
+	 */
 	public static String getPlayerUUID(EntityPlayer player) {
 		return player.getGameProfile().getId().toString();
 	}
@@ -71,13 +80,13 @@ public class PlayerUtils {
 	 */
 	public static boolean isPlayerOnline(String par1) {
 
-		if(FMLLoader.getDist() == Dist.CLIENT)
+		if(EffectiveSide.get() == LogicalSide.CLIENT)
 		{
 			for(int i = 0; i < Minecraft.getInstance().world.playerEntities.size(); i++)
 			{
 				EntityPlayer player = Minecraft.getInstance().world.playerEntities.get(i);
 
-				if(player != null && player.getName().equals(par1))
+				if(player != null && player.getName().getFormattedText().equals(par1))
 					return true;
 			}
 
@@ -114,5 +123,10 @@ public class PlayerUtils {
 		
 		return null;
 	}
-	
+
+	@OnlyIn(Dist.CLIENT)
+	public static void playSound(SoundEvent sound) {
+		Minecraft.getInstance().getSoundHandler().play(SimpleSound.master(sound, 0.8F));
+	}
+
 }

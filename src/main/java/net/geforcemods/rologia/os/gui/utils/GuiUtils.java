@@ -66,6 +66,10 @@ public class GuiUtils {
 		GlStateManager.disableBlend();
 	}
 	
+	public static void drawFilledRect(int x, int y, int width, int height, Color color, float transparency) {
+		drawFilledRect(new Position(x, y), width, height, color, transparency);
+	}
+	
 	public static void drawItem(Position startPos, Item item) {
 		GlStateManager.pushMatrix();
 		GlStateManager.enableBlend();

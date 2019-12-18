@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 import net.geforcemods.rologia.os.RologiaOS;
 import net.geforcemods.rologia.os.gui.components.ScreenComponent;
-import net.geforcemods.rologia.os.gui.components.images.ScreenImage;
-import net.geforcemods.rologia.os.gui.components.text.ScreenText;
+import net.geforcemods.rologia.os.gui.components.images.Image;
+import net.geforcemods.rologia.os.gui.components.text.Text;
 import net.geforcemods.rologia.os.gui.utils.GuiUtils;
 import net.geforcemods.rologia.os.misc.Position;
 
@@ -26,8 +26,9 @@ public class SelectionScreen extends Screen {
 
 			if(appsDisplayed.contains(appName)) continue;
 
-			ScreenComponent text = new ScreenText(getOS(), appName, GuiUtils.toHex(getOS().getTheme().SELECTION_TEXT));
+			ScreenComponent text = new Text(getOS(), appName, GuiUtils.toHex(getOS().getTheme().SELECTION_TEXT));
 			text.centerPosition(0, -35 + (20 * i));
+			text.setHoverColor(GuiUtils.toHex(getOS().getTheme().SELECTION_TEXT_HOVERING));
 			addComponent(text);
 
 			appsDisplayed.add(appName);
@@ -35,7 +36,15 @@ public class SelectionScreen extends Screen {
 	}
 
 	@Override
-	public void onComponentClicked(ScreenComponent component, Position mousePos, int mouseButtonClicked) {}
+	public void onComponentClicked(ScreenComponent component, Position mousePos, int mouseButtonClicked) {
+		if(component instanceof Text) {
+			String text = ((Text) component).getText();
+			
+			if(appsDisplayed.contains(text))
+				getOS().setAppByName(text);
+		}
+			
+	}
 
 	@Override
 	public String getScreenName() {
@@ -43,8 +52,8 @@ public class SelectionScreen extends Screen {
 	}
 
 	@Override
-	public ScreenImage getBackgroundImage() {
-		return new ScreenImage(getOS(), "rologia:textures/gui/watch/boot_screen_dark.png", WATCH_SCREEN_X_SIZE, WATCH_SCREEN_Y_SIZE);
+	public Image getBackgroundImage() {
+		return new Image(getOS(), "rologia:textures/gui/watch/boot_screen_dark.png", WATCH_SCREEN_X_SIZE, WATCH_SCREEN_Y_SIZE);
 	}
 
 }

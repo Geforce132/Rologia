@@ -38,7 +38,7 @@ public class BaseInteractionObject implements IInteractionObject
 	@Override
 	public Container createContainer(InventoryPlayer playerInventory, EntityPlayer player)
 	{
-		return null;
+		return new ContainerGeneric();
 	}
 
 	@Override

@@ -2,7 +2,7 @@ package net.geforcemods.rologia.os.gui.screens;
 
 import net.geforcemods.rologia.os.RologiaOS;
 import net.geforcemods.rologia.os.gui.components.ScreenComponent;
-import net.geforcemods.rologia.os.gui.components.images.ScreenImage;
+import net.geforcemods.rologia.os.gui.components.images.Image;
 import net.geforcemods.rologia.os.misc.Position;
 
 public class BootScreen extends Screen {
@@ -38,8 +38,8 @@ public class BootScreen extends Screen {
 	}
 
 	@Override
-	public ScreenImage getBackgroundImage() {
-		return new ScreenImage(getOS(), "minewatch:textures/gui/watch/default.png", WATCH_SCREEN_X_SIZE, WATCH_SCREEN_Y_SIZE);	
+	public Image getBackgroundImage() {
+		return new Image(getOS(), "minewatch:textures/gui/watch/default.png", WATCH_SCREEN_X_SIZE, WATCH_SCREEN_Y_SIZE);	
 	}
 
 }

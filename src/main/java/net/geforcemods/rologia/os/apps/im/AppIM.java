@@ -8,18 +8,21 @@ import net.geforcemods.rologia.os.apps.AppInfo;
 import net.geforcemods.rologia.os.apps.events.AppEvent;
 import net.geforcemods.rologia.os.apps.events.AppEventReceiveMessage;
 import net.geforcemods.rologia.os.apps.events.AppEventType;
-import net.geforcemods.rologia.os.gui.components.ScreenButton;
+import net.geforcemods.rologia.os.gui.components.Button;
 import net.geforcemods.rologia.os.gui.components.ScreenComponent;
-import net.geforcemods.rologia.os.gui.components.text.ScreenTextField;
+import net.geforcemods.rologia.os.gui.components.text.TextField;
 import net.geforcemods.rologia.os.gui.screens.Screen;
 import net.geforcemods.rologia.os.gui.utils.Colors;
 import net.geforcemods.rologia.os.gui.utils.GuiUtils;
 import net.geforcemods.rologia.os.imc.IMCManager;
+import net.geforcemods.rologia.os.imc.RologiaMessage;
+import net.geforcemods.rologia.os.imc.IRologiaMessageHandler;
 import net.geforcemods.rologia.os.misc.Position;
 import net.geforcemods.rologia.os.sounds.Sounds;
+import net.minecraft.world.World;
 
 @AppInfo(id=AppIM.ID, name = AppIM.NAME, version = AppIM.VERSION)
-public class AppIM extends App {
+public class AppIM extends App implements IRologiaMessageHandler {
 	
 	public static final String ID = "im";
 	public static final String NAME = "IM Chat";
@@ -27,10 +30,12 @@ public class AppIM extends App {
 
 	public static final float TEXT_SCALE = .6F;
 
-	private ScreenTextField textField = new ScreenTextField(getOS(), 40, 10);
-	private ScreenButton sendButton = new ScreenButton(getOS(), "Send");
+	private TextField textField = new TextField(getOS(), 40, 10);
+	private Button sendButton = new Button(getOS(), "Send");
 
 	private ArrayList<IMTab> tabs = new ArrayList<IMTab>();
+
+	public AppIM() {}
 
 	public AppIM(RologiaOS rologia) {
 		super(rologia);
@@ -38,6 +43,7 @@ public class AppIM extends App {
 	
 	@Override
 	public void initializeApp() {
+		System.out.println("init");
 		textField.centerPosition(-15, 55);
 		textField.setTextScale(TEXT_SCALE);
 		sendButton.centerPosition(25, 55);
@@ -48,7 +54,7 @@ public class AppIM extends App {
 	@Override
 	public void updateApp() {
 		boolean hasMessage = !textField.getText().isEmpty();
-
+		
 		if(hasMessage && !sendButton.isEnabled())
 			sendButton.setEnabled(true);
 		else if(!hasMessage && sendButton.isEnabled())
@@ -66,9 +72,14 @@ public class AppIM extends App {
 	@Override
 	public void onComponentClicked(ScreenComponent component, Position mousePos, int mouseButtonClicked) {
 		if(component == sendButton) {
-			IMCManager.sendMessage(getOS().getUser().getName().getFormattedText(), IMCManager.IM, textField.getText());
+			IMCManager.sendMessage(getOS().getUser().getName().getFormattedText(), getOS().getUser().getName().getFormattedText(), IMCManager.IM, textField.getText());
 			textField.clearText();
 		}
+	}
+
+	@Override
+	public void handleMessage(RologiaOS os, World world, RologiaMessage message) {		
+		System.out.printf("Rologia message: %s %s %s %s %s\n", message.body, world.isRemote ? "CLIENT" : "SERVER", os, message.getSender(), message.getRecipient());
 	}
 
 	@Override

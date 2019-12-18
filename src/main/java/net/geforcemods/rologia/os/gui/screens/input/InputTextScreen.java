@@ -1,11 +1,11 @@
 package net.geforcemods.rologia.os.gui.screens.input;
 
 import net.geforcemods.rologia.os.RologiaOS;
-import net.geforcemods.rologia.os.gui.components.ScreenButton;
+import net.geforcemods.rologia.os.gui.components.Button;
 import net.geforcemods.rologia.os.gui.components.ScreenComponent;
-import net.geforcemods.rologia.os.gui.components.images.ScreenImage;
-import net.geforcemods.rologia.os.gui.components.text.ScreenText;
-import net.geforcemods.rologia.os.gui.components.text.ScreenTextField;
+import net.geforcemods.rologia.os.gui.components.images.Image;
+import net.geforcemods.rologia.os.gui.components.text.Text;
+import net.geforcemods.rologia.os.gui.components.text.TextField;
 import net.geforcemods.rologia.os.gui.screens.Screen;
 import net.geforcemods.rologia.os.gui.utils.GuiUtils;
 import net.geforcemods.rologia.os.misc.Position;
@@ -14,9 +14,9 @@ public class InputTextScreen extends Screen {
 	
 	public static final String NAME = "input_text";
 
-	private ScreenText prompt = new ScreenText(getOS(), null, GuiUtils.toHex(getOS().getTheme().INPUT_TEXT_PROMPT));
-	private ScreenTextField textField = new ScreenTextField(getOS(), 50, 12);
-	private ScreenButton doneButton = new ScreenButton(getOS(), "Done");
+	private Text prompt = new Text(getOS(), null, GuiUtils.toHex(getOS().getTheme().INPUT_TEXT_PROMPT));
+	private TextField textField = new TextField(getOS(), 50, 12);
+	private Button doneButton = new Button(getOS(), "Done");
 
 	private Screen screenToReturnTo;
 
@@ -52,8 +52,8 @@ public class InputTextScreen extends Screen {
 	}
 
 	@Override
-	public ScreenImage getBackgroundImage() {
-		return new ScreenImage(getOS(), "rologia:textures/gui/watch/boot_screen_dark.png", WATCH_SCREEN_X_SIZE, WATCH_SCREEN_Y_SIZE);	
+	public Image getBackgroundImage() {
+		return new Image(getOS(), "rologia:textures/gui/watch/boot_screen_dark.png", WATCH_SCREEN_X_SIZE, WATCH_SCREEN_Y_SIZE);	
 	}
 
 }

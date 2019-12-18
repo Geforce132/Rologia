@@ -34,7 +34,7 @@ public class ItemRologia extends Item {
 		if(world.isRemote)
 			return ActionResult.newResult(EnumActionResult.PASS, itemStackIn);
 		else{
-			NetworkHooks.openGui((EntityPlayerMP) player, new BaseInteractionObject(GuiHandler.WATCH_SCREEN), null);
+			NetworkHooks.openGui((EntityPlayerMP) player, new BaseInteractionObject(GuiHandler.WATCH_SCREEN));
 			return ActionResult.newResult(EnumActionResult.PASS, itemStackIn);
 		}
 	}

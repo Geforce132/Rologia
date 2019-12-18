@@ -6,6 +6,6 @@ import net.minecraft.world.World;
 
 public interface IRologiaMessageHandler {
 
-	public void handleMessage(RologiaOS os, World world, EntityPlayer recipient, String key, String body);
+	public void handleMessage(RologiaOS os, World world, RologiaMessage message);
 
 }
