@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import net.geforcemods.rologia.os.RologiaOS;
 import net.geforcemods.rologia.os.gui.components.ScreenComponent;
 import net.geforcemods.rologia.os.gui.screens.Screen;
+import net.geforcemods.rologia.os.sounds.Sounds;
+import net.geforcemods.rologia.utils.Utils;
 
 public class InputManager {
 	
@@ -38,6 +40,10 @@ public class InputManager {
 				}
 
 				screen.onComponentClicked(component, screen.getMousePosition(), mouseButtonClicked);
+
+				if(component.getClickSound() != null)
+					Utils.playSound(component.getClickSound());
+
 				clickedOnComponent = true;
 			}
 		}

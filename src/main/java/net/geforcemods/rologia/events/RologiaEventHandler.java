@@ -18,7 +18,7 @@ public class RologiaEventHandler {
 	@SubscribeEvent
 	@OnlyIn(Dist.CLIENT)
 	public void onSoundPlayed(PlaySoundAtEntityEvent event) {
-		if(event.getEntity() == null) return;
+		if(event.getEntity() == null || event.getSound() == null) return;
 
 		PlayerEntity player = Minecraft.getInstance().player;
 		if(event.getEntity() == player && event.getSound().getName().getPath().endsWith(".step")) {

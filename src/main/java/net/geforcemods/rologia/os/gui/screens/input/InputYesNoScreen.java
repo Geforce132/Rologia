@@ -54,6 +54,18 @@ public class InputYesNoScreen extends Screen {
 		}
 	}
 
+	public Button getYesButton() {
+		return yesButton;
+	}
+
+	public Button getNoButton() {
+		return noButton;
+	}
+
+	public Screen getReturnScreen() {
+		return screenToReturnTo;
+	}
+
 	@Override
 	public String getScreenName() {
 		return NAME + "_" + screenToReturnTo.getScreenName();

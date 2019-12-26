@@ -12,6 +12,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundEvent;
 
 public abstract class ScreenComponent extends net.minecraft.client.gui.screen.Screen {
 	
@@ -238,6 +239,10 @@ public abstract class ScreenComponent extends net.minecraft.client.gui.screen.Sc
 
 	public Theme getTheme() {
 		return os.getTheme();
+	}
+
+	public SoundEvent getClickSound() {
+		return null;
 	}
 
 	public RologiaOS getOS() {
