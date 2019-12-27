@@ -101,7 +101,7 @@ public class GuiUtils {
 		
 		if(keywords != null) {
 			for(int i = 0; i < keywords.length; i++) {			
-				text = text.replace("$$" + keywords[i] + "$$", OS.getCurrentApp().replaceKeywords(keywords[i]).toString());
+				text = text.replace("$$" + keywords[i] + "$$", OS.getCurrentScreen().replaceKeywords(keywords[i]).toString());
 			}
 		}
 		

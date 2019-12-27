@@ -3,26 +3,26 @@ package net.geforcemods.rologia.os.apps.im;
 import java.util.ArrayList;
 
 import net.geforcemods.rologia.os.RologiaOS;
-import net.geforcemods.rologia.os.apps.App;
 import net.geforcemods.rologia.os.apps.AppInfo;
 import net.geforcemods.rologia.os.apps.events.AppEvent;
 import net.geforcemods.rologia.os.apps.events.AppEventReceiveMessage;
 import net.geforcemods.rologia.os.apps.events.AppEventType;
 import net.geforcemods.rologia.os.gui.components.Button;
 import net.geforcemods.rologia.os.gui.components.ScreenComponent;
+import net.geforcemods.rologia.os.gui.components.images.Image;
 import net.geforcemods.rologia.os.gui.components.text.TextField;
 import net.geforcemods.rologia.os.gui.screens.Screen;
 import net.geforcemods.rologia.os.gui.utils.Colors;
 import net.geforcemods.rologia.os.gui.utils.GuiUtils;
 import net.geforcemods.rologia.os.imc.IMCManager;
-import net.geforcemods.rologia.os.imc.RologiaMessage;
 import net.geforcemods.rologia.os.imc.IRologiaMessageHandler;
+import net.geforcemods.rologia.os.imc.RologiaMessage;
 import net.geforcemods.rologia.os.misc.Position;
 import net.geforcemods.rologia.os.sounds.Sounds;
 import net.minecraft.world.World;
 
 @AppInfo(id=AppIM.ID, name = AppIM.NAME, version = AppIM.VERSION)
-public class AppIM extends App implements IRologiaMessageHandler {
+public class AppIM extends Screen implements IRologiaMessageHandler {
 	
 	public static final String ID = "im";
 	public static final String NAME = "IM Chat";
@@ -35,14 +35,12 @@ public class AppIM extends App implements IRologiaMessageHandler {
 
 	private ArrayList<IMTab> tabs = new ArrayList<IMTab>();
 
-	public AppIM() {}
-
-	public AppIM(RologiaOS rologia) {
-		super(rologia);
+	public AppIM(RologiaOS rologia, Position pos) {
+		super(rologia, pos);
 	}
 	
 	@Override
-	public void initializeApp() {
+	public void initializeScreen() {
 		System.out.println("init");
 		textField.centerPosition(-15, 55);
 		textField.setTextScale(TEXT_SCALE);
@@ -52,21 +50,18 @@ public class AppIM extends App implements IRologiaMessageHandler {
 	}
 
 	@Override
-	public void updateApp() {
+	public void updateScreen() {		
+		GuiUtils.drawFilledRect(getPosition(), Screen.WATCH_SCREEN_X_SIZE, Screen.WATCH_SCREEN_Y_SIZE, Colors.GRAY.color);
+
+		for(IMTab tab : tabs)
+			tab.drawTab(this);
+
 		boolean hasMessage = !textField.getText().isEmpty();
 		
 		if(hasMessage && !sendButton.isEnabled())
 			sendButton.setEnabled(true);
 		else if(!hasMessage && sendButton.isEnabled())
 			sendButton.setEnabled(false);
-	}
-
-	@Override
-	public void drawApp(Screen currentScreen) {
-		GuiUtils.drawFilledRect(currentScreen.getPosition(), Screen.WATCH_SCREEN_X_SIZE, Screen.WATCH_SCREEN_Y_SIZE, Colors.GRAY.color);
-
-		for(IMTab tab : tabs)
-			tab.drawTab(currentScreen);
 	}
 
 	@Override
@@ -109,13 +104,18 @@ public class AppIM extends App implements IRologiaMessageHandler {
 	}
 
 	@Override
-	public Object replaceKeywords(String keyword) {
-		return null;
+	public AppEventType[] subscribeToEvents() {
+		return new AppEventType[] {AppEventType.RECEIVE_MESSAGES};
 	}
 
 	@Override
-	public AppEventType[] subscribeToEvents() {
-		return new AppEventType[] {AppEventType.RECEIVE_MESSAGES};
+	public String getScreenName() {
+		return NAME;
+	}
+
+	@Override
+	public Image getBackgroundImage() {
+		return new Image(getOS(), "rologia:textures/gui/watch/boot_screen_light.png", WATCH_SCREEN_X_SIZE, WATCH_SCREEN_Y_SIZE);
 	}
 
 }

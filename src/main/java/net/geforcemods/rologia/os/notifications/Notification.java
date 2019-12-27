@@ -2,7 +2,6 @@ package net.geforcemods.rologia.os.notifications;
 
 import com.mojang.blaze3d.platform.GlStateManager;
 
-import net.geforcemods.rologia.os.apps.App;
 import net.geforcemods.rologia.os.gui.screens.Screen;
 import net.geforcemods.rologia.os.gui.utils.GuiUtils;
 import net.geforcemods.rologia.os.misc.Position;
@@ -19,13 +18,13 @@ public class Notification {
 	public static ResourceLocation NOTIFICATION_ICONS_LIGHT = new ResourceLocation(ResourceLoader.TEXTURE_FOLDER_PATH + "icons_light.png");
 	public static ResourceLocation NOTIFICATION_ICONS_DARK = new ResourceLocation(ResourceLoader.TEXTURE_FOLDER_PATH + "icons_dark.png");
 
-	private App sourceApp;
+	private Screen source;
 	private String notificationTitle;
 	private String notificationBody;
 	private int slotNumber = 0;
 
-	public Notification(Screen screen, App app, String title, String body) {
-		sourceApp = app;
+	public Notification(Screen screen, String title, String body) {
+		source = screen;
 		notificationTitle = title;
 		notificationBody = body;
 	}
@@ -92,12 +91,8 @@ public class Notification {
 		return mousePos.getX() >= notificationBeginWidth && mousePos.getX() <= notificationEndWidth && mousePos.getY() >= notificationBeginHeight && mousePos.getY() <= notificationEndHeight;
 	}
 
-	public App getSourceApp() {
-		return sourceApp;
-	}
-	
-	public boolean fromApp() {
-		return sourceApp != null;
+	public Screen getSource() {
+		return source;
 	}
 	
 	public String getTitle() {

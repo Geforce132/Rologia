@@ -71,7 +71,7 @@ public class AppBar extends ScreenComponent {
 		else if(index == 1)
 			os.setScreen(SelectionScreen.NAME);
 		else if(index >= 2 && index < (2 + os.getApps().size()))
-			os.setApp(os.getApps().get(index - 2));
+			os.setScreen(os.getApps().get(index - 2));
 		else if(index == (2 + os.getApps().size()))
 			os.setScreen(SettingsScreen.NAME);
 	}
@@ -84,7 +84,7 @@ public class AppBar extends ScreenComponent {
 		else if(button == getOS().getApps().size() + 2)
 			return SettingsScreen.NAME;
 		else if(button > 1 && button < getOS().getApps().size() + 2)
-			return getOS().getApps().get(button - 2).getAppName();
+			return getOS().getApps().get(button - 2).getScreenName();
 		else
 			return "???";
 	}
@@ -100,7 +100,7 @@ public class AppBar extends ScreenComponent {
 			return 1;
 		else if(getOS().isAppOpen()) {
 			for(int i = 0; i < getOS().getApps().size(); i++) {
-				if(getOS().getApps().get(i) == getOS().getCurrentApp()) {
+				if(getOS().getApps().get(i) == getOS().getCurrentScreen()) {
 					return i + 2;
 				}
 			}

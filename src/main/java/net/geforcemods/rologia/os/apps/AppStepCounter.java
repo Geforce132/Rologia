@@ -6,39 +6,45 @@ import java.text.DecimalFormat;
 import net.geforcemods.rologia.os.RologiaOS;
 import net.geforcemods.rologia.os.apps.events.AppEvent;
 import net.geforcemods.rologia.os.apps.events.AppEventType;
+import net.geforcemods.rologia.os.gui.components.ScreenComponent;
+import net.geforcemods.rologia.os.gui.components.images.Image;
 import net.geforcemods.rologia.os.gui.components.text.Text;
 import net.geforcemods.rologia.os.gui.screens.Screen;
 import net.geforcemods.rologia.os.gui.utils.Colors;
+import net.geforcemods.rologia.os.misc.Position;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraftforge.fml.loading.FMLLoader;
 
-@AppInfo(id="step_counter", name = "Step Counter", version = "1.0.0")
-public class AppStepCounter extends App {
+@AppInfo(id=AppStepCounter.ID, name = AppStepCounter.NAME, version = AppStepCounter.VERSION)
+public class AppStepCounter extends Screen {
+
+	public static final String ID = "step_counter";
+	public static final String NAME = "Step Counter";
+	public static final String VERSION = "1.0.0";
 	
 	private Text distance = new Text(getOS(), "Distance travelled:", null, Colors.GREEN.hexValue);
 
-	public AppStepCounter(RologiaOS rologia) {
-		super(rologia);
+	public AppStepCounter(RologiaOS rologia, Position pos) {
+		super(rologia, pos);
 	}
 
 	@Override
-	public void initializeApp() {
+	public void initializeScreen() {
 		distance.centerPosition(0, -20);
 		addComponent(distance);
 	}
 
 	@Override
-	public void drawApp(Screen currentScreen) {
-	}
-	
-	@Override
-	public void updateApp() {
+	public void updateScreen() {
 		String newText = "Distance travelled: %s";
 
 		if(!distance.getText().equals(newText)) {
 			distance.setText(newText, getDistanceInMiles(getOS().getUser()));
 		}
 	}
+
+	@Override
+	public void onComponentClicked(ScreenComponent component, Position mousePos, int mouseButtonClicked) {}
 	
 	@Override
 	public void onEventPosted(AppEvent event) {
@@ -68,6 +74,16 @@ public class AppStepCounter extends App {
 	@Override
 	public AppEventType[] subscribeToEvents() {
 		return new AppEventType[] {AppEventType.PLAYER_STEP};
+	}
+
+	@Override
+	public String getScreenName() {
+		return NAME;
+	}
+
+	@Override
+	public Image getBackgroundImage() {
+		return new Image(getOS(), "rologia:textures/gui/watch/boot_screen_light.png", WATCH_SCREEN_X_SIZE, WATCH_SCREEN_Y_SIZE);
 	}
 
 }

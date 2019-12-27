@@ -3,6 +3,7 @@ package net.geforcemods.rologia.os.gui.screens;
 import java.util.ArrayList;
 
 import net.geforcemods.rologia.os.RologiaOS;
+import net.geforcemods.rologia.os.apps.events.AppEventType;
 import net.geforcemods.rologia.os.gui.components.ScreenComponent;
 import net.geforcemods.rologia.os.gui.components.images.Image;
 import net.geforcemods.rologia.os.gui.components.text.Text;
@@ -22,7 +23,7 @@ public class SelectionScreen extends Screen {
 	@Override
 	public void initializeScreen() {
 		for(int i = 0; i < getOS().getApps().size(); i++) {
-			String appName = getOS().getApps().get(i).getAppName();
+			String appName = getOS().getApps().get(i).getScreenName();
 
 			if(appsDisplayed.contains(appName)) continue;
 
@@ -41,7 +42,7 @@ public class SelectionScreen extends Screen {
 			String text = ((Text) component).getText();
 			
 			if(appsDisplayed.contains(text))
-				getOS().setAppByName(text);
+				getOS().setScreen(text);
 		}
 			
 	}
@@ -54,6 +55,11 @@ public class SelectionScreen extends Screen {
 	@Override
 	public Image getBackgroundImage() {
 		return new Image(getOS(), "rologia:textures/gui/watch/boot_screen_dark.png", WATCH_SCREEN_X_SIZE, WATCH_SCREEN_Y_SIZE);
+	}
+
+	@Override
+	public AppEventType[] subscribeToEvents() {
+		return null;
 	}
 
 }

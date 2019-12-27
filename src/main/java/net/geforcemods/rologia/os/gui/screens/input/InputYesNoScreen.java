@@ -1,6 +1,7 @@
 package net.geforcemods.rologia.os.gui.screens.input;
 
 import net.geforcemods.rologia.os.RologiaOS;
+import net.geforcemods.rologia.os.apps.events.AppEventType;
 import net.geforcemods.rologia.os.gui.components.Button;
 import net.geforcemods.rologia.os.gui.components.ScreenComponent;
 import net.geforcemods.rologia.os.gui.components.images.Image;
@@ -74,6 +75,11 @@ public class InputYesNoScreen extends Screen {
 	@Override
 	public Image getBackgroundImage() {
 		return new Image(getOS(), "rologia:textures/gui/watch/boot_screen_light.png", WATCH_SCREEN_X_SIZE, WATCH_SCREEN_Y_SIZE);	
+	}
+
+	@Override
+	public AppEventType[] subscribeToEvents() {
+		return null;
 	}
 
 }

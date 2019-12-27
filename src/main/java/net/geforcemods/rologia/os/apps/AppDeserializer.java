@@ -8,11 +8,12 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 
 import net.geforcemods.rologia.os.apps.im.AppIM;
+import net.geforcemods.rologia.os.gui.screens.Screen;
 
-public class AppDeserializer implements JsonDeserializer<App> {
+public class AppDeserializer implements JsonDeserializer<Screen> {
 	
 	@Override
-    public App deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+    public Screen deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         String id = json.getAsJsonObject().get("app_id").getAsString();
 
 		if(id.matches("im"))

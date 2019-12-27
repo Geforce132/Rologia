@@ -1,7 +1,6 @@
 package net.geforcemods.rologia.os.resources;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -17,10 +16,6 @@ import com.google.gson.reflect.TypeToken;
 
 import net.geforcemods.rologia.Rologia;
 import net.geforcemods.rologia.os.RologiaOS;
-import net.geforcemods.rologia.os.apps.App;
-import net.geforcemods.rologia.os.apps.AppDeserializer;
-import net.geforcemods.rologia.os.gui.components.ComponentDeserializer;
-import net.geforcemods.rologia.os.gui.components.ScreenComponent;
 import net.geforcemods.rologia.os.gui.utils.Theme;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.IResource;
@@ -76,6 +71,7 @@ public class ResourceLoader {
 	}
 	*/
 
+	/*
 	public static void loadApps(RologiaOS os) throws IOException {
 		JsonObject json = loadJsonObject(APPS_FOLDER_PATH + "apps.json");
 
@@ -99,6 +95,7 @@ public class ResourceLoader {
 			os.addApp(app);
 		}
 	}
+	*/
 
 	public static void loadThemes(RologiaOS os) throws IOException {
 		JsonObject themes = loadJsonObject(OS_FOLDER_PATH + "themes/themes.json");
