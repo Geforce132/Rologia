@@ -22,9 +22,11 @@ import net.geforcemods.rologia.os.imc.IMCManager;
 import net.geforcemods.rologia.os.misc.Position;
 import net.geforcemods.rologia.os.notifications.Notification;
 import net.geforcemods.rologia.os.resources.ResourceLoader;
+import net.geforcemods.rologia.os.sounds.Sounds;
 import net.geforcemods.rologia.os.stats.UserStats;
 import net.geforcemods.rologia.os.tasks.Task;
 import net.geforcemods.rologia.os.tasks.TaskUpdateTime;
+import net.geforcemods.rologia.utils.Utils;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraftforge.fml.loading.FMLLoader;
 
@@ -71,6 +73,8 @@ public class RologiaOS {
 	private LocalDateTime time = LocalDateTime.now();
 	private ArrayList<Task> tasks = new ArrayList<Task>();
 	private ArrayList<Notification> notifications = new ArrayList<Notification>();
+	public static final int NOTIFICATION_TICK_LENGTH = 360;
+	public int notificationPopupTimer = 0;
 
 	private InputManager inputManager = new InputManager(this);
 	private IMCManager imcManager = new IMCManager();
@@ -316,6 +320,9 @@ public class RologiaOS {
 	public void addNotification(Notification notification) {
 		notification.setSlotNumber(notifications.size());
 		notifications.add(notification);
+
+		Utils.playSound(Sounds.NOTIFICATION.event);
+		notificationPopupTimer = NOTIFICATION_TICK_LENGTH;
 	}
 
 	/**

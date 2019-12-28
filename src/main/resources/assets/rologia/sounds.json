@@ -1,4 +1,5 @@
 {
     "beep_1": {"category": "item","sounds":["rologia:beep_1"], "subtitle": "rologia.subtitle.beep"},
-    "beep_2": {"category": "item","sounds":["rologia:beep_2"], "subtitle": "rologia.subtitle.beep"}
+    "beep_2": {"category": "item","sounds":["rologia:beep_2"], "subtitle": "rologia.subtitle.beep"},
+    "notification": {"category": "item","sounds":["rologia:notification"], "subtitle": "rologia.subtitle.notification"}
 }
