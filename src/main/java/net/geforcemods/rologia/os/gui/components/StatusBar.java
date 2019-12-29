@@ -12,7 +12,7 @@ import net.minecraft.client.Minecraft;
 
 public class StatusBar extends ScreenComponent {
 	
-	public static final int DEFAULT_WIDTH = 7;
+	public static final int DEFAULT_HEIGHT = 7;
 
 	public StatusBar(RologiaOS os) {
 		super(os);
@@ -67,7 +67,7 @@ public class StatusBar extends ScreenComponent {
 
 	@Override
 	public boolean mouseClick(Position mousePos, int mouseButtonClicked) {
-		if(mousePos.getY() >= getScreen().getPosition().getY() && mousePos.getY() <= getScreen().getPosition().getY() + DEFAULT_WIDTH && getOS().hasNotifications())
+		if(mousePos.getY() >= getScreen().getPosition().getY() && mousePos.getY() <= getScreen().getPosition().getY() + DEFAULT_HEIGHT && getOS().hasNotifications())
 			return true;
 
 		for(int i = 0; i < getOS().getNotifications().size(); i++) {
@@ -93,7 +93,14 @@ public class StatusBar extends ScreenComponent {
 
 	@Override
 	public int getHeight() {
-		return isExpanded() ? DEFAULT_WIDTH + (getOS().getNotifications().size() * Notification.NOTIFICATION_HEIGHT) : DEFAULT_WIDTH;
+		if(isExpanded()) {
+			if(getOS().getNotifications().size() > 3)
+				return DEFAULT_HEIGHT + (3 * Notification.NOTIFICATION_HEIGHT);
+
+			return DEFAULT_HEIGHT + (getOS().getNotifications().size() * Notification.NOTIFICATION_HEIGHT);
+		}
+
+		return DEFAULT_HEIGHT;
 	}
 
 }

@@ -4,6 +4,7 @@ import com.mojang.blaze3d.platform.GlStateManager;
 
 import net.geforcemods.rologia.Rologia;
 import net.geforcemods.rologia.os.RologiaOS;
+import net.geforcemods.rologia.os.gui.components.AppBar;
 import net.geforcemods.rologia.os.gui.utils.Colors;
 import net.geforcemods.rologia.os.gui.utils.GuiUtils;
 import net.minecraft.client.Minecraft;
@@ -41,9 +42,10 @@ public class RologiaClientEventHandler {
 
 				int x = Minecraft.getInstance().mainWindow.getScaledWidth() / 2 - 112;
 				int y = Minecraft.getInstance().mainWindow.getScaledHeight() - 18 - ((int) (alpha * 17));
-				GuiUtils.drawFilledRect(x - 2, y - 2, 9, 11, Colors.DARK_GRAY.color, (float) alpha);
-				mc.fontRenderer.drawStringWithShadow(os.getNotifications().size() + "", x, y, Colors.RED.hexValue | ((int) (alpha * 255) << 24));
-
+				mc.textureManager.bindTexture(AppBar.APP_ICONS);
+				GlStateManager.color4f(1, 1, 1, (float) alpha); 
+				GuiUtils.drawTexturedModelRect(x, y, 12, 0, 9, 11, 0, 256, 256);
+				mc.fontRenderer.drawString(os.getNotifications().size() + "", x + 2, y + 1, Colors.RED.hexValue | ((int) (alpha * 255) << 24));
 				GlStateManager.disableBlend();
 				GlStateManager.popMatrix();
 			}

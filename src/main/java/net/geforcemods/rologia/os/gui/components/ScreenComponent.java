@@ -139,7 +139,7 @@ public abstract class ScreenComponent extends net.minecraft.client.gui.screen.Sc
 	}
 
 	public ScreenComponent centerPosition(int xShift, int yShift) {
-		Position pos = getScreen().getCenteredPositionForComponent(this).shiftX(xShift).shiftY(yShift - StatusBar.DEFAULT_WIDTH);
+		Position pos = getScreen().getCenteredPositionForComponent(this).shiftX(xShift).shiftY(yShift - StatusBar.DEFAULT_HEIGHT);
 
 		if(offset == null)
 			offset = new Position(0, 0);

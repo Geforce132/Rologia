@@ -11,7 +11,10 @@ import net.geforcemods.rologia.os.misc.Position;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
@@ -70,7 +73,7 @@ public class GuiUtils {
 	public static void drawFilledRect(int x, int y, int width, int height, Color color, float transparency) {
 		drawFilledRect(new Position(x, y), width, height, color, transparency);
 	}
-	
+
 	public static void drawItem(Position startPos, Item item) {
 		GlStateManager.pushMatrix();
 		GlStateManager.enableBlend();
@@ -122,6 +125,19 @@ public class GuiUtils {
 
 	public static void drawTexturedModalRect(int x, int y, int u, int v, int width, int height, int zlevel) {
 		net.minecraftforge.fml.client.config.GuiUtils.drawTexturedModalRect(x, y, u, v, width, height, zlevel);
+	}
+	
+	public static void drawTexturedModelRect(int x, int y, int u, int v, int width, int height, int zLevel, int textureWidth, int textureHeight) {
+		double widthFactor = 1F / (double) textureWidth;
+		double heightFactor = 1F / (double) textureHeight;
+		Tessellator tessellator = Tessellator.getInstance();
+		BufferBuilder buffer = tessellator.getBuffer();
+		buffer.begin(7, DefaultVertexFormats.POSITION_TEX);
+		buffer.pos(x, y + height, zLevel).tex(u * widthFactor, (v + height) * heightFactor).endVertex();
+		buffer.pos(x + width, y + height, zLevel).tex((u + width) * widthFactor, (v + height) * heightFactor).endVertex();
+		buffer.pos(x + width, y, zLevel).tex((u + width) * widthFactor, v * heightFactor).endVertex();
+		buffer.pos(x, y, zLevel).tex(u * widthFactor, v * heightFactor).endVertex();
+		tessellator.draw();
 	}
 
 }

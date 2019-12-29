@@ -38,22 +38,23 @@ public class Notification {
 				GlStateManager.color4f(1, 1, 1, 1);
 				Minecraft.getInstance().getTextureManager().bindTexture(NOTIFICATION_BOX);
 
-				///if(isMouseHoveringOverXButton(screen))
-					//GuiUtils.drawTexturedModalRect(position.getX(), position.shiftY(7).getY(), 86, 0, 85, 25);
-				//else
-					//GuiUtils.drawTexturedModalRect(position.getX(), position.shiftY(7).getY(), 0, 0, 85, 25);
+				if(isMouseHoveringOverXButton(screen))
+					GuiUtils.drawTexturedModalRect(position.getX(), position.shiftY(7).getY(), 86, 0, 85, 25, 0);
+				else
+					GuiUtils.drawTexturedModalRect(position.getX(), position.shiftY(7).getY(), 0, 0, 85, 25, 0);
 
 				// Draw title string
 				GlStateManager.translated(position.getX(), 10 + position.getY(), 0);
 				GlStateManager.scalef(0.9F, 0.9F, 0);
 				GlStateManager.translated(-position.getX(), -(10 + position.getY()), 0);
-				screen.drawString(Minecraft.getInstance().fontRenderer, notificationTitle, position.shiftX(22).getX(), 10 + position.getY(), GuiUtils.toHex(screen.getOS().getTheme().NOTIFICATION_TITLE));
+				Minecraft.getInstance().fontRenderer.drawString(notificationTitle, position.shiftX(22).getX(), 10 + position.getY(), GuiUtils.toHex(screen.getOS().getTheme().NOTIFICATION_TITLE));
+				screen.drawString(Minecraft.getInstance().fontRenderer, notificationTitle, position.shiftX(22).getX(), 10 + position.getY(), GuiUtils.toHex(screen.getOS().getTheme().NOTIFICATION_TITLE), false);
 
 				// Draw body string
 				GlStateManager.translated(position.getX(), 22 + position.getY(), 0);
 				GlStateManager.scalef(0.75F, 0.75F, 0);
 				GlStateManager.translated(-position.getX(), -(22 + position.getY()), 0);
-				screen.drawString(Minecraft.getInstance().fontRenderer, notificationBody, position.shiftX(31).getX(), 22 + position.getY(), GuiUtils.toHex(screen.getOS().getTheme().NOTIFICATION_BODY));
+				screen.drawString(Minecraft.getInstance().fontRenderer, notificationBody, position.shiftX(31).getX(), 22 + position.getY(), GuiUtils.toHex(screen.getOS().getTheme().NOTIFICATION_BODY), false);
 				GlStateManager.popMatrix();
 
 				// Render icon

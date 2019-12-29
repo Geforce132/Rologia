@@ -172,6 +172,13 @@ public abstract class Screen extends net.minecraft.client.gui.screen.Screen {
 		}
 	}
 
+	public void drawString(FontRenderer fontRenderer, String string, int x, int y, int color, boolean textShadow) {
+		if(textShadow)
+			fontRenderer.drawStringWithShadow(string, x, y, color);
+		else
+			fontRenderer.drawString(string, x, y, color);
+	}
+
 	public void onScreenOpened() {}
 
 	/**
