@@ -1,8 +1,9 @@
 package net.geforcemods.rologia.os.gui.components;
 
-import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.geforcemods.rologia.os.RologiaOS;
+import net.geforcemods.rologia.os.gui.animations.AnimationNotificationSwipe;
 import net.geforcemods.rologia.os.gui.screens.Screen;
 import net.geforcemods.rologia.os.gui.utils.GuiUtils;
 import net.geforcemods.rologia.os.misc.Position;
@@ -12,7 +13,7 @@ import net.minecraft.client.Minecraft;
 
 public class StatusBar extends ScreenComponent {
 	
-	public static final int DEFAULT_WIDTH = 7;
+	public static final int DEFAULT_HEIGHT = 7;
 
 	public StatusBar(RologiaOS os) {
 		super(os);
@@ -24,15 +25,15 @@ public class StatusBar extends ScreenComponent {
 
 	@Override
 	public void drawComponent() {
-		GlStateManager.func_227626_N_();
+		RenderSystem.pushMatrix();
 
-		GlStateManager.func_227702_d_(1, 1, 1, 1);
+		RenderSystem.color4f(1, 1, 1, 1);
 		GuiUtils.drawFilledRect(getPosition(), getWidth(), getHeight(), getTheme().STATUS_BAR, 0.5F);
 
         float scaleOfText = 0.85F;
-		GlStateManager.func_227672_b_(scaleOfText, scaleOfText, 1F);
+        RenderSystem.scalef(scaleOfText, scaleOfText, 1F);
         drawString(getFontRenderer(), getScreen().getOS().getTime(TimeConstants.HM), (int) ((getPosition().getX() + 50) / scaleOfText), (int) ((getPosition().getY() + 1) / scaleOfText), GuiUtils.toHex(getTheme().STATUS_BAR_CLOCK));
-        GlStateManager.func_227627_O_();
+        RenderSystem.popMatrix();
         
         //Draw notifications
         drawNotifications();
@@ -41,15 +42,15 @@ public class StatusBar extends ScreenComponent {
 	private void drawNotifications() {
 		for(int i = 0; i < getOS().getNotifications().size(); i++) {
 			if(i > 3 && !isExpanded()) {
-				GlStateManager.func_227626_N_();
+				RenderSystem.pushMatrix();
 				Minecraft.getInstance().getTextureManager().bindTexture(Notification.NOTIFICATION_ICONS_LIGHT);
 
-				GlStateManager.func_227702_d_(1, 1, 1, 1);
-				GlStateManager.func_227670_b_(getPosition().shiftX(40).getX(), getPosition().getY(), 0);
-				GlStateManager.func_227672_b_(0.2F, 0.2F, 0);
-				GlStateManager.func_227670_b_(-getPosition().shiftX(40).getX(), -getPosition().getY(), 0);
+				RenderSystem.color4f(1, 1, 1, 1);
+				RenderSystem.translated(getPosition().shiftX(40).getX(), getPosition().getY(), 0);
+				RenderSystem.scalef(0.2F, 0.2F, 0);
+				RenderSystem.translated(-getPosition().shiftX(40).getX(), -getPosition().getY(), 0);
 				GuiUtils.drawTexturedModalRect(getPosition().shiftX(40).getX(), getPosition().getY(), 38, 0, 37, 33, this.getBlitOffset());
-				GlStateManager.func_227627_O_();
+				RenderSystem.popMatrix();
 
 				break;
 			}
@@ -67,12 +68,13 @@ public class StatusBar extends ScreenComponent {
 
 	@Override
 	public boolean mouseClick(Position mousePos, int mouseButtonClicked) {
-		if(mousePos.getY() >= getScreen().getPosition().getY() && mousePos.getY() <= getScreen().getPosition().getY() + DEFAULT_WIDTH && getOS().hasNotifications())
+		if(mousePos.getY() >= getScreen().getPosition().getY() && mousePos.getY() <= getScreen().getPosition().getY() + DEFAULT_HEIGHT && getOS().hasNotifications())
 			return true;
 
 		for(int i = 0; i < getOS().getNotifications().size(); i++) {
 			if(getOS().getNotifications().get(i).isMouseHoveringOverXButton(getScreen())) {
-				getOS().removeNotification(getOS().getNotifications().get(i));
+				//getOS().removeNotification(getOS().getNotifications().get(i));
+				getOS().beginAnimation(new AnimationNotificationSwipe(getOS().getNotifications().get(i)));
 				break;
 			}
 
@@ -93,7 +95,14 @@ public class StatusBar extends ScreenComponent {
 
 	@Override
 	public int getHeight() {
-		return isExpanded() ? DEFAULT_WIDTH + (getOS().getNotifications().size() * Notification.NOTIFICATION_HEIGHT) : DEFAULT_WIDTH;
+		if(isExpanded()) {
+			if(getOS().getNotifications().size() > 3)
+				return DEFAULT_HEIGHT + (3 * Notification.NOTIFICATION_HEIGHT);
+
+			return DEFAULT_HEIGHT + (getOS().getNotifications().size() * Notification.NOTIFICATION_HEIGHT);
+		}
+
+		return DEFAULT_HEIGHT;
 	}
 
 }

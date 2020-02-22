@@ -2,9 +2,9 @@ package net.geforcemods.rologia.gui;
 
 import java.util.function.Consumer;
 
-import net.minecraftforge.fml.client.config.GuiButtonExt;
+import net.minecraftforge.fml.client.gui.widget.ExtendedButton;
 
-public class GuiButtonClick extends GuiButtonExt
+public class GuiButtonClick extends ExtendedButton
 {
 	private Consumer<GuiButtonClick> onClick;
 	public int id;

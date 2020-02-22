@@ -1,8 +1,6 @@
 package net.geforcemods.rologia.os;
 
 import java.io.IOException;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -11,11 +9,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import net.geforcemods.rologia.Rologia;
-import net.geforcemods.rologia.os.apps.App;
 import net.geforcemods.rologia.os.apps.AppInfo;
 import net.geforcemods.rologia.os.apps.AppStepCounter;
 import net.geforcemods.rologia.os.apps.im.AppIM;
-import net.geforcemods.rologia.os.gui.screens.AppScreen;
+import net.geforcemods.rologia.os.gui.animations.Animation;
 import net.geforcemods.rologia.os.gui.screens.HomeScreen;
 import net.geforcemods.rologia.os.gui.screens.Screen;
 import net.geforcemods.rologia.os.gui.screens.SelectionScreen;
@@ -26,9 +23,11 @@ import net.geforcemods.rologia.os.imc.IMCManager;
 import net.geforcemods.rologia.os.misc.Position;
 import net.geforcemods.rologia.os.notifications.Notification;
 import net.geforcemods.rologia.os.resources.ResourceLoader;
+import net.geforcemods.rologia.os.sounds.Sounds;
 import net.geforcemods.rologia.os.stats.UserStats;
 import net.geforcemods.rologia.os.tasks.Task;
 import net.geforcemods.rologia.os.tasks.TaskUpdateTime;
+import net.geforcemods.rologia.utils.Utils;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraftforge.fml.loading.FMLLoader;
 
@@ -68,22 +67,22 @@ public class RologiaOS {
 	private HashMap<String, Screen> activeScreens = new HashMap<String, Screen>();
 
 	/**
-	 * Used when another Screen/App requests a Screen change
+	 * Used when a Screen requests a Screen change
 	 */
 	private Screen screenToSwitchTo;
 
-	/**
-	 * The App currently running (null if none)
-	 */
-	private App currentApp;
 	private LocalDateTime time = LocalDateTime.now();
 	private ArrayList<Task> tasks = new ArrayList<Task>();
-	private ArrayList<App> apps = new ArrayList<App>();
 	private ArrayList<Notification> notifications = new ArrayList<Notification>();
+	public static final int NOTIFICATION_TICK_LENGTH = 360;
+	public int notificationPopupTimer = 0;
+
+	private ArrayList<Animation<?>> animations = new ArrayList<Animation<?>>();
 
 	private InputManager inputManager = new InputManager(this);
 	private IMCManager imcManager = new IMCManager();
 
+	private ArrayList<Screen> apps = new ArrayList<Screen>();
 	private HashMap<String, Theme> themes = new HashMap<String, Theme>();
 	private Theme currentTheme;
 
@@ -99,7 +98,6 @@ public class RologiaOS {
 		if(hasInitialized) return;
 
 		try {
-			loadApps();
 			loadThemes();
 		}
 		catch(IOException e) {
@@ -125,9 +123,9 @@ public class RologiaOS {
 			//currentScreen.initializeScreen();
 
 			// Just for testing purposes, obviously 
-			addNotification(new Notification(currentScreen, null, "t1", "body 1"));
-			addNotification(new Notification(currentScreen, null, "t2", "body 2"));
-			addNotification(new Notification(currentScreen, null, "t3", "body 3"));
+			addNotification(new Notification(currentScreen, "t1", "body 1"));
+			addNotification(new Notification(currentScreen, "t2", "body 2"));
+			addNotification(new Notification(currentScreen, "t3", "body 3"));
 		}
 		else {
 			Position p = new Position(screenXPos, screenYPos);
@@ -148,11 +146,6 @@ public class RologiaOS {
 			currentScreen.addStartupComponents();
 			currentScreen.initializeScreen();
 
-			if(currentScreen instanceof AppScreen) {
-				((AppScreen) currentScreen).getApp().initializeApp();
-				currentScreen.addComponents(((AppScreen) currentScreen).getApp());
-			}
-
 			activeScreens.put(currentScreen.getScreenName(), currentScreen);
 			screenToSwitchTo = null;
 		}
@@ -161,8 +154,18 @@ public class RologiaOS {
 			checkScrollBar();
 			currentScreen.updateScreen();
 
-			if(isAppOpen()) {
-				currentApp.updateApp();
+			// Cycle through all of the active animations and update them. Remove them from
+			// the list of running animations if they are finished.
+			for(int i = 0; i < animations.size(); i++) {
+				Animation<?> animation = animations.get(i);
+
+				if(animation.isFinished()) {
+					animation.finished();
+					animations.remove(i);
+					continue;
+				}
+
+				animation.update();
 			}
 
 			for(Task task : tasks) {
@@ -187,11 +190,6 @@ public class RologiaOS {
 		currentScreen.editComponents();
 		currentScreen.drawComponents();
 
-		if(isAppOpen()) {
-			currentApp.drawApp(currentScreen);
-			currentApp.drawComponents(currentScreen);
-		}
-
 		// Edited last because this should always be drawn over everything
 		// else on the screen.
 		currentScreen.drawStatusBar();
@@ -200,6 +198,7 @@ public class RologiaOS {
 	/**
 	 * Loads Apps created by .json files in the /rologia/os/apps/ folder
 	 */
+	/*
 	private void loadApps() throws IOException {		
 		//ResourceLoader.loadApps(this);
 		String[] appsToLoad = new String[] {AppStepCounter.class.getName(), AppIM.class.getName()};
@@ -225,6 +224,7 @@ public class RologiaOS {
 			
 		}
 	}
+	*/
 	
 	/**
 	 * Loads color themes created by .json files in the /rologia/os/themes/ folder
@@ -238,21 +238,32 @@ public class RologiaOS {
 	 * Loads the home, app selection, and system screens when the watch GUI is first opened.
 	 */
 	private void loadSystemScreens(int screenXPos, int screenYPos) {
-		activeScreens.put(HomeScreen.NAME, new HomeScreen(this, new Position(screenXPos, screenYPos)));
-		activeScreens.put(SelectionScreen.NAME, new SelectionScreen(this, new Position(screenXPos, screenYPos)));
-		activeScreens.put(SettingsScreen.NAME, new SettingsScreen(this, new Position(screenXPos, screenYPos)));
+		Position pos = new Position(screenXPos, screenYPos);
+		activeScreens.put(HomeScreen.NAME, new HomeScreen(this, pos));
+		activeScreens.put(SelectionScreen.NAME, new SelectionScreen(this, pos));
+		activeScreens.put(SettingsScreen.NAME, new SettingsScreen(this, pos));
+
+		loadApps(pos);
 
 		setScreen(activeScreens.get(HomeScreen.NAME));
 	}
 
+	private void loadApps(Position pos) {
+		apps.add(new AppStepCounter(this, pos));
+		apps.add(new AppIM(this, pos));
+	}
+
 	public void checkScrollBar() {
-		if(currentScreen.getScreenHeight() > Screen.WATCH_SCREEN_Y_SIZE)
+		if(currentScreen.getHeight() > Screen.WATCH_SCREEN_Y_SIZE)
 			currentScreen.getScrollBar().setVisibility(true);
 		else {
 			if(currentScreen.getScrollBar().isVisible()) 
 				currentScreen.getScrollBar().setVisibility(false);
 		}
+	}
 
+	public boolean isAppOpen() {
+		return currentScreen != null && currentScreen.getClass().isAnnotationPresent(AppInfo.class);
 	}
 
 	/**
@@ -264,9 +275,6 @@ public class RologiaOS {
 	 */
 	public void setScreen(Screen newScreen) {
 		screenToSwitchTo = newScreen;
-
-		if(!(newScreen instanceof AppScreen))
-			clearApp();
 	}
 
 	/**
@@ -278,36 +286,6 @@ public class RologiaOS {
 	 */
 	public void setScreen(String screenName) {
 		setScreen(activeScreens.get(screenName));
-	}
-
-	public void setApp(String appID) {
-		if(currentApp != getApp(appID)) {
-			if(this.isAppOpen()) {
-				for(int i = 0; i < currentApp.getComponents().size(); i++)
-					currentScreen.getComponents().remove(currentApp.getComponents().get(i));
-			}
-
-			currentApp = getApp(appID);
-			setScreen(new AppScreen(this, currentScreen.getPosition(), currentApp));
-		}
-	}
-
-	public void setApp(App app) {
-		setApp(app.getAppID());
-	}
-	
-	public void setAppByName(String appName) {
-		for(App app : apps) {
-			if(app.getAppName().equals(appName))
-				setApp(app.getAppID());
-		}
-	}
-
-	public void clearApp() {
-		if(currentApp == null) return;
-
-		currentScreen.removeComponents(currentApp);
-		currentApp = null;
 	}
 
 	public void setTime(LocalDateTime newTime) {
@@ -352,44 +330,6 @@ public class RologiaOS {
 	public ArrayList<Task> getScheduledTasks() {
 		return tasks;
 	}
-	
-	public void addApp(App app) {
-		if(getApp(app.getAppID()) != null)
-			LOGGER.log(Level.WARNING, "An app with an ID of '" + app.getAppID() + "' already exists. The oldest version will be kept.");
-
-		apps.add(app);
-	}
-	
-	public ArrayList<App> getApps() {
-		return apps;
-	}
-	
-	public App getApp(String appID) {
-		for(App app : apps)
-		{
-			if(app.getAppID().matches(appID))
-				return app;
-		}
-
-		return null;
-	}
-	
-	public App getAppByName(String appName) {
-		for(App app : apps) {
-			if(app.getAppName().equals(appName))
-				return app;
-		}
-		
-		return null;
-	}
-
-	public App getCurrentApp() {
-		return currentApp;
-	}
-
-	public boolean isAppOpen() {
-		return currentApp != null;
-	}
 
 	/**
 	 * Adds a Notification to the screen
@@ -397,6 +337,9 @@ public class RologiaOS {
 	public void addNotification(Notification notification) {
 		notification.setSlotNumber(notifications.size());
 		notifications.add(notification);
+
+		Utils.playSound(Sounds.NOTIFICATION.event);
+		notificationPopupTimer = NOTIFICATION_TICK_LENGTH;
 	}
 
 	/**
@@ -422,6 +365,14 @@ public class RologiaOS {
 		return notifications;
 	}
 
+	public void beginAnimation(Animation<?> animation) {
+		animations.add(animation);
+	}
+
+	public ArrayList<Animation<?>> getAnimations() {
+		return animations;
+	}
+
 	public InputManager getInputManager() {
 		return inputManager;
 	}
@@ -436,6 +387,10 @@ public class RologiaOS {
 
 	public HashMap<String, Theme> getThemes() {
 		return themes;
+	}
+
+	public ArrayList<Screen> getApps() {
+		return apps;
 	}
 
 	public void setTheme(String themeName) {

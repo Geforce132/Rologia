@@ -3,7 +3,6 @@ package net.geforcemods.rologia.os.gui.utils;
 import org.apache.commons.lang3.StringUtils;
 import org.lwjgl.opengl.GL11;
 
-import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.geforcemods.rologia.os.RologiaOS;
@@ -12,7 +11,10 @@ import net.geforcemods.rologia.os.misc.Position;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.RenderHelper;
+import net.minecraft.client.renderer.Tessellator;
+import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
@@ -21,12 +23,12 @@ public class GuiUtils {
 	public static final char BACKSPACE = '';
 	
 	public static void drawHollowRect(Position startPos, int width, int height, Color color) {
-		GlStateManager.func_227626_N_();
+		RenderSystem.pushMatrix();
 		RenderSystem.enableBlend();
 		RenderSystem.disableTexture();
         
 		GL11.glBegin(GL11.GL_LINES);
-		GlStateManager.func_227702_d_(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
+		RenderSystem.color4f(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
 		GL11.glVertex3f(startPos.getX(), startPos.getY(), 0);
 		GL11.glVertex3f(startPos.getX() + width, startPos.getY(), 0);
 		
@@ -43,7 +45,7 @@ public class GuiUtils {
 
 		RenderSystem.enableTexture();
 		RenderSystem.disableBlend();
-		GlStateManager.func_227627_O_();
+		RenderSystem.popMatrix();
 	}
 	
 	public static void drawFilledRect(Position startPos, int width, int height, Color color) {
@@ -54,7 +56,7 @@ public class GuiUtils {
 		RenderSystem.enableBlend();
 		RenderSystem.disableTexture();
 
-		GlStateManager.func_227702_d_(color.getRed(), color.getGreen(), color.getBlue(), transparency);
+		RenderSystem.color4f(color.getRed(), color.getGreen(), color.getBlue(), transparency);
 		RenderSystem.polygonMode(GL11.GL_FRONT, GL11.GL_FILL);
 		GL11.glBegin(GL11.GL_QUADS);
 
@@ -71,19 +73,19 @@ public class GuiUtils {
 	public static void drawFilledRect(int x, int y, int width, int height, Color color, float transparency) {
 		drawFilledRect(new Position(x, y), width, height, color, transparency);
 	}
-	
+
 	public static void drawItem(Position startPos, Item item) {
-		GlStateManager.func_227626_N_();
+		RenderSystem.pushMatrix();
 		RenderSystem.enableBlend();
 		RenderHelper.disableStandardItemLighting();
-		//RenderHelper.enableGUIStandardItemLighting(); //TODO
+		//RenderHelper.enableGUIStandardItemLighting();
 		
 		Minecraft.getInstance().getItemRenderer().renderItemIntoGUI(new ItemStack(item), startPos.getX(), startPos.getY());
 		Minecraft.getInstance().getItemRenderer().renderItemOverlayIntoGUI(Minecraft.getInstance().fontRenderer, new ItemStack(item), startPos.getX(), startPos.getY(), "");
 
 		RenderSystem.disableBlend();
 		RenderHelper.disableStandardItemLighting();
-		GlStateManager.func_227627_O_();
+		RenderSystem.popMatrix();
 	}
 	
 	public static void drawItem(Position startPos, Block block) {
@@ -102,7 +104,7 @@ public class GuiUtils {
 		
 		if(keywords != null) {
 			for(int i = 0; i < keywords.length; i++) {			
-				text = text.replace("$$" + keywords[i] + "$$", OS.getCurrentApp().replaceKeywords(keywords[i]).toString());
+				text = text.replace("$$" + keywords[i] + "$$", OS.getCurrentScreen().replaceKeywords(keywords[i]).toString());
 			}
 		}
 		
@@ -122,7 +124,20 @@ public class GuiUtils {
 	}
 
 	public static void drawTexturedModalRect(int x, int y, int u, int v, int width, int height, int zlevel) {
-		net.minecraftforge.fml.client.config.GuiUtils.drawTexturedModalRect(x, y, u, v, width, height, zlevel);
+		net.minecraftforge.fml.client.gui.GuiUtils.drawTexturedModalRect(x, y, u, v, width, height, zlevel);
+	}
+	
+	public static void drawTexturedModelRect(int x, int y, int u, int v, int width, int height, int zLevel, int textureWidth, int textureHeight) {
+		float widthFactor = 1F / (float) textureWidth;
+		float heightFactor = 1F / (float) textureHeight;
+		Tessellator tessellator = Tessellator.getInstance();
+		BufferBuilder buffer = tessellator.getBuffer();
+		buffer.begin(7, DefaultVertexFormats.POSITION_TEX);
+		buffer.pos(x, y + height, zLevel).tex((u * widthFactor), (v + height) * heightFactor).endVertex();
+		buffer.pos(x + width, y + height, zLevel).tex((u + width) * widthFactor, (v + height) * heightFactor).endVertex();
+		buffer.pos(x + width, y, zLevel).tex((u + width) * widthFactor, v * heightFactor).endVertex();
+		buffer.pos(x, y, zLevel).tex(u * widthFactor, v * heightFactor).endVertex();
+		tessellator.draw();
 	}
 
 }

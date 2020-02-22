@@ -6,7 +6,8 @@ import net.minecraft.util.SoundEvent;
 public enum Sounds {
 
 	BEEP_1("rologia:beep_1", 20),
-	BEEP_2("rologia:beep_2", 10);
+	BEEP_2("rologia:beep_2", 10),
+	NOTIFICATION("rologia:notification", 10);
 
 	public final String path;
 	public final ResourceLocation location;

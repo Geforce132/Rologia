@@ -3,6 +3,8 @@ package net.geforcemods.rologia.os.gui.components;
 import net.geforcemods.rologia.os.RologiaOS;
 import net.geforcemods.rologia.os.gui.utils.GuiUtils;
 import net.geforcemods.rologia.os.misc.Position;
+import net.geforcemods.rologia.os.sounds.Sounds;
+import net.minecraft.util.SoundEvent;
 
 public class Button extends ScreenComponent {
 	
@@ -34,6 +36,11 @@ public class Button extends ScreenComponent {
 
 	public String getText() {
 		return text;
+	}
+
+	@Override
+	public SoundEvent getClickSound() {
+		return Sounds.BEEP_2.event;
 	}
 
 	@Override

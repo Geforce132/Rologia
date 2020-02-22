@@ -8,7 +8,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.ActionResultType;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
 
@@ -24,7 +23,7 @@ public class ItemRologia extends Item {
 	public ActionResult<ItemStack> onItemRightClick(World world, PlayerEntity player, Hand hand) {
 		ItemStack itemStackIn = player.getHeldItem(hand);
 
-		if(player.func_226273_bm_()) {
+		if(player.isCrouching()) {
 			RologiaOS.removeInstance();
 			return ActionResult.func_226250_c_(itemStackIn);
 		}
@@ -36,7 +35,7 @@ public class ItemRologia extends Item {
 			Minecraft.getInstance().displayGuiScreen(new GuiRologia(player, (ItemRologia) player.getHeldItem(hand).getItem()));
 			return ActionResult.func_226250_c_(itemStackIn);
 		}
-		else{
+		else {
 			return ActionResult.func_226250_c_(itemStackIn);
 		}
 	}

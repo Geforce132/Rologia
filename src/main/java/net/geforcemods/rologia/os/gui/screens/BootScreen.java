@@ -1,6 +1,7 @@
 package net.geforcemods.rologia.os.gui.screens;
 
 import net.geforcemods.rologia.os.RologiaOS;
+import net.geforcemods.rologia.os.apps.events.AppEventType;
 import net.geforcemods.rologia.os.gui.components.ScreenComponent;
 import net.geforcemods.rologia.os.gui.components.images.Image;
 import net.geforcemods.rologia.os.misc.Position;
@@ -23,7 +24,7 @@ public class BootScreen extends Screen {
 
 	@Override
 	public void editComponent(ScreenComponent comp) {
-		getOS().setApp("step_counter"); //TODO just for testing
+		//getOS().setApp("step_counter"); //TODO just for testing
 	}
 
 	@Override
@@ -40,6 +41,11 @@ public class BootScreen extends Screen {
 	@Override
 	public Image getBackgroundImage() {
 		return new Image(getOS(), "minewatch:textures/gui/watch/default.png", WATCH_SCREEN_X_SIZE, WATCH_SCREEN_Y_SIZE);	
+	}
+
+	@Override
+	public AppEventType[] subscribeToEvents() {
+		return null;
 	}
 
 }

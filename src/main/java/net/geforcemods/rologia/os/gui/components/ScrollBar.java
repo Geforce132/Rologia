@@ -2,7 +2,6 @@ package net.geforcemods.rologia.os.gui.components;
 
 import org.lwjgl.opengl.GL11;
 
-import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.geforcemods.rologia.os.RologiaOS;
@@ -21,7 +20,7 @@ public class ScrollBar extends ScreenComponent {
 		RenderSystem.disableTexture();
         
         GL11.glBegin(GL11.GL_QUADS);
-        GlStateManager.func_227702_d_(0, 255, 0, 1);
+        RenderSystem.color4f(0, 255, 0, 1);
         GL11.glVertex3f((float)getPosition().getX(), (float)getPosition().getY() + getHeight(), 0.0F);
         GL11.glVertex3f((float)getPosition().getX() + getWidth(), (float)getPosition().getY() + getHeight(), 0.0F);
         GL11.glVertex3f((float)getPosition().getX() + getWidth(), (float)getPosition().getY(), 0.0F);

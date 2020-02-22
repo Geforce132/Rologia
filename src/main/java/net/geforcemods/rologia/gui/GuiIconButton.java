@@ -10,10 +10,10 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
-import net.minecraftforge.fml.client.config.GuiButtonExt;
+import net.minecraftforge.fml.client.gui.widget.ExtendedButton;
 
 @OnlyIn(Dist.CLIENT)
-public class GuiIconButton extends GuiButtonExt {
+public class GuiIconButton extends ExtendedButton {
 	
     private final ResourceLocation iconLocation;
 	private Consumer<GuiIconButton> onClick;
@@ -47,16 +47,16 @@ public class GuiIconButton extends GuiButtonExt {
     	super.render(mouseX, mouseY, partialTicks);
     	
     	if(iconLocation != null) {
-	    	GlStateManager.func_227626_N_();
-	    	GlStateManager.func_227702_d_(1, 1, 1, 1);
+    		RenderSystem.pushMatrix();
+    		RenderSystem.color4f(1, 1, 1, 1);
 	    	Minecraft.getInstance().getTextureManager().bindTexture(iconLocation);
-	    	RenderSystem.disableDepthTest();
+	    	GlStateManager.disableDepthTest();
 	    	int i = xTextureOffset;
 	    	int j = yTextureOffset;
 	
 	    	GuiUtils.drawTexturedModalRect((this.x + 1) + xTextureShift, (this.y + 1) + yTextureShift, i, j, this.width, this.height, this.getBlitOffset());
 	    	RenderSystem.enableDepthTest();
-	    	GlStateManager.func_227627_O_(); 
+	    	RenderSystem.popMatrix(); 
     	}
     }
     

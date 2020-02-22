@@ -1,6 +1,6 @@
 package net.geforcemods.rologia.os.gui.components.images;
 
-import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.geforcemods.rologia.os.RologiaOS;
 import net.geforcemods.rologia.os.misc.Position;
@@ -43,11 +43,11 @@ public class RotatingImage extends Image {
 	
 	@Override
 	public void performPrerenderGLFixes() {
-		GlStateManager.func_227670_b_(getWidth() / 2 + getScreen().getCenteredPositionForComponent(this).getX(), getHeight() / 2 + getScreen().getCenteredPositionForComponent(this).getY(), 0);
-		GlStateManager.func_227689_c_(rotation += getRotation(), 0, 0, 1);
-		GlStateManager.func_227670_b_(-getWidth() / 2 - getScreen().getCenteredPositionForComponent(this).getX(), -getHeight() / 2 - getScreen().getCenteredPositionForComponent(this).getY(), 0);
+		RenderSystem.translated(getWidth() / 2 + getScreen().getCenteredPositionForComponent(this).getX(), getHeight() / 2 + getScreen().getCenteredPositionForComponent(this).getY(), 0);
+		RenderSystem.rotatef(rotation += getRotation(), 0, 0, 1);
+		RenderSystem.translated(-getWidth() / 2 - getScreen().getCenteredPositionForComponent(this).getX(), -getHeight() / 2 - getScreen().getCenteredPositionForComponent(this).getY(), 0);
 		
-		GlStateManager.func_227672_b_(getScale(), getScale(), 1F);
+		RenderSystem.scalef(getScale(), getScale(), 1F);
 		if(getScale() != 1.0F)
 		{
 			Position pos = getScreen().getCenteredPositionForComponent(this).scalePos(getScale());

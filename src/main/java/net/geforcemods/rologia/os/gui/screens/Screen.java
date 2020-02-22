@@ -3,10 +3,11 @@ package net.geforcemods.rologia.os.gui.screens;
 import java.util.ArrayList;
 import java.util.logging.Level;
 
-import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.geforcemods.rologia.os.RologiaOS;
-import net.geforcemods.rologia.os.apps.App;
+import net.geforcemods.rologia.os.apps.events.AppEvent;
+import net.geforcemods.rologia.os.apps.events.AppEventType;
 import net.geforcemods.rologia.os.gui.components.AppBar;
 import net.geforcemods.rologia.os.gui.components.ScreenComponent;
 import net.geforcemods.rologia.os.gui.components.ScrollBar;
@@ -54,12 +55,12 @@ public abstract class Screen extends net.minecraft.client.gui.screen.Screen {
 		backgroundImage.setPosition(pos);
 	}
 
-	public Screen(RologiaOS os, Position pos, App app) {
+	public Screen(RologiaOS os, Position pos, Screen screen) {
 		super(null);
 		OS = os;
 
 		screenPos = pos;
-		backgroundImage = app.getAppBackgroundImage();
+		backgroundImage = screen.getBackgroundImage();
 
 		if(backgroundImage == null)
 			RologiaOS.LOGGER.log(Level.WARNING, getClass().getSimpleName() + " has no background image!");
@@ -96,16 +97,16 @@ public abstract class Screen extends net.minecraft.client.gui.screen.Screen {
 	public void updateScreen() {}
 
 	public void drawBackgroundImage() {
-		GlStateManager.func_227626_N_();
+		RenderSystem.pushMatrix();
 
 		backgroundImage.performPrerenderGLFixes();
 		backgroundImage.drawComponent();
 
-		GlStateManager.func_227626_N_();
+		RenderSystem.pushMatrix();
 		GuiUtils.drawFilledRect(getPosition(), WATCH_SCREEN_X_SIZE, WATCH_SCREEN_Y_SIZE, getOS().getTheme().BACKGROUND_OVERLAY, 0.6F);
-		GlStateManager.func_227627_O_();
+		RenderSystem.popMatrix();
 
-		GlStateManager.func_227627_O_();
+		RenderSystem.popMatrix();
 	}
 
 	public void editComponents() {
@@ -122,18 +123,18 @@ public abstract class Screen extends net.minecraft.client.gui.screen.Screen {
 		for(ScreenComponent component : components){
 			if(!component.isVisible()) continue;
 
-			GlStateManager.func_227626_N_();
+			RenderSystem.pushMatrix();
 			component.performPrerenderGLFixes();
 			component.drawComponent();
-			GlStateManager.func_227627_O_();
+			RenderSystem.popMatrix();
 		}
 	}
 
 	public void drawStatusBar() {
-		GlStateManager.func_227626_N_();
+		RenderSystem.pushMatrix();
 		statusBar.performPrerenderGLFixes();
 		statusBar.drawComponent();
-		GlStateManager.func_227627_O_();
+		RenderSystem.popMatrix();
 	}
 
 	public void drawScreenInfo(int startingXPos, int startingYPos) {
@@ -145,11 +146,13 @@ public abstract class Screen extends net.minecraft.client.gui.screen.Screen {
 		drawString(getFontRenderer(), "Mouse position - X: " + mousePos.getX() + " Y: " + mousePos.getY(), startingXPos, 74, color);
 		drawString(getFontRenderer(), "# of notifications: " + getOS().getNotifications().size(), startingXPos, 98, color);
 
+		/*
 		if(getOS().isAppOpen()) {
 			drawString(getFontRenderer(), "App info: ", startingXPos, 110, color);
 			drawString(getFontRenderer(), "ID: " + getOS().getCurrentApp().getAppID(), startingXPos, 122, color);
 			drawString(getFontRenderer(), "Name: " + getOS().getCurrentApp().getAppName(), startingXPos, 134, color);
 		}
+		*/
 	}
 
 	public void drawComponentInfo(int startingXPos, int startingYPos) {
@@ -169,6 +172,13 @@ public abstract class Screen extends net.minecraft.client.gui.screen.Screen {
 		}
 	}
 
+	public void drawString(FontRenderer fontRenderer, String string, int x, int y, int color, boolean textShadow) {
+		if(textShadow)
+			fontRenderer.drawStringWithShadow(string, x, y, color);
+		else
+			fontRenderer.drawString(string, x, y, color);
+	}
+
 	public void onScreenOpened() {}
 
 	/**
@@ -178,7 +188,22 @@ public abstract class Screen extends net.minecraft.client.gui.screen.Screen {
 		setFocusedComponent(null);
 	}
 
+	public Object replaceKeywords(String keyword) {
+		return keyword;
+	}
+
+	public abstract AppEventType[] subscribeToEvents();
+
 	public void onScreenSwitched() {}
+
+	public boolean isSubscribedTo(AppEventType eventType) {
+		for(AppEventType type : subscribeToEvents())
+			return type == eventType;
+
+		return false;
+	}
+
+	public void onEventPosted(AppEvent type) {}
 
 	public void addComponent(ScreenComponent component) {
 		if(!components.contains(component)){
@@ -189,15 +214,9 @@ public abstract class Screen extends net.minecraft.client.gui.screen.Screen {
 			screenHeight = component.getPosition().getY() - WATCH_SCREEN_Y_SIZE;
 	}
 
-	public void addComponents(App app) {
-		for(ScreenComponent comp : app.getComponents()) {
+	public void addComponents(Screen screen) {
+		for(ScreenComponent comp : screen.getComponents()) {
 			addComponent(comp);
-		}
-	}
-
-	public void removeComponents(App app) {
-		for(int i = 0; i < app.getComponents().size(); i++) {
-			components.remove(app.getComponents().get(i));
 		}
 	}
 
@@ -292,7 +311,7 @@ public abstract class Screen extends net.minecraft.client.gui.screen.Screen {
 		return scrollBar;
 	}
 
-	public int getScreenHeight() {
+	public int getHeight() {
 		return screenHeight;
 	}
 

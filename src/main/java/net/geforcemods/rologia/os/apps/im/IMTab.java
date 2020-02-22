@@ -2,7 +2,7 @@ package net.geforcemods.rologia.os.apps.im;
 
 import java.util.ArrayList;
 
-import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.geforcemods.rologia.os.gui.screens.Screen;
 import net.geforcemods.rologia.os.gui.utils.Colors;
@@ -32,15 +32,15 @@ public class IMTab {
 		int x = position.getX();
 		int y = position.shiftY(20 + getPreviousMessageHeights(index)).getY() + (index * 2);
 
-		GlStateManager.func_227626_N_();
+		RenderSystem.pushMatrix();
 
-		GlStateManager.func_227670_b_(x, y, 0);
-		GlStateManager.func_227672_b_(AppIM.TEXT_SCALE, AppIM.TEXT_SCALE, 0);
-		GlStateManager.func_227670_b_(-x, -y, 0);
+		RenderSystem.translated(x, y, 0);
+		RenderSystem.scalef(AppIM.TEXT_SCALE, AppIM.TEXT_SCALE, 0);
+		RenderSystem.translated(-x, -y, 0);
 
 		screen.getFontRenderer().drawSplitString(messages.get(index).getMessageWithSenderPrefix(), x, y, (int) (Screen.WATCH_SCREEN_X_SIZE / AppIM.TEXT_SCALE), Colors.DARK_GREEN.hexValue);
 
-		GlStateManager.func_227627_O_();
+		RenderSystem.popMatrix();
 	}
 
 	private int getPreviousMessageHeights(int index) {

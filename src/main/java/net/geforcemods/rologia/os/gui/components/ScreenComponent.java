@@ -2,7 +2,7 @@ package net.geforcemods.rologia.os.gui.components;
 
 import org.lwjgl.opengl.GL11;
 
-import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.geforcemods.rologia.os.RologiaOS;
 import net.geforcemods.rologia.os.gui.screens.Screen;
@@ -12,6 +12,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.SoundEvent;
 
 public abstract class ScreenComponent extends net.minecraft.client.gui.screen.Screen {
 	
@@ -106,10 +107,10 @@ public abstract class ScreenComponent extends net.minecraft.client.gui.screen.Sc
 	 * @param texture The ResourceLocation to bind
 	 */
 	public void bindTexture(ResourceLocation texture) {
-		GlStateManager.func_227627_O_();
-		GlStateManager.func_227702_d_(1, 1, 1, 1);
+		RenderSystem.popMatrix();
+		RenderSystem.color4f(1, 1, 1, 1);
 		getTextureManager().bindTexture(texture);
-		GlStateManager.func_227626_N_();
+		RenderSystem.pushMatrix();
 	}
 
 	public ScreenComponent setPosition(Position pos) {
@@ -138,7 +139,7 @@ public abstract class ScreenComponent extends net.minecraft.client.gui.screen.Sc
 	}
 
 	public ScreenComponent centerPosition(int xShift, int yShift) {
-		Position pos = getScreen().getCenteredPositionForComponent(this).shiftX(xShift).shiftY(yShift - StatusBar.DEFAULT_WIDTH);
+		Position pos = getScreen().getCenteredPositionForComponent(this).shiftX(xShift).shiftY(yShift - StatusBar.DEFAULT_HEIGHT);
 
 		if(offset == null)
 			offset = new Position(0, 0);
@@ -238,6 +239,10 @@ public abstract class ScreenComponent extends net.minecraft.client.gui.screen.Sc
 
 	public Theme getTheme() {
 		return os.getTheme();
+	}
+
+	public SoundEvent getClickSound() {
+		return null;
 	}
 
 	public RologiaOS getOS() {

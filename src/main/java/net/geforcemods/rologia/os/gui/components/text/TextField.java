@@ -3,7 +3,6 @@ package net.geforcemods.rologia.os.gui.components.text;
 import org.apache.commons.lang3.StringUtils;
 import org.lwjgl.opengl.GL11;
 
-import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.geforcemods.rologia.os.RologiaOS;
@@ -37,14 +36,14 @@ public class TextField extends ScreenComponent {
 		RenderSystem.disableTexture();
         
 		GL11.glBegin(GL11.GL_LINES);
-		GlStateManager.func_227702_d_(255, 0, 0, 1);
+		RenderSystem.color4f(255, 0, 0, 1);
 		GL11.glVertex3f(getPosition().getX(), getPosition().getY() + height, 0);
 		GL11.glVertex3f(getPosition().getX() + width, getPosition().getY() + height, 0);
 		GL11.glEnd();
 		
 		if(isFocused()) {
 			GL11.glBegin(GL11.GL_LINES);
-			GlStateManager.func_227702_d_(225, 0, 0, 1);
+			RenderSystem.color4f(225, 0, 0, 1);
 			GL11.glVertex3f(getPosition().shiftX((int) (getScreen().getFontRenderer().getStringWidth(text) * textScale) + 1).getX(), getPosition().getY(), 0);
 			GL11.glVertex3f(getPosition().shiftX((int) (getScreen().getFontRenderer().getStringWidth(text) * textScale) + 1).getX(), (int) (getPosition().getY() + (height - 1) * textScale), 0);
 			GL11.glEnd();
@@ -53,9 +52,9 @@ public class TextField extends ScreenComponent {
 		RenderSystem.enableTexture();
 		RenderSystem.disableBlend();
 
-		GlStateManager.func_227670_b_(getPosition().getX(), getPosition().getY(), 0);
-		GlStateManager.func_227672_b_(textScale, textScale, 0);
-		GlStateManager.func_227670_b_(-getPosition().getX(), -getPosition().getY(), 0);
+		RenderSystem.translated(getPosition().getX(), getPosition().getY(), 0);
+		RenderSystem.scalef(textScale, textScale, 0);
+		RenderSystem.translated(-getPosition().getX(), -getPosition().getY(), 0);
 
 		drawString(getFontRenderer(), text, getPosition().getX(), getPosition().getY(), GuiUtils.toHex(getTheme().TEXT_FIELD_TEXT));
 	}
