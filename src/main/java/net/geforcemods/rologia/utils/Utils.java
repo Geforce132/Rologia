@@ -39,7 +39,7 @@ public class Utils {
 
 			while(iterator.hasNext()){
 				PlayerEntity tempPlayer = (PlayerEntity) iterator.next();
-				if(tempPlayer.getName().getFormattedText().equals(name))
+				if(tempPlayer.getName().equals(name))
 					return tempPlayer;
 			}
 
@@ -50,7 +50,7 @@ public class Utils {
 
 			while(iterator.hasNext()){
 				PlayerEntity tempPlayer = (PlayerEntity) iterator.next();
-				if(tempPlayer.getName().getFormattedText().equals(name))
+				if(tempPlayer.getName().equals(name))
 					return tempPlayer;
 			}
 
@@ -75,7 +75,7 @@ public class Utils {
 	public static boolean isPlayerOnline(String name) {
 		if(EffectiveSide.get() == LogicalSide.CLIENT){
 			for(AbstractClientPlayerEntity player : Minecraft.getInstance().world.getPlayers()){
-				if(player != null && player.getName().getFormattedText().equals(name))
+				if(player != null && player.getName().equals(name))
 					return true;
 			}
 

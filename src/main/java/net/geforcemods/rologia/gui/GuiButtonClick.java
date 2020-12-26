@@ -2,6 +2,7 @@ package net.geforcemods.rologia.gui;
 
 import java.util.function.Consumer;
 
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.fml.client.gui.widget.ExtendedButton;
 
 public class GuiButtonClick extends ExtendedButton
@@ -11,7 +12,7 @@ public class GuiButtonClick extends ExtendedButton
 
 	public GuiButtonClick(int id, int xPos, int yPos, int width, int height, String displayString, Consumer<GuiButtonClick> onClick)
 	{
-		super(xPos, yPos, width, height, displayString, b -> {});
+		super(xPos, yPos, width, height, new StringTextComponent(displayString), b -> {});
 
 		this.id = id;
 		this.onClick = onClick;

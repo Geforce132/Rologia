@@ -1,5 +1,7 @@
 package net.geforcemods.rologia.os.gui.components;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
+
 import net.geforcemods.rologia.os.RologiaOS;
 import net.geforcemods.rologia.os.gui.utils.GuiUtils;
 import net.geforcemods.rologia.os.misc.Position;
@@ -25,13 +27,13 @@ public class ToggleButton extends ScreenComponent {
 	}
 
 	@Override
-	public void drawComponent() {
+	public void drawComponent(MatrixStack stack) {
 		drawButtonInterior(this.isMouseHoveringOver(getScreen().getMousePosition()) || !enabled);
 
 		GuiUtils.drawHollowRect(getPosition(), getWidth(), getHeight(), getTheme().BUTTON_OUTLINE);
 
-		drawString(getFontRenderer(), text1, getPosition().getX() + 2, getPosition().getY() + 2, GuiUtils.toHex(getTheme().BUTTON_TEXT));
-		drawString(getFontRenderer(), text2, getPosition().getX() + getFontRenderer().getStringWidth(text1) + 6, getPosition().getY() + 2, GuiUtils.toHex(getTheme().BUTTON_TEXT));
+		drawString(stack, getFontRenderer(), text1, getPosition().getX() + 2, getPosition().getY() + 2, GuiUtils.toHex(getTheme().BUTTON_TEXT));
+		drawString(stack, getFontRenderer(), text2, getPosition().getX() + getFontRenderer().getStringWidth(text1) + 6, getPosition().getY() + 2, GuiUtils.toHex(getTheme().BUTTON_TEXT));
 	}
 	
 	private void drawButtonInterior(boolean mouseHoveringOver) {

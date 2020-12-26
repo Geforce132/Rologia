@@ -1,5 +1,7 @@
 package net.geforcemods.rologia.os.gui.components.images;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
+
 import net.geforcemods.rologia.os.RologiaOS;
 import net.geforcemods.rologia.os.gui.components.ScreenComponent;
 import net.geforcemods.rologia.os.gui.screens.Screen;
@@ -58,9 +60,10 @@ public class Image extends ScreenComponent {
 		imageHeight = height;
 	}
 	
-	public void drawComponent() {
+	@Override
+	public void drawComponent(MatrixStack stack) {
 		getTextureManager().bindTexture(location);
-		AbstractGui.blit(getPosition().getX(), getPosition().getY(), 0, 0, imageWidth, imageHeight, Screen.WATCH_SCREEN_X_SIZE, Screen.WATCH_SCREEN_Y_SIZE); // TODO make sure this doesn't break anything
+		AbstractGui.blit(stack, getPosition().getX(), getPosition().getY(), 0, 0, imageWidth, imageHeight, Screen.WATCH_SCREEN_X_SIZE, Screen.WATCH_SCREEN_Y_SIZE); // TODO make sure this doesn't break anything
 	}
 	
 	@Override

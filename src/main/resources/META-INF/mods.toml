@@ -5,6 +5,7 @@ displayURL="https://discord.gg/D8VfMnT"
 logoFile="logo.png"
 credits="Thanks to all of you guys for your support!"
 authors="Geforce"
+license="GNU GPL v3.0"
 
 [[mods]] #mandatory
 modId="rologia" #mandatory

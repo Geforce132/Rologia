@@ -8,6 +8,7 @@ import net.geforcemods.rologia.os.gui.screens.Screen;
 import net.geforcemods.rologia.os.gui.utils.Colors;
 import net.geforcemods.rologia.os.gui.utils.GuiUtils;
 import net.geforcemods.rologia.os.misc.Position;
+import net.minecraft.util.text.StringTextComponent;
 
 public class IMTab {
 	
@@ -22,8 +23,8 @@ public class IMTab {
 	
 	public void drawTab(Screen currentScreen) {
 		GuiUtils.drawHollowRect(position, currentScreen.getFontRenderer().getStringWidth(sender) + 1, 10, Colors.RED.color);
-		currentScreen.getFontRenderer().drawString(sender, position.getX() + 1, position.getY() + 1, Colors.GREEN.hexValue);
-
+		//currentScreen.getFontRenderer().drawString(sender, position.getX() + 1, position.getY() + 1, Colors.GREEN.hexValue);
+		//TODO
 		for(int i = 0; i < messages.size(); i++)
 			drawMessage(currentScreen, i);
 	}
@@ -38,7 +39,7 @@ public class IMTab {
 		RenderSystem.scalef(AppIM.TEXT_SCALE, AppIM.TEXT_SCALE, 0);
 		RenderSystem.translated(-x, -y, 0);
 
-		screen.getFontRenderer().drawSplitString(messages.get(index).getMessageWithSenderPrefix(), x, y, (int) (Screen.WATCH_SCREEN_X_SIZE / AppIM.TEXT_SCALE), Colors.DARK_GREEN.hexValue);
+		screen.getFontRenderer().func_238418_a_(new StringTextComponent(messages.get(index).getMessageWithSenderPrefix()), x, y, (int) (Screen.WATCH_SCREEN_X_SIZE / AppIM.TEXT_SCALE), Colors.DARK_GREEN.hexValue);
 
 		RenderSystem.popMatrix();
 	}

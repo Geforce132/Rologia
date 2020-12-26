@@ -45,7 +45,7 @@ public class RologiaClientEventHandler {
 				mc.textureManager.bindTexture(AppBar.APP_ICONS);
 				RenderSystem.color4f(1, 1, 1, (float) alpha); 
 				GuiUtils.drawTexturedModelRect(x, y, 12, 0, 9, 11, 0, 256, 256);
-				mc.fontRenderer.drawString(os.getNotifications().size() + "", x + 2, y + 1, Colors.RED.hexValue | ((int) (alpha * 255) << 24));
+				mc.fontRenderer.drawString(event.getMatrixStack(), os.getNotifications().size() + "", x + 2, y + 1, Colors.RED.hexValue | ((int) (alpha * 255) << 24));
 				RenderSystem.disableBlend();
 				RenderSystem.popMatrix();
 			}

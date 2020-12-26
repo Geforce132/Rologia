@@ -17,6 +17,8 @@ import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.IReorderingProcessor;
+import net.minecraft.util.text.StringTextComponent;
 
 public class GuiUtils {
 	
@@ -114,9 +116,9 @@ public class GuiUtils {
 	public static int getWordWrappedWidth(FontRenderer renderer, String text, int width) {
 		int longestWidth = 0;
 
-		for(String line : renderer.listFormattedStringToWidth(text, width)) {
-			int lineWidth = renderer.getStringWidth(line);
-			if(renderer.getStringWidth(line) > longestWidth)
+		for(IReorderingProcessor line : renderer.trimStringToWidth(new StringTextComponent(text), width)) {
+			int lineWidth = renderer.getStringWidth(line.toString());
+			if(renderer.getStringWidth(line.toString()) > longestWidth)
 				longestWidth = lineWidth;
 		}
 		

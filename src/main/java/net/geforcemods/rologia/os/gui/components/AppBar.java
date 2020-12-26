@@ -1,5 +1,7 @@
 package net.geforcemods.rologia.os.gui.components;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
+
 import net.geforcemods.rologia.os.RologiaOS;
 import net.geforcemods.rologia.os.gui.screens.HomeScreen;
 import net.geforcemods.rologia.os.gui.screens.Screen;
@@ -23,7 +25,7 @@ public class AppBar extends ScreenComponent {
 	}
 
 	@Override
-	public void drawComponent() {
+	public void drawComponent(MatrixStack stack) {
 		// Useful variables
 		int barSize = getBarSize();
 		int iconHovering = getIconHoveringOver(getScreen().getMousePosition());
@@ -38,7 +40,7 @@ public class AppBar extends ScreenComponent {
 				GuiUtils.drawTexturedModalRect(getPosition().shiftX(i * ICON_X_SPACING).getX(), getPosition().getY(), 0, 0, 6, 6, this.getBlitOffset());
 
 		if(iconHovering != -1)
-			drawString(getFontRenderer(), iconName, getPosition().shiftX((getWidth() / 2) - (getFontRenderer().getStringWidth(iconName) / 2)).getX(), getPosition().shiftY(10).getY(), net.geforcemods.rologia.os.gui.utils.GuiUtils.toHex(getOS().getTheme().APP_BAR_HOVERING_TEXT));
+			drawString(stack, getFontRenderer(), iconName, getPosition().shiftX((getWidth() / 2) - (getFontRenderer().getStringWidth(iconName) / 2)).getX(), getPosition().shiftY(10).getY(), net.geforcemods.rologia.os.gui.utils.GuiUtils.toHex(getOS().getTheme().APP_BAR_HOVERING_TEXT));
 	}
 
 	@Override

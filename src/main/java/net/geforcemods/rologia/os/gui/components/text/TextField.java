@@ -3,6 +3,7 @@ package net.geforcemods.rologia.os.gui.components.text;
 import org.apache.commons.lang3.StringUtils;
 import org.lwjgl.opengl.GL11;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.geforcemods.rologia.os.RologiaOS;
@@ -31,7 +32,7 @@ public class TextField extends ScreenComponent {
 	}
 
 	@Override
-	public void drawComponent() {
+	public void drawComponent(MatrixStack stack) {
 		RenderSystem.enableBlend();
 		RenderSystem.disableTexture();
         
@@ -56,7 +57,7 @@ public class TextField extends ScreenComponent {
 		RenderSystem.scalef(textScale, textScale, 0);
 		RenderSystem.translated(-getPosition().getX(), -getPosition().getY(), 0);
 
-		drawString(getFontRenderer(), text, getPosition().getX(), getPosition().getY(), GuiUtils.toHex(getTheme().TEXT_FIELD_TEXT));
+		drawString(stack, getFontRenderer(), text, getPosition().getX(), getPosition().getY(), GuiUtils.toHex(getTheme().TEXT_FIELD_TEXT));
 	}
 
 	@Override

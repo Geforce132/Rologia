@@ -1,5 +1,6 @@
 package net.geforcemods.rologia.os.gui.components;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.geforcemods.rologia.os.RologiaOS;
@@ -24,7 +25,7 @@ public class StatusBar extends ScreenComponent {
 	}
 
 	@Override
-	public void drawComponent() {
+	public void drawComponent(MatrixStack stack) {
 		RenderSystem.pushMatrix();
 
 		RenderSystem.color4f(1, 1, 1, 1);
@@ -32,14 +33,14 @@ public class StatusBar extends ScreenComponent {
 
         float scaleOfText = 0.85F;
         RenderSystem.scalef(scaleOfText, scaleOfText, 1F);
-        drawString(getFontRenderer(), getScreen().getOS().getTime(TimeConstants.HM), (int) ((getPosition().getX() + 50) / scaleOfText), (int) ((getPosition().getY() + 1) / scaleOfText), GuiUtils.toHex(getTheme().STATUS_BAR_CLOCK));
+        drawString(stack, getFontRenderer(), getScreen().getOS().getTime(TimeConstants.HM), (int) ((getPosition().getX() + 50) / scaleOfText), (int) ((getPosition().getY() + 1) / scaleOfText), GuiUtils.toHex(getTheme().STATUS_BAR_CLOCK));
         RenderSystem.popMatrix();
         
         //Draw notifications
-        drawNotifications();
+        drawNotifications(stack);
     }
 
-	private void drawNotifications() {
+	private void drawNotifications(MatrixStack stack) {
 		for(int i = 0; i < getOS().getNotifications().size(); i++) {
 			if(i > 3 && !isExpanded()) {
 				RenderSystem.pushMatrix();
@@ -56,9 +57,9 @@ public class StatusBar extends ScreenComponent {
 			}
 
 			if(isExpanded())
-				getOS().getNotifications().get(i).drawNotification(getScreen(), getPosition().shiftX(1).shiftY(i * Notification.NOTIFICATION_HEIGHT), true);
+				getOS().getNotifications().get(i).drawNotification(getScreen(), stack, getPosition().shiftX(1).shiftY(i * Notification.NOTIFICATION_HEIGHT), true);
 			else
-				getOS().getNotifications().get(i).drawNotification(getScreen(), getPosition().shiftX(1 + (i * 10)), false);
+				getOS().getNotifications().get(i).drawNotification(getScreen(), stack, getPosition().shiftX(1 + (i * 10)), false);
 		}
 	}
 	

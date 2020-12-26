@@ -67,7 +67,7 @@ public class AppIM extends Screen implements IRologiaMessageHandler {
 	@Override
 	public void onComponentClicked(ScreenComponent component, Position mousePos, int mouseButtonClicked) {
 		if(component == sendButton) {
-			IMCManager.sendMessage(getOS().getUser().getName().getFormattedText(), getOS().getUser().getName().getFormattedText(), IMCManager.IM, textField.getText());
+			IMCManager.sendMessage(getOS().getUser().getName().getString(), getOS().getUser().getName().getString(), IMCManager.IM, textField.getText());
 			textField.clearText();
 		}
 	}

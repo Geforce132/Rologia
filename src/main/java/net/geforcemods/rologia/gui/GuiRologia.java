@@ -2,6 +2,8 @@ package net.geforcemods.rologia.gui;
 
 import java.util.logging.Level;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
+
 import net.geforcemods.rologia.item.ItemRologia;
 import net.geforcemods.rologia.os.RologiaOS;
 import net.geforcemods.rologia.os.gui.screens.Screen;
@@ -40,7 +42,7 @@ public class GuiRologia extends net.minecraft.client.gui.screen.Screen {
 		rologia.openSmartwatchGUI(player, (width - Screen.WATCH_SCREEN_X_SIZE) / 2, (height - Screen.WATCH_SCREEN_Y_SIZE) / 2);
 
 		if(RologiaOS.debugMode) {
-			debugButtons[0] = new GuiIconButton(this.width - 115, 10, 20, 20, "off", this::actionPerformed) {
+			debugButtons[0] = new GuiIconButton(5, this.width - 115, 10, 20, 20, "off", this::actionPerformed) {
 				
 				@Override
 				public void onClick(double mouseX, double mouseY) {
@@ -96,18 +98,18 @@ public class GuiRologia extends net.minecraft.client.gui.screen.Screen {
 	}
 	
 	@Override
-	public void render(int mouseX, int mouseY, float partialTicks) {
+	public void render(MatrixStack stack, int mouseX, int mouseY, float partialTicks) {
 		if(debugButtons[0].active)
 			GuiUtils.drawFilledRect(width - 160, 0, this.width - (this.width - 160), this.height, Colors.BLACK.color, 0.5F);
 
-		super.render(mouseX, mouseY, partialTicks);
+		super.render(stack, mouseX, mouseY, partialTicks);
 		minecraft.getTextureManager().bindTexture(SCREEN_EDGE_TEXTURE);
 		int startX = (width / 2) - (Screen.WATCH_BACKGROUND_X_SIZE / 2);
 		int startY = (height / 2) - (Screen.WATCH_BACKGROUND_Y_SIZE / 2);
 		GuiUtils.drawTexturedModalRect(startX, startY, 0, 0, Screen.WATCH_BACKGROUND_X_SIZE, Screen.WATCH_BACKGROUND_Y_SIZE, this.getBlitOffset());
 
 		try {
-			rologia.renderScreen(mouseX, mouseY);
+			rologia.renderScreen(stack, mouseX, mouseY);
 		} catch (Exception e) {
 			RologiaOS.LOGGER.log(Level.WARNING, "A problem has occured while rendering a Screen!", e);
 		}
@@ -116,9 +118,9 @@ public class GuiRologia extends net.minecraft.client.gui.screen.Screen {
 		if(debugButtons[0] != null && rologia.getCurrentScreen() != null) {
 
 			if(debugButtons[1].active == false)
-				rologia.getCurrentScreen().drawScreenInfo(width - 150, height);
+				rologia.getCurrentScreen().drawScreenInfo(stack, width - 150, height);
 			else if(debugButtons[2].active == false)
-				rologia.getCurrentScreen().drawComponentInfo(width - 150, height);
+				rologia.getCurrentScreen().drawComponentInfo(stack, width - 150, height);
 		}
 	}
 

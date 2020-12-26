@@ -25,7 +25,7 @@ public class ItemRologia extends Item {
 
 		if(player.isCrouching()) {
 			RologiaOS.removeInstance();
-			return ActionResult.func_226250_c_(itemStackIn);
+			return ActionResult.resultPass(itemStackIn);
 		}
 
 		if(world.isRemote) {
@@ -33,10 +33,10 @@ public class ItemRologia extends Item {
 			//System.out.println(Rologia.cTypeSmartWatch.getRegistryName());
 			//Rologia.channel.sendToServer(new OpenGui(Rologia.cTypeSmartWatch.getRegistryName(), world.getDimension().getType().getId(), player.getPosition()));
 			Minecraft.getInstance().displayGuiScreen(new GuiRologia(player, (ItemRologia) player.getHeldItem(hand).getItem()));
-			return ActionResult.func_226250_c_(itemStackIn);
+			return ActionResult.resultPass(itemStackIn);
 		}
 		else {
-			return ActionResult.func_226250_c_(itemStackIn);
+			return ActionResult.resultPass(itemStackIn);
 		}
 	}
 

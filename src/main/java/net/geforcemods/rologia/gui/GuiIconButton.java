@@ -2,12 +2,15 @@ package net.geforcemods.rologia.gui;
 
 import java.util.function.Consumer;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.geforcemods.rologia.os.gui.utils.GuiUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.client.gui.widget.ExtendedButton;
@@ -25,7 +28,7 @@ public class GuiIconButton extends ExtendedButton {
     private int yTextureShift;
 
 	public GuiIconButton(int xPos, int yPos, int width, int height, int texXOffset, int texYOffset, int texXShift, int texYShift, ResourceLocation resource, Consumer<GuiIconButton> onClick) {
-		super(xPos, yPos, width, height, "", b -> {});
+		super(xPos, yPos, width, height, new StringTextComponent(""), b -> {});
 		this.onClick = onClick;
         xTextureOffset = texXOffset;
         yTextureOffset = texYOffset;
@@ -36,15 +39,16 @@ public class GuiIconButton extends ExtendedButton {
         iconLocation = resource;
     }
 	
-	public GuiIconButton(int xPos, int yPos, int width, int height, String displayString, Consumer<GuiIconButton> onClick)
+	public GuiIconButton(int id, int xPos, int yPos, int width, int height, String displayString, Consumer<GuiIconButton> onClick)
     {
-        super(xPos, yPos, width, height, displayString, b -> {});
+        super(xPos, yPos, width, height, new StringTextComponent(displayString), b -> {});
         iconLocation = null;
 		this.onClick = onClick;
     }
 
-    public void render(int mouseX, int mouseY, float partialTicks) {
-    	super.render(mouseX, mouseY, partialTicks);
+	@Override
+    public void render(MatrixStack stack, int mouseX, int mouseY, float partialTicks) {
+    	super.render(stack, mouseX, mouseY, partialTicks);
     	
     	if(iconLocation != null) {
     		RenderSystem.pushMatrix();

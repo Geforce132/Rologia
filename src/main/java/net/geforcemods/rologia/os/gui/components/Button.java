@@ -1,5 +1,7 @@
 package net.geforcemods.rologia.os.gui.components;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
+
 import net.geforcemods.rologia.os.RologiaOS;
 import net.geforcemods.rologia.os.gui.utils.GuiUtils;
 import net.geforcemods.rologia.os.misc.Position;
@@ -21,7 +23,7 @@ public class Button extends ScreenComponent {
 	}
 
 	@Override
-	public void drawComponent() {
+	public void drawComponent(MatrixStack stack) {
 		if(this.isMouseHoveringOver(getScreen().getMousePosition()) || !isEnabled()) {
 			GuiUtils.drawFilledRect(getPosition(), getWidth(), getHeight(), getTheme().BUTTON_INTERIOR_HOVERING);
 		}
@@ -31,7 +33,7 @@ public class Button extends ScreenComponent {
 
 		GuiUtils.drawHollowRect(getPosition(), getWidth(), getHeight(), getTheme().BUTTON_OUTLINE);
 
-		drawString(getFontRenderer(), text, getPosition().getX() + 2, getPosition().getY() + 2, GuiUtils.toHex(getTheme().BUTTON_TEXT));
+		drawString(stack, getFontRenderer(), text, getPosition().getX() + 2, getPosition().getY() + 2, GuiUtils.toHex(getTheme().BUTTON_TEXT));
 	}
 
 	public String getText() {

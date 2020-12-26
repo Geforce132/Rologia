@@ -1,5 +1,6 @@
 package net.geforcemods.rologia.os.notifications;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.geforcemods.rologia.os.gui.screens.Screen;
@@ -29,7 +30,7 @@ public class Notification {
 		notificationBody = body;
 	}
 	
-	public void drawNotification(Screen screen, Position position, boolean expanded) {
+	public void drawNotification(Screen screen, MatrixStack stack, Position position, boolean expanded) {
 		if(expanded) {
 			// If the status bar has been clicked
 			if(slotNumber <= 2) {
@@ -47,14 +48,14 @@ public class Notification {
 				RenderSystem.translated(position.getX(), 10 + position.getY(), 0);
 				RenderSystem.scalef(0.9F, 0.9F, 0);
 				RenderSystem.translated(-position.getX(), -(10 + position.getY()), 0);
-				Minecraft.getInstance().fontRenderer.drawString(notificationTitle, position.shiftX(22).getX(), 10 + position.getY(), GuiUtils.toHex(screen.getOS().getTheme().NOTIFICATION_TITLE));
-				screen.drawString(Minecraft.getInstance().fontRenderer, notificationTitle, position.shiftX(22).getX(), 10 + position.getY(), GuiUtils.toHex(screen.getOS().getTheme().NOTIFICATION_TITLE), false);
+				Minecraft.getInstance().fontRenderer.drawString(stack, notificationTitle, position.shiftX(22).getX(), 10 + position.getY(), GuiUtils.toHex(screen.getOS().getTheme().NOTIFICATION_TITLE));
+				screen.drawString(Minecraft.getInstance().fontRenderer, stack, notificationTitle, position.shiftX(22).getX(), 10 + position.getY(), GuiUtils.toHex(screen.getOS().getTheme().NOTIFICATION_TITLE), false);
 
 				// Draw body string
 				RenderSystem.translated(position.getX(), 22 + position.getY(), 0);
 				RenderSystem.scalef(0.75F, 0.75F, 0);
 				RenderSystem.translated(-position.getX(), -(22 + position.getY()), 0);
-				screen.drawString(Minecraft.getInstance().fontRenderer, notificationBody, position.shiftX(31).getX(), 22 + position.getY(), GuiUtils.toHex(screen.getOS().getTheme().NOTIFICATION_BODY), false);
+				screen.drawString(Minecraft.getInstance().fontRenderer, stack, notificationBody, position.shiftX(31).getX(), 22 + position.getY(), GuiUtils.toHex(screen.getOS().getTheme().NOTIFICATION_BODY), false);
 				RenderSystem.popMatrix();
 
 				// Render icon

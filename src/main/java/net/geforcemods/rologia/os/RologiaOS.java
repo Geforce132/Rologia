@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
+
 import net.geforcemods.rologia.Rologia;
 import net.geforcemods.rologia.os.apps.AppInfo;
 import net.geforcemods.rologia.os.apps.AppStepCounter;
@@ -179,20 +181,20 @@ public class RologiaOS {
 	 * including ScreenImages, ScreenComponents, and Apps. Also keeps track of the mouse
 	 * cursor's position.
 	 */
-	public void renderScreen(int mouseX, int mouseY) {
+	public void renderScreen(MatrixStack stack, int mouseX, int mouseY) {
 		if(isScreenBeingSwapped() || currentScreen == null) return;
 
 		if(currentScreen.getMousePosition() == null || currentScreen.getMousePosition().getX() != mouseX || currentScreen.getMousePosition().getY() != mouseY)
 			currentScreen.setMousePos(mouseX, mouseY);
 		
-		currentScreen.drawBackgroundImage();
+		currentScreen.drawBackgroundImage(stack);
 		
-		currentScreen.editComponents();
-		currentScreen.drawComponents();
+		currentScreen.editComponents(stack);
+		currentScreen.drawComponents(stack);
 
 		// Edited last because this should always be drawn over everything
 		// else on the screen.
-		currentScreen.drawStatusBar();
+		currentScreen.drawStatusBar(stack);
 	}
 
 	/**

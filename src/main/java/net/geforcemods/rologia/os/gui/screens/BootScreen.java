@@ -1,5 +1,7 @@
 package net.geforcemods.rologia.os.gui.screens;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
+
 import net.geforcemods.rologia.os.RologiaOS;
 import net.geforcemods.rologia.os.apps.events.AppEventType;
 import net.geforcemods.rologia.os.gui.components.ScreenComponent;
@@ -23,7 +25,7 @@ public class BootScreen extends Screen {
 	}
 
 	@Override
-	public void editComponent(ScreenComponent comp) {
+	public void editComponent(MatrixStack stack, ScreenComponent comp) {
 		//getOS().setApp("step_counter"); //TODO just for testing
 	}
 

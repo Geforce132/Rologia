@@ -3,6 +3,7 @@ package net.geforcemods.rologia.os.gui.screens;
 import java.util.ArrayList;
 import java.util.logging.Level;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.geforcemods.rologia.os.RologiaOS;
@@ -96,11 +97,11 @@ public abstract class Screen extends net.minecraft.client.gui.screen.Screen {
 
 	public void updateScreen() {}
 
-	public void drawBackgroundImage() {
+	public void drawBackgroundImage(MatrixStack stack) {
 		RenderSystem.pushMatrix();
 
 		backgroundImage.performPrerenderGLFixes();
-		backgroundImage.drawComponent();
+		backgroundImage.drawComponent(stack);
 
 		RenderSystem.pushMatrix();
 		GuiUtils.drawFilledRect(getPosition(), WATCH_SCREEN_X_SIZE, WATCH_SCREEN_Y_SIZE, getOS().getTheme().BACKGROUND_OVERLAY, 0.6F);
@@ -109,42 +110,42 @@ public abstract class Screen extends net.minecraft.client.gui.screen.Screen {
 		RenderSystem.popMatrix();
 	}
 
-	public void editComponents() {
+	public void editComponents(MatrixStack stack) {
 		int l = components.size();
 		for(int i = 0; i < l; i++)
 		{
-			editComponent(components.get(i));
+			editComponent(stack, components.get(i));
 		}
 	}
 
-	public void editComponent(ScreenComponent comp) {}
+	public void editComponent(MatrixStack stack, ScreenComponent comp) {}
 
-	public void drawComponents() {
+	public void drawComponents(MatrixStack stack) {
 		for(ScreenComponent component : components){
 			if(!component.isVisible()) continue;
 
 			RenderSystem.pushMatrix();
 			component.performPrerenderGLFixes();
-			component.drawComponent();
+			component.drawComponent(stack);
 			RenderSystem.popMatrix();
 		}
 	}
 
-	public void drawStatusBar() {
+	public void drawStatusBar(MatrixStack stack) {
 		RenderSystem.pushMatrix();
 		statusBar.performPrerenderGLFixes();
-		statusBar.drawComponent();
+		statusBar.drawComponent(stack);
 		RenderSystem.popMatrix();
 	}
 
-	public void drawScreenInfo(int startingXPos, int startingYPos) {
+	public void drawScreenInfo(MatrixStack stack, int startingXPos, int startingYPos) {
 		int color = GuiUtils.toHex(getOS().getTheme().DEBUG_TEXT);
 
-		drawString(getFontRenderer(), "Screen info:", startingXPos, 38, color);
-		drawString(getFontRenderer(), "Name: " + getClass().getSimpleName(), startingXPos, 50, color);
-		drawString(getFontRenderer(), "Position - X: " + getPosition().getX() + " Y: " + getPosition().getY(), startingXPos, 62, color);
-		drawString(getFontRenderer(), "Mouse position - X: " + mousePos.getX() + " Y: " + mousePos.getY(), startingXPos, 74, color);
-		drawString(getFontRenderer(), "# of notifications: " + getOS().getNotifications().size(), startingXPos, 98, color);
+		drawString(getFontRenderer(), stack, "Screen info:", startingXPos, 38, color, false);
+		drawString(getFontRenderer(), stack, "Name: " + getClass().getSimpleName(), startingXPos, 50, color, false);
+		drawString(getFontRenderer(), stack, "Position - X: " + getPosition().getX() + " Y: " + getPosition().getY(), startingXPos, 62, color, false);
+		drawString(getFontRenderer(), stack, "Mouse position - X: " + mousePos.getX() + " Y: " + mousePos.getY(), startingXPos, 74, color, false);
+		drawString(getFontRenderer(), stack, "# of notifications: " + getOS().getNotifications().size(), startingXPos, 98, color, false);
 
 		/*
 		if(getOS().isAppOpen()) {
@@ -155,28 +156,28 @@ public abstract class Screen extends net.minecraft.client.gui.screen.Screen {
 		*/
 	}
 
-	public void drawComponentInfo(int startingXPos, int startingYPos) {
+	public void drawComponentInfo(MatrixStack stack, int startingXPos, int startingYPos) {
 		int color = GuiUtils.toHex(getOS().getTheme().DEBUG_TEXT);
 
-		drawString(getFontRenderer(), "Components:", startingXPos, 38, color);
+		drawString(getFontRenderer(), stack, "Components:", startingXPos, 38, color, false);
 
 		for (int i = 0; i < components.size(); i++) {
 			boolean isBeingHoveredOver = components.get(i).isMouseHoveringOver(mousePos);
 			
-			drawString(getFontRenderer(), (focusedComponent == components.get(i) ? "* " : "") + i + ": " + components.get(i).getClass().getSimpleName() + (!components.get(i).isVisible() ? " (H)" : ""), startingXPos, 50 + (i * 12), isBeingHoveredOver ? GuiUtils.toHex(getOS().getTheme().DEBUG_TEXT_HOVERING) : color);
+			drawString(getFontRenderer(), stack, (focusedComponent == components.get(i) ? "* " : "") + i + ": " + components.get(i).getClass().getSimpleName() + (!components.get(i).isVisible() ? " (H)" : ""), startingXPos, 50 + (i * 12), isBeingHoveredOver ? GuiUtils.toHex(getOS().getTheme().DEBUG_TEXT_HOVERING) : color, false);
 
 			if(isBeingHoveredOver) {
-				drawString(getFontRenderer(), "Component info:", startingXPos, 50 + ((components.size() + 1) * 12), color);
-				drawString(getFontRenderer(), " - Position - X: " + components.get(i).getPosition().getX() + " Y: " + components.get(i).getPosition().getY(), startingXPos, 50 + ((components.size() + 2) * 12), color);
+				drawString(getFontRenderer(), stack, "Component info:", startingXPos, 50 + ((components.size() + 1) * 12), color, false);
+				drawString(getFontRenderer(), stack, " - Position - X: " + components.get(i).getPosition().getX() + " Y: " + components.get(i).getPosition().getY(), startingXPos, 50 + ((components.size() + 2) * 12), color, false);
 			}
 		}
 	}
 
-	public void drawString(FontRenderer fontRenderer, String string, int x, int y, int color, boolean textShadow) {
+	public void drawString(FontRenderer fontRenderer, MatrixStack stack, String string, int x, int y, int color, boolean textShadow) {
 		if(textShadow)
-			fontRenderer.drawStringWithShadow(string, x, y, color);
+			fontRenderer.drawStringWithShadow(stack, string, x, y, color);
 		else
-			fontRenderer.drawString(string, x, y, color);
+			fontRenderer.drawString(stack, string, x, y, color);
 	}
 
 	public void onScreenOpened() {}

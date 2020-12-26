@@ -2,6 +2,7 @@ package net.geforcemods.rologia.os.gui.components;
 
 import org.lwjgl.opengl.GL11;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
 
 import net.geforcemods.rologia.os.RologiaOS;
@@ -53,7 +54,7 @@ public abstract class ScreenComponent extends net.minecraft.client.gui.screen.Sc
 		scale = 1F;
 	}
 	
-	public abstract void drawComponent();
+	public abstract void drawComponent(MatrixStack stack);
 
 	public boolean mouseClick(Position mousePos, int mouseButtonClicked) {
 		return true;
